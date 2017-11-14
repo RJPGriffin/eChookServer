@@ -1,29 +1,30 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
+const socket = require('socket.io');
 
 
-
-var app = express(); //Create express app
+// App setup
+var app = express();
 var jsonParser = bodyParser.json();
 app.set('view engine', 'ejs');
-app.listen(3000);
 
-app.post('/post/:id', jsonParser, function(req, res) {
-  console.log(req.params.id + ' posted ' + JSON.stringify(req.body));
-  res.status(200).end();
-
+var server = app.listen(4000, function() {
+  console.log('listening for requests on port 4000,');
 });
 
-app.use('/post', function(req, res) {
-  //handle post data to /post
-});
+app.use(express.static('public'));
 
-app.get('/', function(req, res) {
-  res.render('cars.ejs');
-});
+// app.post('/post/:id', jsonParser, function(req, res) {
+//   console.log(req.params.id + ' posted ' + JSON.stringify(req.body));
+//   res.status(200).end();
+//
+// });
 
-app.get('/post/:id', function(req, res) {
-  res.send('Read dynamic route ' + req.params.id);
+// Socket setup & pass server
+var io = socket(server);
+io.on('connection', (socket) => {
+
+  console.log('made socket connection', socket.id);
 
 });
