@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Current Cars</title>
+    <script src="https://unpkg.com/vue"></script>
+
+  </script>
+</head>
+<body>
+
+  <h1>These cars are currently live</h1>
+
+  <div id="cars-vue">
+
+    <h3>{{message}}</h3>
+
+    <div v-for="item in cars">
+      <div>{{item.name}},
+        {{item.raceNum}}</div>
+
+    </div>
+
+  </div>
+  <script src="cars-vue.js"></script>
+
+</body>
+</html>
