@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add a Car</title>
+  </head>
+  <body>
+    <h1>Register a new car:</h1>
+
+    <form class="add-car-form" action="/addCar" method="post">
+      <div>Team Name:</div>
+      <input type="text" name="team" value="">
+      <div>Car Name:</div>
+      <input type="text" name="name" value="">
+      <div>Race Number:</div>
+      <input type="text" name="number" value="">
+      <div>Passcode:</div>
+      <input type="text" name="passcode" value="">
+      <div>Note: Make this something you can share with your team. Only people with the passcode can see the car's data.</div>
+      <div>Email for passcode recovery:</div>
+      <input type="email" name="email" value="">
+      <input type="submit" name="submit" value="Submit">
+    </form>
+
+  </body>
+</html>

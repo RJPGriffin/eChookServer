@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 // App setup
 var app = express();
 var jsonParser = bodyParser.json();
+var urlEncodedParder = bodyParser.urlencoded({
+  extended: false
+});
 app.set('view engine', 'ejs');
 
 var server = app.listen(3000, function() {
@@ -32,7 +35,21 @@ var carData = {
 }
 
 app.get('/', function(req, res) {
-  res.render('cars', carData);
+  res.render('cars', {
+    'cars': [{
+      'name': 'car1'
+    }, {
+      name: 'car2'
+    }]
+  });
+});
+
+app.get('/add', function(req, res) {
+  res.render('addCar');
+
+});
+
+app.post('/add', urlEncodedParder, function(req, res) {
 
 });
 
