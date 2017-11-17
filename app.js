@@ -1,8 +1,24 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 //const socket = require('socket.io');
 
+
+//Connect to Database
+mongoose.connect('mongodb://echookServer:echookdatabasepassword@ds259855.mlab.com:59855/echook-cars')
+
+//Define Schema for DB
+var carsSchema = new mongoose.Schema({
+  team: String,
+  car: String,
+  number: Number,
+  passcode: String,
+  email: String,
+  lastLive: Date,
+});
+
+var Cars = mongoose.model('Cars', carsSchema);
 
 // App setup
 var app = express();
@@ -50,6 +66,13 @@ app.get('/add', function(req, res) {
 });
 
 app.post('/add', urlEncodedParder, function(req, res) {
+  console.log(req.body);
+  var newCar = Cars(req.body).save(function(err) {
+    if (err) throw err;
+    console.log('New Car Saved');
+  });
+  res.status(200).end();
+
 
 });
 
