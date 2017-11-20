@@ -4,10 +4,17 @@
   <head></head>
 
   <body>
-    <h1>Working</h1>
+    <h1>Cars.ejs</h1>
     <div>
-      name is
-      <%= cars[1].name %></div>
+      <% for(var i=0; i < data.length; i++) { %>
+        <div>Car Name:
+          <%= data[i].car %></div>
+      <% } %>
+    </div>
+
+    <div>Need to add your car?
+      <a href="/add">Go Here</a>
+    </div>
   </body>
 
 </html>
