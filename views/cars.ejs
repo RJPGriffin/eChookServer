@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 
-  <head></head>
+  <head>
+    <link rel='stylesheet' href='/normalize.css'/>
+  </head>
 
   <body>
     <h1>Cars.ejs</h1>
@@ -15,6 +17,12 @@
     <div>Need to add your car?
       <a href="/add">Go Here</a>
     </div>
+
+    <form class="SelectCarForm" action="/data" method="post">
+      <input type="text" name="passcode" value="">
+      <input type="submit" name="" value="Go!">
+
+    </form>
   </body>
 
 </html>

@@ -15,10 +15,20 @@ mongoose.Promise = global.Promise;
 var app = express();
 app.use(routes);
 app.set('view engine', 'ejs');
+
 //Send Stylesheets
 app.use(express.static('public'));
 
+//error handling middleware
+app.use(function(error, rew, res, next) {
+  // console.log(err);
+  res.status(422).send({ //TODO Flesh this out
+    error: err.message
+  })
+
+});
+
 
 var server = app.listen(3000, function() {
-  console.log('listening for requests on port 4000,');
+  console.log('listening for requests on port 3000,');
 });

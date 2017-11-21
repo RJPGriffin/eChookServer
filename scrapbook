@@ -1,0 +1,4 @@
+<script>
+  var carData = <%car%>;
+</script>
+<script type="text/javascript" src="/data.js">

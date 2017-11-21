@@ -3,24 +3,35 @@
   <head>
     <meta charset="utf-8">
     <title>Add a Car</title>
+    <link rel='stylesheet' href='/styles.css'/>
+    <link rel='stylesheet' href='/normalize.css'/>
+
   </head>
   <body>
-    <h1>Register a new car:</h1>
+    <div class="dual-column-container">
+      <div class="left-column column-light">
+        <h1>Register a new car:</h1>
 
-    <form class="add-car-form" action="/add" method="post">
-      <div>Team Name:</div>
-      <input type="text" name="team" value="">
-      <div>Car Name:</div>
-      <input type="text" name="car" value="">
-      <div>Race Number:</div>
-      <input type="text" name="number" value="">
-      <div>Passcode:</div>
-      <input type="text" name="passcode" value="">
-      <div>Note: Make this something you can share with your team. Only people with the passcode can see the car's data.</div>
-      <div>Email for passcode recovery:</div>
-      <input type="email" name="email" value="">
-      <input type="submit" name="submit" value="Submit">
-    </form>
+        <form class="add-car-form" action="/add" method="post">
+          <div>Team Name:*</div>
+          <input type="text" name="team" value="">
+          <div>Car Name:*</div>
+          <input type="text" name="car" value="">
+          <div>Race Number:</div>
+          <input type="text" name="number" value="">
+          <div>Passcode:*</div>
+          <input type="text" name="passcode" value="<%= randName %>">
+          <div>Note: Make this something you can share with your team. Only people with the passcode can see the car's data.</div>
+          <div>Email for passcode recovery:</div>
+          <input type="email" name="email" value="">
+          <input type="submit" name="submit" value="Submit">
+        </form>
+      </div>
+      <div class="right-column column-light">
+        <h1>Instructions</h1>
+        <div>Descriptions :)</div>
+      </div>
+    </div>
 
   </body>
 </html>
