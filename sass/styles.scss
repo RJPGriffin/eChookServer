@@ -1,44 +1,77 @@
-body {
-  background-color: #505050;
+@import url(https://fonts.googleapis.com/css?family=Oswald:400,500|Cabin:400,700);
+@import "_customVariables.scss";
+
+html {
+  background             : url("/bg-small-dark.jpg") no-repeat top center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size   : cover;
+  -o-background-size     : cover;
+  background-size        : cover;
+  font-family            : Cabin, sans-serif;
 }
 
 .dual-column-container {
-  display: grid;
+  display              : grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr, 10%;
-  grid-auto-flow: row;
-  column-gap: 20px;
+  grid-template-rows   : 1fr, 10%;
+  grid-auto-flow       : row;
+  column-gap           : 20px;
 }
 
 .left-column {
   grid-column: 1;
-  grid-row: auto;
+  grid-row   : auto;
 }
 
 .right-column {
   grid-column: 2;
-  grid-row: auto;
+  grid-row   : auto;
 }
 
 .column-light {
   background-color: #f9f9f9;
-  padding: 3em;
-  margin: 1em;
-  border-radius: 10px;
+  padding         : 3em;
+  margin          : 1em;
+  border-radius   : 10px;
 }
 //Data
 
+.fullTitle {
+  width           : 100%;
+  background-color: rgba(0,0,0,0.3);
+  padding-top     : 20px;
+  padding-bottom  : 20px;
+  font-family     : Cabin, sans-serif;
+  text-align      : center;
+  vertical-align  : middle;
+  color           : #f9f9f9;
+}
+
+#carHeader {
+  font-size: 50px;
+}
+
+#teamHeader {
+  font-style: 20px;
+}
+
 .dataContainer {
-  display: grid;
+  display              : grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr, 10%;
-  grid-auto-flow: row;
-  column-gap: 10px;
+  grid-template-rows   : 1fr, 10%;
+  grid-auto-flow       : row;
+  column-gap           : 10px;
+  text-align           : center;
 }
 
 .dataGraph {
-  grid-column: 1;
-  width: inherit;
+  grid-column   : 1;
+  width         : inherit;
+  padding-top   : 20px;
+  padding-bottom: 20px;
+  min-height    : 200px;
 }
 
-.dataNumber {}
+.dataHeading {
+  font-size: 15px;
+}

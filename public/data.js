@@ -4,7 +4,9 @@ console.log('Recieved: Car: ' + car);
 var alpha = 0.99;
 var voltageAverage = 0;
 var currentAverage = 0;
+var rpmAverage = 0;
 var pause = false;
+var dataSeconds = $('#graphCount').val() * 60;
 
 // //testing a voltage chart`
 // const VCHART = document.getElementById("voltageChart");
@@ -75,6 +77,8 @@ var voltageChart = new Chart(voltageChartCtx, {
     ]
   },
   options: {
+    responsive: true,
+    maintainAspectRatio: false,
     animation: {
       duration: 300
     },
@@ -139,6 +143,8 @@ var currentChart = new Chart(currentChartCtx, {
     ]
   },
   options: {
+    responsive: true,
+    maintainAspectRatio: false,
     animation: {
       duration: 300
     },
@@ -169,8 +175,8 @@ var currentChart = new Chart(currentChartCtx, {
   }
 });
 
-var rpmChart = document.getElementById("rpmChart").getContext('2d');
-var rChart = new Chart(rpmChart, {
+var rpmChartCtx = document.getElementById("rpmChart").getContext('2d');
+var rpmChart = new Chart(rpmChartCtx, {
   type: 'line',
   data: {
     labels: [],
@@ -200,6 +206,8 @@ var rChart = new Chart(rpmChart, {
     ]
   },
   options: {
+    responsive: true,
+    maintainAspectRatio: false,
     animation: {
       duration: 300
     },
@@ -239,6 +247,9 @@ setInterval(function addData() {
     if (currentAverage === 0) {
       currentAverage = data.current;
     }
+    if (rpmAverage === 0) {
+      rpmAverage = data.rpm;
+    }
 
     //Remove animations after 100 datapoints
     if (voltageChart.data.labels.length === 100) {
@@ -264,14 +275,40 @@ setInterval(function addData() {
     currentAverage = currentAverage * alpha + data.current * (1 - alpha);
     currentChart.data.datasets[1].data.push(currentAverage);
 
+    //RPM Chart
+    rpmChart.data.labels.push(data.time);
+    rpmChart.data.datasets[0].data.push(data.rpm);
+    rpmAverage = rpmAverage * alpha + data.rpm * (1 - alpha);
+    rpmChart.data.datasets[1].data.push(rpmAverage);
 
-    if (!pause) {
-      voltageChart.update();
-      currentChart.update();
+
+    while (voltageChart.data.labels.length > dataSeconds) {
+      voltageChart.data.labels.splice(0, 1);;
+      voltageChart.data.datasets.forEach((dataset) => {
+        dataset.data.splice(0, 1);;
+      });
+
+      currentChart.data.labels.splice(0, 1);;
+      currentChart.data.datasets.forEach((dataset) => {
+        dataset.data.splice(0, 1);;
+      });
+
+      rpmChart.data.labels.splice(0, 1);;
+      rpmChart.data.datasets.forEach((dataset) => {
+        dataset.data.splice(0, 1);;
+      });
+
     }
+
+
+
+    voltageChart.update();
+    currentChart.update();
+    rpmChart.update();
   })
 }, 1000);
 
-function pauseGraphs() {
-  pause = !pause;
-}
+function updateTime() {
+  dataSeconds = 60 * $('#graphCount').val();
+
+};

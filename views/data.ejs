@@ -15,21 +15,32 @@
     var id = '<%= data._id %>';
     console.log('Running');
   </script>
+  <div class="fullTitle">
+    <div id="carHeader"><%= data.car %></div>
+    <div id="teamHeader"><%= data.team %></div>
+  </div>
 
-  <h1><%= data.car %>'s data here.</h1>
   <div class="dataContainer column-light">
-    <input type="button" value="Pause" onclick="pauseGraphs()">
-    <div class="dataNumber">
-      Voltages:</div>
+    <div class="dataHeading">
+      Voltage</div>
 
     <div class="dataGraph">
       <canvas id="voltageChart" width="200" height="60"></canvas>
     </div>
+    <div class="dataHeading">
+      Current</div>
     <div class="dataGraph">
       <canvas id="currentChart" width="200" height="60"></canvas>
     </div>
+    <div class="dataHeading">
+      RPM</div>
     <div class="dataGraph">
       <canvas id="rpmChart" width="200" height="60"></canvas>
+    </div>
+    <div style="text-align:right">
+      <div>Minutes of Data to Show:</div>
+      <input type="number" id="graphCount" value="5">
+      <input type="button" name="" value="Update" onclick="updateTime()">
     </div>
   </div>
 

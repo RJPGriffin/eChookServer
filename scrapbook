@@ -2,3 +2,20 @@
   var carData = <%car%>;
 </script>
 <script type="text/javascript" src="/data.js">
+
+{
+"Vt": 24,
+"V1": 12,
+"A": 24,
+"RPM": 1800,
+"Spd": 13,
+"Thrtl": 100,
+"Tmp1": 30,
+"Tmp2": 20,
+"AH": 3,
+"Lap": 2,
+"Gear": 4,
+"brk": 0,
+"Lon": 1000,
+"Lat": 1000
+}
