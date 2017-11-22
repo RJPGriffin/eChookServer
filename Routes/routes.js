@@ -2,13 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const moment = require('moment');
 const router = express.Router();
-const dataStore = require('../DataStore/dataStore.js');
+// const dataStore = require('../DataStore/dataStore.js');
 //var generate = require('project-name-generator');
 var generate = require("adjective-adjective-animal");
 const Cars = require('../models/Cars.js');
 
 
-
+var dataStore = {};
 
 var urlEncodedParser = bodyParser.urlencoded({
   extended: false
@@ -84,24 +84,26 @@ router.get('/api/get', function(req, res) {
 router.post('/api/send/:id', jsonParser, function(req, res) {
   console.log('Post Recieved with id: ' + req.params.id);
   var dataIn = {
-    // 'voltage': req.body.Vt,
-    // 'current': req.body.A,
-    // 'voltageLower': req.body.V1,
-    // 'rpm': req.body.RPM,
-    // 'speed': req.body.Spd,
-    // 'throttle': req.body.Thrtl,
-    // 'temp1': req.body.Tmp1,
-    // 'temp2': req.body.Tmp2,
-    // 'ampH': req.body.AH,
-    // 'currLap': req.body.Lap,
-    // 'gear': req.body.Gear,
-    // 'brake': req.body.brk,
-    // 'lon': req.body.Lon,
-    // 'lat': req.body.Lat
+    'voltage': req.body.Vt,
+    'current': req.body.A,
+    'voltageLower': req.body.V1,
+    'rpm': req.body.RPM,
+    'speed': req.body.Spd,
+    'throttle': req.body.Thrtl,
+    'temp1': req.body.Tmp1,
+    'temp2': req.body.Tmp2,
+    'ampH': req.body.AH,
+    'currLap': req.body.Lap,
+    'gear': req.body.Gear,
+    'brake': req.body.brk,
+    'lon': req.body.Lon,
+    'lat': req.body.Lat,
+    'updated': Date.now()
   };
 
-  // dataStore.data[req.params.id] = dataIn;
-  // console.log('Stored: ' + dataStore.data[req.params.id] + " in " + req.params.id);
+
+  dataStore[req.params.id] = dataIn;
+  console.log(dataStore);
 
   res.status(200).end();
 
