@@ -1,4 +1,14 @@
 console.log('Recieved: Car: ' + car);
+console.log('Recieved: ID: ' + id);
+
+var url = "";
+if (car === "eChook Demo Car") {
+  url = 'http://localhost:3000/api/get/Demo';
+} else {
+  url = 'http://localhost:3000/api/get/' + id;
+}
+
+console.log(url);
 
 //averageing values
 var alpha = 0.99;
@@ -240,7 +250,9 @@ var rpmChart = new Chart(rpmChartCtx, {
 
 
 setInterval(function addData() {
-  $.get("http://localhost:3000/api/get", function(data, status) {
+
+
+  $.get(url, function(data, status) {
     if (voltageAverage === 0) {
       voltageAverage = data.voltage;
     }
@@ -259,7 +271,7 @@ setInterval(function addData() {
     }
 
     alpha = voltageChart.data.labels.length / (voltageChart.data.labels.length + 1);
-    console.log('Alpha = ' + alpha + ', Data Length = ' + voltageChart.data.labels.length);
+    // console.log('Alpha = ' + alpha + ', Data Length = ' + voltageChart.data.labels.length);
 
     //Voltage Chart
     voltageChart.data.labels.push(data.time);

@@ -2,13 +2,29 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const moment = require('moment');
 const router = express.Router();
-// const dataStore = require('../DataStore/dataStore.js');
-//var generate = require('project-name-generator');
 var generate = require("adjective-adjective-animal");
 const Cars = require('../models/Cars.js');
 
-
 var dataStore = {};
+
+var dataTemplate = {
+  'voltage': '',
+  'current': '',
+  'voltageLower': '',
+  'rpm': '',
+  'speed': '',
+  'throttle': '',
+  'temp1': '',
+  'temp2': '',
+  'ampH': '',
+  'currLap': '',
+  'gear': '',
+  'brake': '',
+  'lon': '',
+  'lat': '',
+  'updated': '',
+  'status': ''
+};
 
 var urlEncodedParser = bodyParser.urlencoded({
   extended: false
@@ -66,47 +82,134 @@ router.post('/add', urlEncodedParser, function(req, res, next) {
 
 //API access
 
-router.get('/api/get', function(req, res) {
-  var voltage = Math.floor((Math.random() * 6) + 19);
-  var voltageLower = Math.floor((Math.random() * 3) + 9);
-  var current = Math.floor((Math.random() * 10) + 17);
-  var rpm = Math.floor((Math.random() * 300) + 1650);
-  var time = moment().locale('en-gb').format('LTS');
-  res.status(200).send({
-    'voltage': voltage,
-    'voltsLower': voltageLower,
-    'current': current,
-    'rpm': rpm,
-    'time': time
-  }).end;
+router.get('/api/get/:id', function(req, res) {
+  let key = req.params.id;
+  if (key == 'Demo') {
+    var voltage = Math.floor((Math.random() * 6) + 19);
+    var voltageLower = Math.floor((Math.random() * 3) + 9);
+    var current = Math.floor((Math.random() * 10) + 17);
+    var rpm = Math.floor((Math.random() * 300) + 1650);
+    var time = moment().locale('en-gb').format('LTS');
+    res.status(200).send({
+      'voltage': voltage,
+      'voltsLower': voltageLower,
+      'current': current,
+      'rpm': rpm,
+      'time': time
+    }).end;
+  } else {
+    if (key in dataStore) {
+      res.status(200).send(dataStore[key]).end;
+    } else {
+      res.status(200).send({
+        'status': 'No data found for car',
+        'updated': null
+      }).end;
+    };
+  }
 });
 
 router.post('/api/send/:id', jsonParser, function(req, res) {
   console.log('Post Recieved with id: ' + req.params.id);
-  var dataIn = {
-    'voltage': req.body.Vt,
-    'current': req.body.A,
-    'voltageLower': req.body.V1,
-    'rpm': req.body.RPM,
-    'speed': req.body.Spd,
-    'throttle': req.body.Thrtl,
-    'temp1': req.body.Tmp1,
-    'temp2': req.body.Tmp2,
-    'ampH': req.body.AH,
-    'currLap': req.body.Lap,
-    'gear': req.body.Gear,
-    'brake': req.body.brk,
-    'lon': req.body.Lon,
-    'lat': req.body.Lat,
-    'updated': Date.now()
-  };
+  try {
+    updateData(req.params.id, req.body);
+  } catch (e) {
+    console.log('Error in Update Data: ' + e);
+  } finally {
 
+  }
 
-  dataStore[req.params.id] = dataIn;
-  console.log(dataStore);
-
+  res.send(dataStore[req.params.id]);
   res.status(200).end();
+});
+
+
+
+
+router.post('/api/getid', jsonParser, function(req, res) {
+  console.log('Request to get ID for pascode: ' + req.body.passcode);
+  Cars.findOne({
+    passcode: req.body.passcode
+  }).then(function(car) {
+    if (car === null) {
+      res.send('Passcode Not Recognised');
+      res.status(204).end();
+    } else {
+      console.log('id found: ' + car._id);
+      res.send({
+        'id': car._id
+      });
+      res.status(200).end();
+    }
+  });
+
+
+
 
 });
 
 module.exports = router;
+
+
+// Data Functions
+function updateData(key, dataIn) {
+  console.log('Calling Update Data');
+
+  if (key in dataStore) {
+
+  } else {
+    console.log('Adding ' + key + ' to Data Store');
+    dataStore[key] = dataTemplate;
+    console.log(dataStore);
+  }
+
+  // console.log(dataStore);
+
+  if ('Vt' in dataIn) {
+    dataStore[key].voltage = dataIn.Vt
+  }
+  if ('A' in dataIn) {
+    dataStore[key].current = dataIn.A
+  }
+  if ('V1' in dataIn) {
+    dataStore[key].voltageLower = dataIn.V1
+  }
+  if ('RPM' in dataIn) {
+    dataStore[key].rpm = dataIn.RPM
+  }
+  if ('Spd' in dataIn) {
+    dataStore[key].speed = dataIn.Spd
+  }
+  if ('Thrtl' in dataIn) {
+    dataStore[key].throttle = dataIn.Thrtl
+  }
+  if ('Tmp1' in dataIn) {
+    dataStore[key].temp1 = dataIn.Tmp1
+  }
+  if ('Tmp2' in dataIn) {
+    dataStore[key].temp2 = dataIn.Tmp2
+  }
+  if ('AH' in dataIn) {
+    dataStore[key].ampH = dataIn.AH
+  }
+  if ('Lap' in dataIn) {
+    dataStore[key].currLap = dataIn.Lap
+  }
+  if ('Gear' in dataIn) {
+    dataStore[key].gear = dataIn.Gear
+  }
+  if ('brk' in dataIn) {
+    dataStore[key].brake = dataIn.brk
+  }
+  if ('Lon' in dataIn) {
+    dataStore[key].lon = dataIn.Lon
+  }
+  if ('Lat' in dataIn) {
+    dataStore[key].lat = dataIn.Lat
+  }
+  dataStore[key].updated = Date.now()
+  dataStore[key].status = 'Live'
+
+  console.log(dataStore);
+
+}
