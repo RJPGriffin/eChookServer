@@ -7,13 +7,19 @@ html {
   background-size: cover;
   font-family: Cabin, sans-serif; }
 
+body {
+  overflow-x: hidden; }
+
 .dual-column-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr, 10%;
-  grid-auto-flow: row;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-auto-flow: column;
   column-gap: 20px; }
 
+@media screen and (max-width: 900px) {
+  .dual-column-container {
+    grid-auto-flow: row; } }
 .left-column {
   grid-column: 1;
   grid-row: auto; }
@@ -24,9 +30,12 @@ html {
 
 .column-light {
   background-color: #f9f9f9;
-  padding: 3em;
+  padding: 1em 3em 3em;
   margin: 1em;
   border-radius: 10px; }
+
+.center {
+  text-align: center; }
 
 .fullTitle {
   width: 100%;
@@ -61,5 +70,63 @@ html {
 
 .dataHeading {
   font-size: 15px; }
+
+.active-car {
+  background-color: #adadad;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 10px 5px 10px 30px;
+  transition-duration: 0.3s;
+  transition-property: all background;
+  transition-timing-function: ease-in-out; }
+
+.active-car:hover {
+  background-color: #3c80c3;
+  color: #f9f9f9;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 18px; }
+
+.new-car-button {
+  background-color: #447604;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  max-width: 300px;
+  margin: auto; }
+  .new-car-button a {
+    color: #f9f9f9;
+    display: block;
+    text-decoration: none; }
+
+.form-container {
+  display: flex;
+  flex-direction: column; }
+  .form-container input[type=password],
+  .form-container input[type=text] {
+    width: 100%;
+    max-width: 500px;
+    border-color: #E71B64;
+    border-radius: 4px;
+    border-style: solid;
+    margin: 3px auto; }
+  .form-container input[type=submit] {
+    margin-top: 5px;
+    border-radius: 5px;
+    background-color: #E71B64;
+    padding: 7px 10px;
+    width: 30%;
+    max-width: 200px;
+    border-color: #E71B64;
+    border-radius: 5px;
+    border-style: solid;
+    border: 0;
+    color: #f9f9f9;
+    height: 2em;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    margin: auto; }
+  .form-container input[type=submit]:hover {
+    background-color: #bb1450; }
 
 /*# sourceMappingURL=styles.css.map */

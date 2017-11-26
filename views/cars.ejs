@@ -3,26 +3,60 @@
 
   <head>
     <link rel='stylesheet' href='/normalize.css'/>
+    <link rel='stylesheet' href='/styles.css'/>
+
+    <script src="https://use.fontawesome.com/8c237fb238.js"></script>
+    <title>
+      eChook Live Data
+    </title>
+
   </head>
 
   <body>
-    <h1>Cars.ejs</h1>
-    <div>
-      <% for(var i=0; i < data.length; i++) { %>
-        <div>Car Name:
-          <%= data[i].car %></div>
-      <% } %>
+    <h1 class="fullTitle">eChook Live Data</h1>
+    <div class="dual-column-container">
+      <div>
+        <div class="column-light">
+          <div class="center">
+            <h2>Currently Active Cars:</h2>
+          </div>
+          <div>
+            <% for(var i=0; i < data.length; i++) { %>
+              <div class="active-car">
+                <strong>
+                  <%= data[i].car %>
+                </strong>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="">
+        <div class="column-light form-container center">
+          <h2>Car Login</h2><br>
+          <form class="SelectCarForm" action="/data" method="post">
+            <input type="text" name="car" value="" placeholder="Car Name"><br>
+            <input type="password" name="passcode" value="" placeholder="Password"><br>
+            <input type="submit" name="" value="Go!"><br>
+          </form>
+          <h3>or</h3>
+          <div class="center">
+            <div class="new-car-button">
+              <a href="/add">
+                <strong>Register a new Car</strong>
+              </a>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+          To see a demo login with:<br>
+          "eChook Demo Car"
+          <br>and password "Demo"
+        </div>
+
+      </div>
+
     </div>
-
-    <div>Need to add your car?
-      <a href="/add">Go Here</a>
-    </div>
-
-    <form class="SelectCarForm" action="/data" method="post">
-      <input type="text" name="passcode" value="">
-      <input type="submit" name="" value="Go!">
-
-    </form>
   </body>
 
 </html>
