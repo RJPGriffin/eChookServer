@@ -3,9 +3,9 @@ console.log('Recieved: ID: ' + id);
 
 var url = "";
 if (car === "eChook Demo Car") {
-  url = 'http://localhost:3000/api/get/Demo';
+  url = 'http://data.echook.uk/api/get/Demo';
 } else {
-  url = 'http://localhost:3000/api/get/' + id;
+  url = 'http://data.echook.uk/api/get/' + id;
 }
 
 console.log(url);

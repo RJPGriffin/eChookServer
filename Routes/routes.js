@@ -207,6 +207,9 @@ function updateData(key, dataIn) {
   if ('Lat' in dataIn) {
     dataStore[key].lat = dataIn.Lat
   }
+  if ('LL_Time' in dataIn) {
+    dataStore[key].LL_Time = dataIn.LL_Time
+  }
   dataStore[key].updated = Date.now()
   dataStore[key].status = 'Live'
 
