@@ -20,23 +20,31 @@
     <div id="teamHeader"><%= data.team %></div>
   </div>
 
-  <div class="dataContainer column-light">
-    <div class="dataHeading">
-      Voltage</div>
+  <div class="dataContainer column-accordion-light active">
+    <button class="accordion">
+      <strong>Individual Graphs</strong>
+    </button>
+    <div class="panel">
+      <div class="dataHeading">
+        Voltage</div>
 
-    <div class="dataGraph">
-      <canvas id="voltageChart" width="200" height="60"></canvas>
+      <div class="dataGraph">
+        <canvas id="voltageChart" width="200" height="60"></canvas>
+      </div>
+      <div class="dataHeading">
+        Current</div>
+      <div class="dataGraph">
+        <canvas id="currentChart" width="200" height="60"></canvas>
+      </div>
+      <div class="dataHeading">
+        RPM</div>
+      <div class="dataGraph">
+        <canvas id="rpmChart" width="200" height="60"></canvas>
+      </div>
     </div>
-    <div class="dataHeading">
-      Current</div>
-    <div class="dataGraph">
-      <canvas id="currentChart" width="200" height="60"></canvas>
-    </div>
-    <div class="dataHeading">
-      RPM</div>
-    <div class="dataGraph">
-      <canvas id="rpmChart" width="200" height="60"></canvas>
-    </div>
+  </div>
+
+  <div class="column-light">
     <div style="text-align:right">
       <div>Minutes of Data to Show:</div>
       <input type="number" id="graphCount" value="5">
@@ -47,5 +55,6 @@
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
   <script src="/data.js"></script>
+  <script src="/accordion.js"></script>
 </body>
 </html>

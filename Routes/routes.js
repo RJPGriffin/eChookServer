@@ -22,6 +22,7 @@ var dataTemplate = {
   'brake': '',
   'lon': '',
   'lat': '',
+  'track': '',
   'LL_Time': '',
   'LL_V': '',
   'LL_I': '',

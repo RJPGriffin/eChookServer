@@ -18,19 +18,6 @@ var rpmAverage = 0;
 var pause = false;
 var dataSeconds = $('#graphCount').val() * 60;
 
-// //testing a voltage chart`
-// const VCHART = document.getElementById("voltageChart");
-// let voltageChart = new Chart(VCHART, {
-//   type: 'line',
-//   data: {
-//     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-//     datasets: [{
-//       label: '# of Votes',
-//       data: [12, 19, 3, 5, 2, 3]
-//     }]
-//   }
-// });
-
 
 var voltageChartCtx = document.getElementById("voltageChart").getContext('2d');
 var voltageChart = new Chart(voltageChartCtx, {

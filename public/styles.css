@@ -30,9 +30,15 @@ body {
 
 .column-light {
   background-color: #f9f9f9;
-  padding: 1em 3em 3em;
+  padding: 1em;
   margin: 1em;
   border-radius: 10px; }
+
+.column-accordion-light {
+  background-color: #f9f9f9;
+  margin: 1em;
+  border-radius: 10px;
+  font-family: Cabin 'sans-serif'; }
 
 .center {
   text-align: center; }
@@ -59,7 +65,8 @@ body {
   grid-template-rows: 1fr, 10%;
   grid-auto-flow: row;
   column-gap: 10px;
-  text-align: center; }
+  text-align: center;
+  margin: 1em; }
 
 .dataGraph {
   grid-column: 1;
@@ -128,5 +135,37 @@ body {
     margin: auto; }
   .form-container input[type=submit]:hover {
     background-color: #bb1450; }
+
+/* Style the buttons that are used to open and close the accordion panel */
+button.accordion {
+  font-family: Cabin 'sans-serif';
+  background-color: #e0e0e0;
+  padding: 1em;
+  cursor: pointer;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px; }
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+button.accordion.active,
+button.accordion:hover {
+  background-color: #3c80c3;
+  color: #f9f9f9; }
+
+button.accordion.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
+
+/* Style the accordion panel. Note: hidden by default */
+div.panel {
+  padding: 0 2em;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out; }
 
 /*# sourceMappingURL=styles.css.map */
