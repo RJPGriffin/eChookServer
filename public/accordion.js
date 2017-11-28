@@ -1,11 +1,11 @@
 var acc = document.getElementsByClassName("accordion");
-var i;
+var i, j;
 
 var panels = document.getElementsByClassName("panel");
 
 
-// for (i = 0; i < panels.length; i++) {
-//   this.style.maxHeight = panel.scrollHeight + "px";
+// for (j = 0; j < panels.length; j++) {
+//   this.style.maxHeight = this.scrollHeight + "px";
 // }
 
 
