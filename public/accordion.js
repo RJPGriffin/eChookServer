@@ -8,6 +8,18 @@ var panels = document.getElementsByClassName("panel");
 //   this.style.maxHeight = this.scrollHeight + "px";
 // }
 
+$(document).ready(function() {
+  for (i = 0; i < acc.length; i++) {
+
+    acc[i].classList.toggle("active");
+    var panel = acc[i].nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  }
+});
 
 for (i = 0; i < acc.length; i++) {
   acc[i].onclick = function() {

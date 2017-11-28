@@ -3,7 +3,8 @@ console.log('Recieved: ID: ' + id);
 
 var url = "";
 if (car === "eChook Demo Car") {
-  url = 'http://data.echook.uk/api/get/Demo';
+  // url = 'http://data.echook.uk/api/get/Demo';
+  url = 'http://localhost:3000/api/get/Demo';
 } else {
   url = 'http://data.echook.uk/api/get/' + id;
 }
@@ -299,7 +300,7 @@ setInterval(function addData() {
 
     }
 
-
+    var update = updateNumericals(data);
 
     voltageChart.update();
     currentChart.update();
@@ -311,3 +312,12 @@ function updateTime() {
   dataSeconds = 60 * $('#graphCount').val();
 
 };
+
+function updateNumericals(data) {
+  $('#voltageTotal').text(data.voltage);
+  $('#voltageLower').text(data.voltsLower);
+  $('#voltageUpper').text(data.voltage - data.voltsLower);
+  $('#Current').text(data.current);
+  $('#RPM').text(data.rpm);
+  $('#Speed').text(data.speed);
+}

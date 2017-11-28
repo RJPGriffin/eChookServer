@@ -84,6 +84,12 @@ body {
   text-align: center;
   margin: 1em;
 }
+@media screen and (max-width: 700px) {
+  .column-light,
+  .dataContainer {
+    margin: 1em 0;
+  }
+}
 
 .dataGraph {
   grid-column: 1;
@@ -167,6 +173,7 @@ body {
   }
 }
 /* Style the buttons that are used to open and close the accordion panel */
+
 button.accordion {
   font-family: Cabin 'sans-serif';
   background-color: darken(#f9f9f9, 10%);
@@ -175,13 +182,14 @@ button.accordion {
   text-align: left;
   border: none;
   outline: none;
-  transition: 0.4s;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  transition: 0.3s;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+
 button.accordion.active,
 button.accordion:hover {
   background-color: $brandBlue;
@@ -193,6 +201,7 @@ button.accordion.active {
   border-bottom-right-radius: 0;
 }
 /* Style the accordion panel. Note: hidden by default */
+
 div.panel {
   padding: 0 2em;
   max-height: 0;
@@ -237,6 +246,11 @@ div.panel {
   flex-basis: 140px;
   flex-grow: 1.1;
   flex-shrink: 0.5;
+}
+
+.num-background:hover {
+  border-color: $brand-primary;
+  background-color: darken(#f9f9f9, 7%);
 }
 
 .num-title-dual {
