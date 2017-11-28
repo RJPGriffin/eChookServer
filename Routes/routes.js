@@ -22,6 +22,12 @@ var dataTemplate = {
   'brake': '',
   'lon': '',
   'lat': '',
+  'LL_Time': '',
+  'LL_V': '',
+  'LL_I': '',
+  'LL_RPM': '',
+  'LL_Spd': '',
+  'LL_Ah': '',
   'updated': '',
   'status': ''
 };
@@ -209,6 +215,21 @@ function updateData(key, dataIn) {
   }
   if ('LL_Time' in dataIn) {
     dataStore[key].LL_Time = dataIn.LL_Time
+  }
+  if ('LL_V' in dataIn) {
+    dataStore[key].LL_V = dataIn.LL_V
+  }
+  if ('LL_I' in dataIn) {
+    dataStore[key].LL_I = dataIn.LL_I
+  }
+  if ('LL_RPM' in dataIn) {
+    dataStore[key].LL_RPM = dataIn.LL_RPM
+  }
+  if ('LL_Spd' in dataIn) {
+    dataStore[key].LL_Spd = dataIn.LL_Spd
+  }
+  if ('LL_Ah' in dataIn) {
+    dataStore[key].LL_Ah = dataIn.LL_Ah
   }
   dataStore[key].updated = Date.now()
   dataStore[key].status = 'Live'
