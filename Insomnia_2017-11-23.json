@@ -93,7 +93,7 @@
 			"method": "POST",
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\"passcode\":\"testing\"}"
+				"text": "{\"password\":\"testing\"}"
 			},
 			"parameters": [],
 			"headers": [

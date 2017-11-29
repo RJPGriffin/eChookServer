@@ -50,9 +50,9 @@ router.get('/', function(req, res) {
 });
 
 router.post('/data', urlEncodedParser, function(req, res) {
-  console.log('Looking for' + req.body.passcode);
+  console.log('Looking for' + req.body.password);
   Cars.findOne({
-    passcode: req.body.passcode
+    password: req.body.password
   }).then(function(car) {
     console.log(car);
     res.render('data', {
@@ -134,12 +134,12 @@ router.post('/api/send/:id', jsonParser, function(req, res) {
 
 
 router.post('/api/getid', jsonParser, function(req, res) {
-  console.log('Request to get ID for pascode: ' + req.body.passcode);
+  console.log('Request to get ID for pascode: ' + req.body.password);
   Cars.findOne({
-    passcode: req.body.passcode
+    password: req.body.password
   }).then(function(car) {
     if (car === null) {
-      res.send('Passcode Not Recognised');
+      res.send('password Not Recognised');
       res.status(204).end();
     } else {
       console.log('id found: ' + car._id);

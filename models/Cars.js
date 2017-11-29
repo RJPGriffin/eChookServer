@@ -5,21 +5,29 @@ const mongoose = require('mongoose');
 var carsSchema = new mongoose.Schema({
   team: {
     type: String,
+    unique: true,
     required: [true, 'Team Name is required']
   },
   car: {
     type: String,
+    unique: true,
     required: [true, 'Car Name is Required']
   },
   number: {
     type: Number
   },
-  passcode: String,
+  password: {
+    type: String,
+    required: true
+  },
   visibility: {
     type: Boolean,
     default: false
   },
-  email: String,
+  email: {
+    type: String,
+    unique: true
+  },
   lastLive: Date,
 });
 
