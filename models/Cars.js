@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 //Define Schema for DB
-var carsSchema = new mongoose.Schema({
+var carSchema = new mongoose.Schema({
   team: {
     type: String,
     unique: true,
@@ -20,6 +20,10 @@ var carsSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  passwordConf: {
+    type: String,
+    required: true
+  },
   visibility: {
     type: Boolean,
     default: false
@@ -31,6 +35,6 @@ var carsSchema = new mongoose.Schema({
   lastLive: Date,
 });
 
-const Cars = mongoose.model('Cars', carsSchema);
+const Cars = mongoose.model('Cars', carSchema);
 
 module.exports = Cars;
