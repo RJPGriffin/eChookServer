@@ -238,3 +238,20 @@ function updateData(key, dataIn) {
   console.log(dataStore);
 
 }
+
+$(document).ready(manageData());
+
+function manageData() {
+  console.log("Running manageData");
+  for (var n in data) {
+    if (Date.now() - n.updated > 30000) { //30 seconds
+      console.log('Deleting: ' + n);
+      n.delete();
+    } else if (Date.now() - n.updated > 10000) {
+      n.status = 'Stale - 10s'
+    }
+
+
+    return Promise.delay(10000).then(() => manageData());
+  }
+};
