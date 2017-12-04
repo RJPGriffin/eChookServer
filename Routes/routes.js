@@ -33,6 +33,8 @@ var dataTemplate = {
   'status': ''
 };
 
+var dataManage = manageData(dataStore);
+
 var urlEncodedParser = bodyParser.urlencoded({
   extended: false
 });
@@ -239,9 +241,8 @@ function updateData(key, dataIn) {
 
 }
 
-$(document).ready(manageData());
 
-function manageData() {
+function manageData(data) {
   console.log("Running manageData");
   for (var n in data) {
     if (Date.now() - n.updated > 30000) { //30 seconds
@@ -252,6 +253,6 @@ function manageData() {
     }
 
 
-    return Promise.delay(10000).then(() => manageData());
+    return Promise.delay(10000).then(() => manageData(dataStore));
   }
 };
