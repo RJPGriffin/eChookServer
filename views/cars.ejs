@@ -13,12 +13,21 @@
   </head>
 
   <body>
+    <script>
+      var localData = '<%- JSON.stringify(data) %>';
+      localData = JSON.parse(localData);
+      console.log(localData);
+      var dataLength = '<%- data.length %>';
+      console.log('Length: ' + localData.length);
+    </script>
+
     <h1 class="fullTitle">eChook Live Data</h1>
     <div class="dual-column-container">
       <div>
         <div class="column-light">
           <div class="center">
-            <h2>Currently Active Cars:</h2>
+            <h2>Currently Active Cars:
+            </h2>
           </div>
           <div>
             <% for(var i=0; i < data.length; i++) { %>
@@ -32,7 +41,7 @@
         </div>
       </div>
 
-      <div class="">
+      <div class="" style="text-align:center">
         <div class="column-light form-container center">
           <h2>Car Login</h2><br>
           <form class="SelectCarForm" action="/data" method="post">

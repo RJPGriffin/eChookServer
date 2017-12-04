@@ -24,3 +24,12 @@
 https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
 
 https://www.leggetter.co.uk/real-time-web-technologies-guide/
+
+
+<script>
+  var localData = '<%- JSON.stringify(data) %>';
+  localData = JSON.parse(localData);
+  console.log(localData);
+  var dataLength = '<%- data.length() %>';
+  console.log(dataLength);
+</script>

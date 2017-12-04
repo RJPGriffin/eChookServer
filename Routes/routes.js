@@ -33,8 +33,6 @@ var dataTemplate = {
   'status': ''
 };
 
-var dataManage = manageData(dataStore);
-
 var urlEncodedParser = bodyParser.urlencoded({
   extended: false
 });
@@ -42,12 +40,27 @@ var urlEncodedParser = bodyParser.urlencoded({
 var jsonParser = bodyParser.json();
 
 router.get('/', function(req, res) {
-  //console.log("Loading");
-  var carList = Cars.find({}).then(function(carList) {
-    //  console.log(carList);
-    res.render('cars', {
-      data: carList
+  //Innefficient - fetches all cars
+  var count = 0;
+  carList = {};
+  var carMasterList = Cars.find({}).then(function(masterCarList) {
+    Object.keys(dataStore).forEach(function(key) { // look for each entry in data store
+      Object.keys(masterCarList).forEach(function(masterKey) { // compare to entries in master list
+        console.log('Comparing ' + key + ' with ' + JSON.stringify(masterCarList[masterKey]._id));
+        //if (key == masterCarList[masterKey]._id) {
+        carList[count] = masterCarList[masterKey];
+        console.log('Added Car: ' + JSON.stringify(carList[count].car));
+        count++;
+        //  }
+      });
     });
+    console.log('rendering Page');
+    console.log('data:{' + JSON.stringify(carList) + '}');
+    res.render('cars', {
+      data: carList,
+      'length': count
+    });
+
   });
 });
 
@@ -134,7 +147,7 @@ router.post('/api/send/:id', jsonParser, function(req, res) {
 
 
 
-
+// Used to get the database ID of a car - for app to send data
 router.post('/api/getid', jsonParser, function(req, res) {
   console.log('Request to get ID for pascode: ' + req.body.password);
   Cars.findOne({
@@ -242,17 +255,18 @@ function updateData(key, dataIn) {
 }
 
 
-function manageData(data) {
-  console.log("Running manageData");
-  for (var n in data) {
-    if (Date.now() - n.updated > 30000) { //30 seconds
-      console.log('Deleting: ' + n);
-      n.delete();
-    } else if (Date.now() - n.updated > 10000) {
-      n.status = 'Stale - 10s'
+function manageData() {
+  // console.log("Running manageData");
+  Object.keys(dataStore).forEach(function(key) {
+    // console.log('Checking ' + n + n.updated);
+    // console.log('In Loop');
+    if (Date.now() - dataStore[key].updated > 30000) { //30 seconds
+      // console.log('Deleting: ' + dataStore[key]);
+      delete dataStore[key];
+    } else if (Date.now() - dataStore[key].updated > 10000) {
+      // console.log('Marking ' + dataStore[key] + ' Stale');
+      dataStore[key].status = 'Stale'
     }
-
-
-    return Promise.delay(10000).then(() => manageData(dataStore));
-  }
+  });
 };
+// setInterval(manageData, 10000);
