@@ -33,3 +33,6 @@ https://www.leggetter.co.uk/real-time-web-technologies-guide/
   var dataLength = '<%- data.length() %>';
   console.log(dataLength);
 </script>
+
+
+https://scotch.io/tutorials/easy-node-authentication-setup-and-local

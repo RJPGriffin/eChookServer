@@ -12,15 +12,15 @@
       <div class="left-column column-light">
         <h1>Register a new car:</h1>
 
-        <form class="add-car-form" action="/add" method="post">
+        <form class="add-car-form" action="/auth/register" method="post">
           <div>Team Name:*</div>
-          <input type="text" name="team" value="">
+          <input type="text" name="team" value="" required="required">
           <div>Car Name:*</div>
-          <input type="text" name="car" value="">
+          <input type="text" name="car" value="" required="required">
           <div>Race Number:</div>
           <input type="text" name="number" value="">
-          <div>password:*</div>
-          <input type="text" name="password" value="<%= randName %>">
+          <div>Password:</div>
+          <input type="text" name="password" value="">
           <div>Note: Make this something you can share with your team. Only people with the password can see the car's data.</div>
           <div>Email for password recovery:</div>
           <input type="email" name="email" value="">

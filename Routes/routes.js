@@ -78,17 +78,7 @@ router.post('/data', urlEncodedParser, function(req, res) {
 
 
 router.get('/add', function(req, res) {
-  generate({
-    adjectives: 1,
-    format: "param"
-  }).then(function(name) {
-    var randObject = {
-      'randName': name
-    }
-    console.log(name);
-    res.render('addCar', randObject);
-
-  });
+  res.render('addCar');
 
 });
 
@@ -172,7 +162,7 @@ router.post('/api/getid', jsonParser, function(req, res) {
 
 module.exports = router;
 
-
+//==========================================================================
 // Data Functions
 function updateData(key, dataIn) {
   console.log('Calling Update Data');

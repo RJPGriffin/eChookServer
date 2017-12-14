@@ -2,8 +2,15 @@ const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport'); //I think this is superceded by the line above... maybe
+const passportSetup = require('./Config/passport-setup.js'); //just to run the passport setup
+const flash = require('connect-flash');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const routes = require('./Routes/routes');
+const authRoutes = require('./Routes/authRoutes');
 const Cars = require('./models/Cars');
 
 
@@ -13,8 +20,27 @@ mongoose.Promise = global.Promise;
 
 // App setup
 var app = express();
-app.use(routes);
+app.use(morgan('dev')); // log every request to the console
+
+
+//required for passport
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(bodyParser());
 app.set('view engine', 'ejs');
+app.use(session({
+  secret: 'tmpSckt',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false
+  }
+})); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+app.use('/', routes);
+app.use('/auth', authRoutes);
 
 //Send Stylesheets
 app.use(express.static('public'));
@@ -23,7 +49,8 @@ app.use(express.static('public'));
 app.use(function(error, rew, res, next) {
   // console.log(err);
   res.status(422).send({ //TODO Flesh this out
-    error: err.message
+    message: err.message,
+    error: err
   })
 
 });
