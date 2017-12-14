@@ -6,12 +6,10 @@ const bcrypt = require('bcrypt-nodejs');
 var carSchema = new mongoose.Schema({
   team: {
     type: String,
-    unique: true,
     required: [true, 'Team Name is required']
   },
   car: {
     type: String,
-    unique: true,
     required: [true, 'Car Name is Required']
   },
   number: {
@@ -27,7 +25,6 @@ var carSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    unique: true
   },
   lastLive: Date,
 });

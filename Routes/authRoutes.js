@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const bodyParser = require('body-parser');
+
+
+var urlEncodedParser = bodyParser.urlencoded({
+  extended: false
+});
 
 //Auth Routes. /auth not required
 router.post('/login',
@@ -26,9 +32,10 @@ router.get('/register', function(req, res) {
 });
 
 
-router.post('/register', passport.authenticate('local-signup', {
+router.post('/register', urlEncodedParser, passport.authenticate('local-signup', {
   successRedirect: '/', // redirect to the secure profile section
   failureRedirect: '/auth/register', // redirect back to the signup page if there is an error
+  session: false,
   failureFlash: true // allow flash messages
 }));
 
@@ -41,7 +48,9 @@ router.get('/signup', function(req, res) {
 });
 
 
-router.post('/signup', passport.authenticate('local-signup', {
+router.post('/signup', bodyParser.urlencoded({
+  extended: true
+}), passport.authenticate('local-signup', {
   successRedirect: '/', // redirect to the secure profile section
   failureRedirect: '/auth/signup', // redirect back to the signup page if there is an error
   failureFlash: true // allow flash messages

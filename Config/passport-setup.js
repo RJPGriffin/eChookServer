@@ -3,24 +3,25 @@ const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 const Cars = require('../models/Cars');
 
-
+console.log('Passport Init');
 // =========================================================================
 // passport session setup ==================================================
 // =========================================================================
 // required for persistent login sessions
 // passport needs ability to serialize and unserialize users out of session
-
 // used to serialize the user for the session
-passport.serializeUser(function(user, done) {
+
+passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// used to deserialize the user
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
+passport.deserializeUser((id, done) => {
+  User.findById(id).then((user) => {
+    done(null, user);
   });
 });
+
+
 
 // =========================================================================
 // LOCAL SIGNUP ============================================================
@@ -28,9 +29,10 @@ passport.deserializeUser(function(id, done) {
 // we are using named strategies since we have one for login and one for signup
 // by default, if there was no name, it would just be called 'local'
 
+var tmpReq = {};
+
 passport.use('local-signup', new LocalStrategy({
     // by default, local strategy uses username and password, we will override with email
-
     usernameField: 'car',
     passwordField: 'password',
     passReqToCallback: true // allows us to pass back the entire request to the callback
@@ -44,31 +46,32 @@ passport.use('local-signup', new LocalStrategy({
       // find a user whose email is the same as the forms email
       // we are checking to see if the user trying to login already exists
       console.log('Checking for user in DB');
-      User.findOne({
+      Cars.findOne({
         'car': car
-      }, function(err, user) {
+      }).then(function(err, user) {
+        console.log('Finished DB Lookup. Found: ' + user);
         // if there are any errors, return the error
         if (err)
-          return done(err);
+          done(err);
 
         // check to see if theres already a user with that email
         if (user) {
-          return done(null, false, req.flash('signupMessage', 'That car is already registered!'));
+          done(null, false, req.flash('signupMessage', 'That car is already registered!'));
         } else {
-
           // if there is no user with that email
-          // create the user
           var newCar = new Cars();
 
           // set the user's local credentials
+          newCar.team = req.body.team;
           newCar.car = car;
+          newCar.number = req.body.number;
+          newCar.email = req.body.email;
           newCar.password = newCar.generateHash(password);
 
           // save the user
-          newUser.save(function(err) {
-            if (err)
-              throw err;
-            return done(null, newUser);
+          newCar.save().then((newCar) => {
+            console.log('created new user: ', newCar);
+            done(null, newCar);
           });
         }
 
