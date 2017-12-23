@@ -35,7 +35,7 @@ router.get('/register', function(req, res) {
 router.post('/register', urlEncodedParser, passport.authenticate('local-signup', {
   successRedirect: '/', // redirect to the secure profile section
   failureRedirect: '/auth/register', // redirect back to the signup page if there is an error
-  session: false,
+  session: true,
   failureFlash: true // allow flash messages
 }));
 
@@ -48,17 +48,16 @@ router.get('/signup', function(req, res) {
 });
 
 
-router.post('/signup', bodyParser.urlencoded({
-  extended: true
-}), passport.authenticate('local-signup', {
+router.post('/signup', urlEncodedParser, passport.authenticate('local-signup', {
   successRedirect: '/', // redirect to the secure profile section
   failureRedirect: '/auth/signup', // redirect back to the signup page if there is an error
   failureFlash: true // allow flash messages
 }));
 
-// router.get('/login',passport.authenticate('local') (req, res)=>{
-// //handle local login with passport
-//
-// })
+router.post('/login', urlEncodedParser, passport.authenticate('local-login', {
+  successRedirect: '/', // redirect to the secure profile section
+  failureRedirect: '/', // redirect back to the signup page if there is an error
+  failureFlash: true // allow flash messages
+}));
 
 module.exports = router;
