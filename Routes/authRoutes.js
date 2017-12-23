@@ -8,14 +8,6 @@ var urlEncodedParser = bodyParser.urlencoded({
   extended: false
 });
 
-//Auth Routes. /auth not required
-router.post('/login',
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/auth/login',
-    failureFlash: true
-  })
-);
 
 router.get('/login', function(req, res) {
 
@@ -57,7 +49,7 @@ router.post('/signup', urlEncodedParser, passport.authenticate('local-signup', {
 router.post('/login', urlEncodedParser, passport.authenticate('local-login', {
   successRedirect: '/', // redirect to the secure profile section
   failureRedirect: '/', // redirect back to the signup page if there is an error
-  failureFlash: true // allow flash messages
+  failureFlash: false // allow flash messages
 }));
 
 module.exports = router;
