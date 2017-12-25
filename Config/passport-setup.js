@@ -100,7 +100,7 @@ passport.use('local-login', new LocalStrategy({
 
       // if no user is found, return the message
       if (!car)
-        return done(null, false, req.flash('loginMessage', 'No car found.')); // req.flash is the way to set flashdata using connect-flash
+        return done(null, false, req.flash('loginMessage', 'We Couldn\'t find that car!')); // req.flash is the way to set flashdata using connect-flash
 
       // if the user is found but the password is wrong
       if (!car.validPassword(password))

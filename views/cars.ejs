@@ -19,53 +19,78 @@
       console.log(localData);
       var dataLength = '<%- data.length %>';
       console.log('Length: ' + localData.length);
+
+      var localUser = '<%- user %>';
+      // localUser = JSON.parse(localUser);
+      console.log('User: ' + localUser);
     </script>
 
     <h1 class="fullTitle">eChook Live Data - Pre-Release, Expect it to be broken!</h1>
-    <div class="dual-column-container">
-      <div>
-        <div class="column-light">
-          <div class="center">
-            <h2>Currently Active Cars:
-            </h2>
+
+    <% if (user) { %>
+      <div class="column-light">
+        <div class="car-summary-container">
+          <div class="car-titles">
+            <%= user.car %>
+            <%= user.team %>
           </div>
+        </div>
+
+        <div class="new-car-button">
+          <a href="/auth/logout">
+            <strong>Log Out</strong>
+          </a>
+        </div>
+
+      </div>
+    <% } %>
+
+    <% if (!user) { %>
+      <div class="column-light center">
+        <h2>Car Login</h2>
+        <!-- show any messages that come back with authentication -->
+        <% if (message.length > 0) { %>
+          <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+        <div class="form-container">
           <div>
-            <% for(var i=0; i < data.length; i++) { %>
-              <div class="active-car">
-                <strong>
-                  <%= data[i].car %>
-                </strong>
-              </div>
-            <% } %>
+            <form class="SelectCarForm" action="/auth/login" method="post">
+              <input type="text" name="car" value="" placeholder="Car Name" required="required">
+              <input type="password" name="password" value="" placeholder="Password" required="required">
+              <input type="submit" name="" value="Go!">
+            </form>
+          </div>
+          <div style="margin:auto; padding:0 20px">
+            <h3>or</h3>
+          </div>
+          <div class="new-car-button">
+            <a href="/auth/register">
+              <strong>Register a new Car</strong>
+            </a>
           </div>
         </div>
+        To see a demo login with: "eChook Demo Car" and password "Demo"
       </div>
+    <% } %>
 
-      <div class="" style="text-align:center">
-        <div class="column-light form-container center">
-          <h2>Car Login</h2><br>
-          <form class="SelectCarForm" action="/auth/login" method="post">
-            <input type="text" name="car" value="" placeholder="Car Name"><br>
-            <input type="password" name="password" value="" placeholder="Password"><br>
-            <input type="submit" name="" value="Go!"><br>
-          </form>
-          <h3>or</h3>
-          <div class="center">
-            <div class="new-car-button">
-              <a href="/auth/register">
-                <strong>Register a new Car</strong>
-              </a>
+    <div>
+      <div class="column-light">
+        <div class="center">
+          <h2>Currently Active Cars:
+          </h2>
+        </div>
+        <div>
+          <% for(var i=0; i < data.length; i++) { %>
+            <div class="active-car">
+              <strong>
+                <%= data[i].car %>
+              </strong>
             </div>
-          </div>
-          <div style="height:20px"></div>
-          To see a demo login with:<br>
-          "eChook Demo Car"
-          <br>and password "Demo"
+          <% } %>
         </div>
-
       </div>
-
     </div>
+
   </body>
 
 </html>

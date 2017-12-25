@@ -58,7 +58,9 @@ router.get('/', function(req, res) {
     console.log('data:{' + JSON.stringify(carList) + '}');
     res.render('cars', {
       data: carList,
-      'length': count
+      'length': count,
+      message: req.flash('loginMessage'),
+      user: req.user,
     });
 
   });
