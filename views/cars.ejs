@@ -30,18 +30,30 @@
     <% if (user) { %>
       <div class="column-light">
         <div class="car-summary-container">
-          <div class="car-titles">
-            <%= user.car %>
+          <div class="summary-tile">
+            <span style="font-size: 2em">
+              <strong><%= user.car %></strong>
+            </span><br>
             <%= user.team %>
+            <div class="logout-button">
+              <a href="/auth/logout">
+                <strong>Log Out</strong>
+              </a>
+            </div>
+          </div>
+          <div class="summary-tile" id="car-status">
+            <div class="car-summary-data">
+              No Data
+            </div>
+          </div>
+          <div class="summary-tile">
+            <div class="data-button">
+              <a href="/data">
+                <strong>Go to<br>Data</strong>
+              </a>
+            </div>
           </div>
         </div>
-
-        <div class="new-car-button">
-          <a href="/auth/logout">
-            <strong>Log Out</strong>
-          </a>
-        </div>
-
       </div>
     <% } %>
 

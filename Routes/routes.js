@@ -66,16 +66,12 @@ router.get('/', function(req, res) {
   });
 });
 
-router.post('/data', urlEncodedParser, function(req, res) {
-  console.log('Looking for' + req.body.password);
-  Cars.findOne({
-    password: req.body.password
-  }).then(function(car) {
-    console.log(car);
-    res.render('data', {
-      data: car
-    })
-  });
+router.get('/data', isLoggedIn, function(req, res) {
+
+  res.render('data', {
+    user: req.user
+  })
+
 });
 
 
@@ -161,6 +157,16 @@ router.post('/api/getid', jsonParser, function(req, res) {
 
 
 });
+
+function isLoggedIn(req, res, next) {
+
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated())
+    return next();
+
+  // if they aren't redirect them to the home page
+  res.redirect('/');
+}
 
 module.exports = router;
 

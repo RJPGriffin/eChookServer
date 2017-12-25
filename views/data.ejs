@@ -10,14 +10,14 @@
 </head>
 <body>
   <script>
-    var car = '<%= data.car %>';
-    var team = '<%= data.team %>';
-    var id = '<%= data._id %>';
+    var car = '<%- user.car %>';
+    var team = '<%- user.team %>';
+    var id = '<%- user._id %>';
     console.log('Running');
   </script>
   <div class="fullTitle">
-    <div id="carHeader"><%= data.car %></div>
-    <div id="teamHeader"><%= data.team %></div>
+    <div id="carHeader"><%= user.car %></div>
+    <div id="teamHeader"><%= user.team %></div>
   </div>
 
   <div class="dataContainer column-accordion-light active">

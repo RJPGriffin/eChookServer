@@ -3,8 +3,8 @@ console.log('Recieved: ID: ' + id);
 
 var url = "";
 if (car === "eChook Demo Car") {
-  url = 'http://data.echook.uk/api/get/Demo';
-  //url = 'http://localhost:3000/api/get/Demo';
+  //url = 'http://data.echook.uk/api/get/Demo';
+  url = 'http://localhost:3000/api/get/Demo';
 } else {
   url = 'http://data.echook.uk/api/get/' + id;
 }
@@ -306,7 +306,7 @@ setInterval(function addData() {
     currentChart.update();
     rpmChart.update();
   })
-}, 1000);
+}, 2000);
 
 function updateTime() {
   dataSeconds = 60 * $('#graphCount').val();
