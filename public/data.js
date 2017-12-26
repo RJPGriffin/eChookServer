@@ -16,6 +16,7 @@ var alpha = 0.99;
 var voltageAverage = 0;
 var currentAverage = 0;
 var rpmAverage = 0;
+var speedAverage = 0;
 var pause = false;
 var dataSeconds = $('#graphCount').val() * 60;
 
@@ -26,193 +27,143 @@ var voltageChart = new Chart(voltageChartCtx, {
   data: {
     labels: [],
     datasets: [{
-        label: 'Total Voltage',
+        label: 'V Total',
         data: [],
-        backgroundColor: [
-          'rgba(60, 128, 195, 0.2)'
+        fill: false,
+        borderColor: [
+          '#2292A4'
         ],
+        backgroundColor: [
+          '#2292A4'
+        ],
+        borderWidth: 4
+      },
+      {
+        label: 'V Batt1',
+        hidden: true,
+        data: [],
+        fill: false,
+
+
         borderColor: [
           'rgba(60, 128, 195, 1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: 'V Batt2',
+        hidden: true,
+        data: [],
+        fill: false,
+
+        borderColor: [
+          'rgba(60, 128, 195, 1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: 'V Avg',
+        data: [],
+        hidden: true,
+        fill: false,
+
+        borderColor: [
+          '#2292A4'
+        ],
+        backgroundColor: [
+          '#2292A4'
         ],
         borderWidth: 2
       },
       {
-        label: 'Batt1 Voltage',
+        label: 'Current',
         data: [],
-        fill: 2,
-        backgroundColor: [
-          'rgba(195, 128, 60, 0.5)'
-        ],
+        fill: false,
         borderColor: [
-          'rgba(60, 128, 195, 1)'
+          '#D74E09'
         ],
-        borderWidth: 1
-      },
-      {
-        label: 'Batt2 Voltage',
+        backgroundColor: [
+          '#D74E09'
+        ],
+        borderWidth: 4
+      }, {
+        label: 'Current Avg',
+        data: [],
+        fill: false,
+        hidden: true,
+        borderColor: [
+          '#D74E09'
+        ],
+        backgroundColor: [
+          '#D74E09'
+        ],
+        borderWidth: 2
+      }, {
+        label: 'RPM x100',
         data: [],
         fill: false,
         backgroundColor: [
-          'rgba(60, 128, 195, 0.2)'
+          '#F2BB05'
         ],
         borderColor: [
-          'rgba(60, 128, 195, 1)'
+          '#F2BB05'
         ],
-        borderWidth: 1
+        borderWidth: 4
       },
       {
-        label: 'Average',
+        label: 'RPM Avg x100',
+        data: [],
+        fill: false,
+        hidden: true,
+        backgroundColor: [
+          '#F2BB05'
+        ],
+        borderColor: [
+          '#F2BB05'
+        ],
+        borderWidth: 2
+      },
+      {
+        label: 'Speed MPH',
         data: [],
         fill: false,
         backgroundColor: [
-          'rgba(60, 128, 195, 0.2)'
+          '#43b929'
         ],
         borderColor: [
-          'rgba(60, 128, 195, 1)'
+          '#43b929'
         ],
-        borderWidth: 1
+        borderWidth: 4
+      },
+      {
+        label: 'Speed MPH Avg',
+        data: [],
+        fill: false,
+        hidden: true,
+        backgroundColor: [
+          '#43b929'
+        ],
+        borderColor: [
+          '#43b929'
+        ],
+        borderWidth: 2
       }
     ]
   },
   options: {
+    intersect: true,
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: 300
+      duration: 200
     },
     elements: {
       point: {
-        radius: 0.8
+        radius: 0.6
       }
     },
     tooltips: {
-      mode: 'nearest'
-    },
-    legend: {
-      display: true,
-      position: 'bottom',
-      labels: {
-        fontColor: 'rgb(255, 99, 132)'
-      }
-    },
-    scales: {
-      yAxes: [{
-        display: true,
-        ticks: {
-          beginAtZero: true
-        }
-      }],
-      xAxes: [{
-        display: false,
-
-      }]
-    }
-  }
-});
-
-var currentChartCtx = document.getElementById("currentChart").getContext('2d');
-var currentChart = new Chart(currentChartCtx, {
-  type: 'line',
-  data: {
-    labels: [],
-    datasets: [{
-        label: 'Current',
-        data: [],
-        backgroundColor: [
-          'rgba(60, 128, 195, 0.2)'
-        ],
-        borderColor: [
-          'rgba(60, 128, 195, 1)'
-        ],
-        borderWidth: 2
-      },
-      {
-        label: 'Average Current',
-        data: [],
-        fill: 2,
-        backgroundColor: [
-          'rgba(195, 128, 60, 0.5)'
-        ],
-        borderColor: [
-          'rgba(60, 128, 195, 1)'
-        ],
-        borderWidth: 2
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: {
-      duration: 300
-    },
-    elements: {
-      point: {
-        radius: 1
-      }
-    },
-    legend: {
-      display: true,
-      position: 'bottom',
-      labels: {
-        fontColor: 'rgb(255, 99, 132)'
-      }
-    },
-    scales: {
-      yAxes: [{
-        display: true,
-        ticks: {
-          beginAtZero: true
-        }
-      }],
-      xAxes: [{
-        display: false,
-
-      }]
-    }
-  }
-});
-
-var rpmChartCtx = document.getElementById("rpmChart").getContext('2d');
-var rpmChart = new Chart(rpmChartCtx, {
-  type: 'line',
-  data: {
-    labels: [],
-    datasets: [{
-        label: 'Current',
-        data: [],
-        backgroundColor: [
-          'rgba(60, 128, 195, 0.2)'
-        ],
-        borderColor: [
-          'rgba(60, 128, 195, 1)'
-        ],
-        borderWidth: 2
-      },
-      {
-        label: 'Average Current',
-        data: [],
-        fill: 2,
-        backgroundColor: [
-          'rgba(195, 128, 60, 0.5)'
-        ],
-        borderColor: [
-          'rgba(60, 128, 195, 1)'
-        ],
-        borderWidth: 2
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: {
-      duration: 300
-    },
-    elements: {
-      point: {
-        radius: 1
-      }
+      mode: 'x'
     },
     legend: {
       display: true,
@@ -254,7 +205,6 @@ setInterval(function addData() {
     //Remove animations after 100 datapoints
     if (voltageChart.data.labels.length === 100) {
       voltageChart.options.animation.duration = 0;
-      currentChart.options.animation.duration = 0;
       console.log('Disabled Animations');
     }
 
@@ -269,32 +219,24 @@ setInterval(function addData() {
     voltageAverage = voltageAverage * alpha + data.voltage * (1 - alpha);
     voltageChart.data.datasets[3].data.push(voltageAverage);
 
-    //Current Chart
-    currentChart.data.labels.push(data.time);
-    currentChart.data.datasets[0].data.push(data.current);
+    //Current
+    voltageChart.data.datasets[4].data.push(data.current);
     currentAverage = currentAverage * alpha + data.current * (1 - alpha);
-    currentChart.data.datasets[1].data.push(currentAverage);
+    voltageChart.data.datasets[5].data.push(currentAverage);
 
-    //RPM Chart
-    rpmChart.data.labels.push(data.time);
-    rpmChart.data.datasets[0].data.push(data.rpm);
-    rpmAverage = rpmAverage * alpha + data.rpm * (1 - alpha);
-    rpmChart.data.datasets[1].data.push(rpmAverage);
+    //RPM
+    voltageChart.data.datasets[6].data.push(data.rpm / 100);
+    rpmAverage = rpmAverage * alpha + (data.rpm / 100) * (1 - alpha);
+    voltageChart.data.datasets[7].data.push(rpmAverage);
 
+    //Speed
+    voltageChart.data.datasets[8].data.push(data.speed * 2.23694);
+    speedAverage = speedAverage * alpha + (data.speed * 2.23694) * (1 - alpha);
+    voltageChart.data.datasets[9].data.push(speedAverage);
 
     while (voltageChart.data.labels.length > dataSeconds) {
       voltageChart.data.labels.splice(0, 1);;
       voltageChart.data.datasets.forEach((dataset) => {
-        dataset.data.splice(0, 1);;
-      });
-
-      currentChart.data.labels.splice(0, 1);;
-      currentChart.data.datasets.forEach((dataset) => {
-        dataset.data.splice(0, 1);;
-      });
-
-      rpmChart.data.labels.splice(0, 1);;
-      rpmChart.data.datasets.forEach((dataset) => {
         dataset.data.splice(0, 1);;
       });
 
@@ -303,8 +245,7 @@ setInterval(function addData() {
     var update = updateNumericals(data);
 
     voltageChart.update();
-    currentChart.update();
-    rpmChart.update();
+
   })
 }, 2000);
 

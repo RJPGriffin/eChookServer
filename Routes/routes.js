@@ -33,6 +33,23 @@ var dataTemplate = {
   'status': ''
 };
 
+var tracks = {
+  'Rockingham': {
+    'latMax': 52.5179712,
+    'latMin': 52.512264,
+    'lonMax': -0.649619,
+    'lonMin': -0.6661527,
+    'name': 'Rockingham'
+  },
+  'Goodwood': {
+    'latMax': 50.864790,
+    'latMin': 50.853663,
+    'lonMax': -0.750720,
+    'lonMin': -0.769699,
+    'name': 'Goodwood'
+  }
+}
+
 var urlEncodedParser = bodyParser.urlencoded({
   extended: false
 });
@@ -91,21 +108,25 @@ router.post('/add', urlEncodedParser, function(req, res, next) {
 
 
 //API access
-
+// TODO maybe rewrite this to work with login - otoh that would disable access from node red etc.
 router.get('/api/get/:id', function(req, res) {
   let key = req.params.id;
   if (key == 'Demo') {
-    var voltage = Math.floor((Math.random() * 6) + 19);
+    var voltage = Math.floor((Math.random() * 5) + 19);
     var voltageLower = Math.floor((Math.random() * 3) + 9);
-    var current = Math.floor((Math.random() * 10) + 17);
-    var rpm = Math.floor((Math.random() * 300) + 1650);
+    var current = Math.floor((Math.random() * 5) + 17);
+    var rpm = Math.floor((Math.random() * 100) + 1650);
+    var speed = Math.floor((Math.random() * 2) + 12);
     var time = moment().locale('en-gb').format('LTS');
     res.status(200).send({
       'voltage': voltage,
       'voltsLower': voltageLower,
       'current': current,
+      'speed': speed,
       'rpm': rpm,
-      'time': time
+      'time': time,
+      'lat': 50.8599424,
+      'lon': -0.7623057,
     }).end;
   } else {
     if (key in dataStore) {
@@ -119,6 +140,7 @@ router.get('/api/get/:id', function(req, res) {
   }
 });
 
+//Recieve post data from server
 router.post('/api/send/:id', jsonParser, function(req, res) {
   console.log('Post Recieved with id: ' + req.params.id);
   try {

@@ -47,7 +47,7 @@ router.post('/signup', urlEncodedParser, passport.authenticate('local-signup', {
 }));
 
 router.post('/login', urlEncodedParser, passport.authenticate('local-login', {
-  successRedirect: '/', // redirect to the secure profile section
+  successRedirect: '/data', // redirect to the secure profile section
   failureRedirect: '/', // redirect back to the signup page if there is an error
   failureFlash: false // allow flash messages
 }));

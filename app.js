@@ -38,6 +38,7 @@ app.use(session({
   secret: 'tmpSckt',
   resave: false,
   saveUninitialized: true,
+  maxAge: 60 * 60 * 1000,
   cookie: {
     secure: false
   }
