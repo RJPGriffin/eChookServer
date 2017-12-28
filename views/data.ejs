@@ -76,7 +76,7 @@
 
   <div class="dataContainer column-accordion-light active">
     <button class="accordion">
-      <strong>Individual Graphs</strong>
+      <strong>Graph</strong>
     </button>
     <div class="panel">
       <div class="dataHeading"></div>
@@ -84,6 +84,17 @@
       <div class="dataGraph">
         <canvas id="voltageChart" width="400" height="100"></canvas>
       </div>
+      <div class="center">Click on the graph legend to show and hide signals</div>
+      <div style="height:10px"></div>
+    </div>
+  </div>
+
+  <div class="dataContainer column-accordion-light active">
+    <button class="accordion">
+      <strong>Map</strong>
+    </button>
+    <div class="panel">
+      <div id="map"></div>
     </div>
   </div>
 
@@ -97,6 +108,7 @@
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+  <script async="async" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCen7-pQH0DptCqtPh1fAuEgzejC21DDtU&callback=initializeMap"></script>
   <script src="/data.js"></script>
   <script src="/accordion.js"></script>
 </body>

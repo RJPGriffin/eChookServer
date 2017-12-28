@@ -118,6 +118,8 @@ router.get('/api/get/:id', function(req, res) {
     var rpm = Math.floor((Math.random() * 100) + 1650);
     var speed = Math.floor((Math.random() * 2) + 12);
     var time = moment().locale('en-gb').format('LTS');
+    var lat = Math.floor((Math.random() / 100) + 50.8599424);
+    var lon = Math.floor((Math.random() / 100) + -0.7623057);
     res.status(200).send({
       'voltage': voltage,
       'voltsLower': voltageLower,
@@ -125,8 +127,8 @@ router.get('/api/get/:id', function(req, res) {
       'speed': speed,
       'rpm': rpm,
       'time': time,
-      'lat': 50.8599424,
-      'lon': -0.7623057,
+      'lat': lat,
+      'lon': lon,
     }).end;
   } else {
     if (key in dataStore) {

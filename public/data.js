@@ -242,9 +242,16 @@ setInterval(function addData() {
 
     }
 
+
     var update = updateNumericals(data);
 
     voltageChart.update();
+
+    movePointer(map, marker, {
+      lat: data.lat,
+      lng: data.lon
+    });
+
 
   })
 }, 2000);
@@ -262,3 +269,49 @@ function updateNumericals(data) {
   $('#RPM').text(data.rpm);
   $('#Speed').text(data.speed);
 }
+
+//Map Stuff
+function initializeMap() {
+
+  var myLatLng = new google.maps.LatLng(50.8599424, -0.7623057),
+    myOptions = {
+      zoom: 15,
+      center: myLatLng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    },
+    map = new google.maps.Map(document.getElementById('map'), myOptions),
+    marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map
+    });
+
+  var pos = {
+    lat: 50.8599424,
+    lng: -0.7623057
+  }
+
+  marker.setMap(map);
+  movePointer(map, marker, pos);
+
+}
+
+function movePointer(map, marker, pos) {
+
+  marker.setPosition(new google.maps.LatLng(pos.lat, pos.lng));
+  map.panTo(new google.maps.LatLng(pos.lat, pos.lng));
+
+};
+
+// initializeMap();
+
+// function initMap() {
+//   var uluru = {
+//     lat: -25.363,
+//     lng: 131.044
+//   };
+//   var map = new google.maps.Map(document.getElementById('map'), {
+//     zoom: 4,
+//     center: uluru
+//   });
+//   var marker = new google.maps.Marker({position: uluru, map: map});
+// }
