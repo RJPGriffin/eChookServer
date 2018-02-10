@@ -118,8 +118,9 @@ router.get('/api/get/:id', function(req, res) {
     var rpm = Math.floor((Math.random() * 100) + 1650);
     var speed = Math.floor((Math.random() * 2) + 12);
     var time = moment().locale('en-gb').format('LTS');
-    var lat = Math.floor((Math.random() / 100) + 50.8599424);
-    var lon = Math.floor((Math.random() / 100) + -0.7623057);
+    var lat = ((Math.random() / 100) + 50.8599424).toFixed(7);
+    var lon = ((Math.random() / 100) + -0.7623057).toFixed(7);
+    console.log('Latitude generated: ' + lat);
     res.status(200).send({
       'voltage': voltage,
       'voltsLower': voltageLower,

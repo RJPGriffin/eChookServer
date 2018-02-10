@@ -20,6 +20,9 @@ var speedAverage = 0;
 var pause = false;
 var dataSeconds = $('#graphCount').val() * 60;
 
+//Map Variables
+var map;
+var marker;
 
 var voltageChartCtx = document.getElementById("voltageChart").getContext('2d');
 var voltageChart = new Chart(voltageChartCtx, {
@@ -188,6 +191,59 @@ var voltageChart = new Chart(voltageChartCtx, {
 });
 
 
+
+
+function updateNumericals(data) {
+  $('#voltageTotal').text(data.voltage);
+  $('#voltageLower').text(data.voltsLower);
+  $('#voltageUpper').text(data.voltage - data.voltsLower);
+  $('#Current').text(data.current);
+  $('#RPM').text(data.rpm);
+  $('#Speed').text(data.speed);
+  $('#lat-text').text(data.lat);
+  $('#lon-text').text(data.lon);
+}
+
+
+//Map Stuff
+function initializeMap() {
+  console.log('Initialising Map');
+
+  var myLatLng = new google.maps.LatLng(50.8599424, -0.7623057);
+
+  myOptions = {
+    zoom: 15,
+    center: myLatLng,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  map = new google.maps.Map(document.getElementById('map'), myOptions);
+
+  marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map
+  });
+
+  var pos = {
+    lat: 50.8599424,
+    lng: -0.7623057
+  }
+
+  marker.setMap(map);
+  movePointer(pos);
+
+}
+
+function movePointer(lat, lon) {
+  console.log('Updating Map Marker to ' + lat + ' ' + lon);
+  marker.setPosition(new google.maps.LatLng(lat, lon));
+  map.panTo(new google.maps.LatLng(lat, lon));
+
+};
+
+
+
+
 setInterval(function addData() {
 
 
@@ -245,12 +301,13 @@ setInterval(function addData() {
 
     var update = updateNumericals(data);
 
+    //movePointer(data.lat, data.lon);
+    marker.setPosition(new google.maps.LatLng(data.lat, data.lon));
+    map.panTo(new google.maps.LatLng(data.lat, data.lon));
+
+
     voltageChart.update();
 
-    movePointer(map, marker, {
-      lat: data.lat,
-      lng: data.lon
-    });
 
 
   })
@@ -260,58 +317,3 @@ function updateTime() {
   dataSeconds = 60 * $('#graphCount').val();
 
 };
-
-function updateNumericals(data) {
-  $('#voltageTotal').text(data.voltage);
-  $('#voltageLower').text(data.voltsLower);
-  $('#voltageUpper').text(data.voltage - data.voltsLower);
-  $('#Current').text(data.current);
-  $('#RPM').text(data.rpm);
-  $('#Speed').text(data.speed);
-}
-
-//Map Stuff
-function initializeMap() {
-
-  var myLatLng = new google.maps.LatLng(50.8599424, -0.7623057),
-    myOptions = {
-      zoom: 15,
-      center: myLatLng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    },
-    map = new google.maps.Map(document.getElementById('map'), myOptions),
-    marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map
-    });
-
-  var pos = {
-    lat: 50.8599424,
-    lng: -0.7623057
-  }
-
-  marker.setMap(map);
-  movePointer(map, marker, pos);
-
-}
-
-function movePointer(map, marker, pos) {
-
-  marker.setPosition(new google.maps.LatLng(pos.lat, pos.lng));
-  map.panTo(new google.maps.LatLng(pos.lat, pos.lng));
-
-};
-
-// initializeMap();
-
-// function initMap() {
-//   var uluru = {
-//     lat: -25.363,
-//     lng: 131.044
-//   };
-//   var map = new google.maps.Map(document.getElementById('map'), {
-//     zoom: 4,
-//     center: uluru
-//   });
-//   var marker = new google.maps.Marker({position: uluru, map: map});
-// }
