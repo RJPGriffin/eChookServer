@@ -3,7 +3,7 @@ console.log('Recieved: ID: ' + id);
 
 var url = "";
 if (car === "eChook Demo Car") {
-  url = 'http://data.echook.uk/api/get/Demo';
+  url = 'https://data.echook.uk/api/get/Demo';
   //url = 'http://localhost:3000/api/get/Demo';
 } else {
   url = 'http://data.echook.uk/api/get/' + id;
