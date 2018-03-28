@@ -3,8 +3,8 @@ console.log('Recieved: ID: ' + id);
 
 var url = "";
 if (car === "eChook Demo Car") {
-  url = 'https://data.echook.uk/api/get/Demo';
-  //url = 'http://localhost:3000/api/get/Demo';
+  // url = 'https://data.echook.uk/api/get/Demo';
+  url = 'http://localhost:3000/api/get/Demo';
 } else {
   url = 'https://data.echook.uk/api/get/' + id;
 }
@@ -192,17 +192,11 @@ var voltageChart = new Chart(voltageChartCtx, {
 
 
 
+$(document).ready(function() {
+  initializeMap();
+  setInterval(addData, 2000);
 
-function updateNumericals(data) {
-  $('#voltageTotal').text(data.voltage);
-  $('#voltageLower').text(data.voltsLower);
-  $('#voltageUpper').text(data.voltage - data.voltsLower);
-  $('#Current').text(data.current);
-  $('#RPM').text(data.rpm);
-  $('#Speed').text(data.speed);
-  $('#lat-text').text(data.lat);
-  $('#lon-text').text(data.lon);
-}
+});
 
 
 //Map Stuff
@@ -232,7 +226,7 @@ function initializeMap() {
   marker.setMap(map);
   movePointer(pos);
 
-}
+};
 
 function movePointer(lat, lon) {
   console.log('Updating Map Marker to ' + lat + ' ' + lon);
@@ -244,9 +238,7 @@ function movePointer(lat, lon) {
 
 
 
-setInterval(function addData() {
-
-
+function addData() {
   $.get(url, function(data, status) {
     if (voltageAverage === 0) {
       voltageAverage = data.voltage;
@@ -305,13 +297,21 @@ setInterval(function addData() {
     marker.setPosition(new google.maps.LatLng(data.lat, data.lon));
     map.panTo(new google.maps.LatLng(data.lat, data.lon));
 
-
     voltageChart.update();
 
-
-
   })
-}, 2000);
+}
+
+function updateNumericals(data) {
+  $('#voltageTotal').text(data.voltage);
+  $('#voltageLower').text(data.voltsLower);
+  $('#voltageUpper').text(data.voltage - data.voltsLower);
+  $('#Current').text(data.current);
+  $('#RPM').text(data.rpm);
+  $('#Speed').text(data.speed);
+  $('#lat-text').text(data.lat);
+  $('#lon-text').text(data.lon);
+}
 
 function updateTime() {
   dataSeconds = 60 * $('#graphCount').val();

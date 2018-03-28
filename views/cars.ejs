@@ -37,7 +37,19 @@
       console.log('User: ' + localUser);
     </script>
 
-    <h1 class="fullTitle">eChook Live Data - Pre-Release, Expect it to be broken!</h1>
+    <h1 class="fullTitle">eChook Live Data</h1>
+
+    <div class="column-light" style="width:60vw">
+      <span style="text-align:center">
+        <h3>eChook's in house telemetry is currently under development</h3>
+      </span>
+      We will open this live data website to a group of beta testers when it is ready. We hope to be able to open it to every eChooker for the second half the the 2018 UK Season.<br><br>
+      In the mean time, all telemetry goes through
+      <a href="http://dweet.io">
+        <strong>dweet.io</strong>
+      </a>
+      :)
+    </div>
 
     <% if (user) { %>
       <div class="column-light">
@@ -98,21 +110,23 @@
     <% } %>
 
     <div>
-      <div class="column-light">
-        <div class="center">
-          <h2>Currently Active Cars:
-          </h2>
+      <% if(0) { %>
+        <div class="column-light">
+          <div class="center">
+            <h2>Currently Active Cars:
+            </h2>
+          </div>
+          <div>
+            <% for(var i=0; i < data.length; i++) { %>
+              <div class="active-car">
+                <strong>
+                  <%= data[i].car %>
+                </strong>
+              </div>
+            <% } %>
+          </div>
         </div>
-        <div>
-          <% for(var i=0; i < data.length; i++) { %>
-            <div class="active-car">
-              <strong>
-                <%= data[i].car %>
-              </strong>
-            </div>
-          <% } %>
-        </div>
-      </div>
+      <% } %>
     </div>
 
   </body>
