@@ -40,6 +40,7 @@ tracks = {
         }
       }
       console.log('Found Track:' + track);
+      return (track);
     });
   }
 
