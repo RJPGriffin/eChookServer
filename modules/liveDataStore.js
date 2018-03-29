@@ -31,80 +31,80 @@ var liveDataStore = {
   updateData: function(key, dataIn) {
     console.log('Calling Update Data');
 
-    if (key in dataStore) {
+    if (key in this.dataStore) {
 
     } else {
       console.log('Adding ' + key + ' to Data Store');
-      dataStore[key] = dataTemplate;
-      console.log(dataStore);
+      this.dataStore[key] = this.dataTemplate;
+      console.log(this.dataStore);
     }
 
-    // console.log(dataStore);
+    // console.log(this.dataStore);
 
     if ('Vt' in dataIn) {
-      dataStore[key].voltage = dataIn.Vt
+      this.dataStore[key].voltage = dataIn.Vt
     }
     if ('A' in dataIn) {
-      dataStore[key].current = dataIn.A
+      this.dataStore[key].current = dataIn.A
     }
     if ('V1' in dataIn) {
-      dataStore[key].voltageLower = dataIn.V1
+      this.dataStore[key].voltageLower = dataIn.V1
     }
     if ('RPM' in dataIn) {
-      dataStore[key].rpm = dataIn.RPM
+      this.dataStore[key].rpm = dataIn.RPM
     }
     if ('Spd' in dataIn) {
-      dataStore[key].speed = dataIn.Spd
+      this.dataStore[key].speed = dataIn.Spd
     }
     if ('Thrtl' in dataIn) {
-      dataStore[key].throttle = dataIn.Thrtl
+      this.dataStore[key].throttle = dataIn.Thrtl
     }
     if ('Tmp1' in dataIn) {
-      dataStore[key].temp1 = dataIn.Tmp1
+      this.dataStore[key].temp1 = dataIn.Tmp1
     }
     if ('Tmp2' in dataIn) {
-      dataStore[key].temp2 = dataIn.Tmp2
+      this.dataStore[key].temp2 = dataIn.Tmp2
     }
     if ('AH' in dataIn) {
-      dataStore[key].ampH = dataIn.AH
+      this.dataStore[key].ampH = dataIn.AH
     }
     if ('Lap' in dataIn) {
-      dataStore[key].currLap = dataIn.Lap
+      this.dataStore[key].currLap = dataIn.Lap
     }
     if ('Gear' in dataIn) {
-      dataStore[key].gear = dataIn.Gear
+      this.dataStore[key].gear = dataIn.Gear
     }
     if ('brk' in dataIn) {
-      dataStore[key].brake = dataIn.brk
+      this.dataStore[key].brake = dataIn.brk
     }
     if ('Lon' in dataIn) {
-      dataStore[key].lon = dataIn.Lon
+      this.dataStore[key].lon = dataIn.Lon
     }
     if ('Lat' in dataIn) {
-      dataStore[key].lat = dataIn.Lat
+      this.dataStore[key].lat = dataIn.Lat
     }
     if ('LL_Time' in dataIn) {
-      dataStore[key].LL_Time = dataIn.LL_Time
+      this.dataStore[key].LL_Time = dataIn.LL_Time
     }
     if ('LL_V' in dataIn) {
-      dataStore[key].LL_V = dataIn.LL_V
+      this.dataStore[key].LL_V = dataIn.LL_V
     }
     if ('LL_I' in dataIn) {
-      dataStore[key].LL_I = dataIn.LL_I
+      this.dataStore[key].LL_I = dataIn.LL_I
     }
     if ('LL_RPM' in dataIn) {
-      dataStore[key].LL_RPM = dataIn.LL_RPM
+      this.dataStore[key].LL_RPM = dataIn.LL_RPM
     }
     if ('LL_Spd' in dataIn) {
-      dataStore[key].LL_Spd = dataIn.LL_Spd
+      this.dataStore[key].LL_Spd = dataIn.LL_Spd
     }
     if ('LL_Ah' in dataIn) {
-      dataStore[key].LL_Ah = dataIn.LL_Ah
+      this.dataStore[key].LL_Ah = dataIn.LL_Ah
     }
-    dataStore[key].updated = Date.now()
-    dataStore[key].status = 'Live'
+    this.dataStore[key].updated = Date.now()
+    this.dataStore[key].status = 'Live'
 
-    console.log(dataStore);
+    console.log(this.dataStore);
   },
 
   getData: function(key) {

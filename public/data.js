@@ -2,13 +2,21 @@ console.log('Recieved: Car: ' + car);
 console.log('Recieved: ID: ' + id);
 
 var url = "";
-if (car === "eChook Demo Car") {
-  // url = 'https://data.echook.uk/api/get/Demo';
-  url = 'http://localhost:3000/api/get/Demo';
+if (localhost) {
+  if (car === "eChook Demo Car") {
+    // url = 'https://data.echook.uk/api/get/Demo';
+    url = 'http://localhost:3000/api/get/Demo';
+  } else {
+    url = 'https://data.echook.uk/api/get/' + id;
+  }
 } else {
-  url = 'https://data.echook.uk/api/get/' + id;
+  if (car === "eChook Demo Car") {
+    // url = 'https://data.echook.uk/api/get/Demo';
+    url = 'http://localhost:3000/api/get/Demo';
+  } else {
+    url = 'https://data.echook.uk/api/get/' + id;
+  }
 }
-
 console.log(url);
 
 //averageing values
