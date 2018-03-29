@@ -2,17 +2,15 @@ console.log('Recieved: Car: ' + car);
 console.log('Recieved: ID: ' + id);
 
 var url = "";
-if (localhost) {
+if (false) {
   if (car === "eChook Demo Car") {
-    // url = 'https://data.echook.uk/api/get/Demo';
     url = 'http://localhost:3000/api/get/Demo';
   } else {
-    url = 'https://data.echook.uk/api/get/' + id;
+    url = 'https://localhost:3000/api/get/' + id;
   }
 } else {
   if (car === "eChook Demo Car") {
-    // url = 'https://data.echook.uk/api/get/Demo';
-    url = 'http://localhost:3000/api/get/Demo';
+    url = 'https://data.echook.uk/api/get/Demo';
   } else {
     url = 'https://data.echook.uk/api/get/' + id;
   }
