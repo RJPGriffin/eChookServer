@@ -1,3 +1,5 @@
+const tracks = require('../modules/tracks.js');
+
 var liveDataStore = {
 
   dataStore: {},
@@ -29,14 +31,14 @@ var liveDataStore = {
   },
 
   updateData: function(key, dataIn) {
-    console.log('Calling Update Data');
+    // console.log('Calling Update Data');
 
     if (key in this.dataStore) {
 
     } else {
-      console.log('Adding ' + key + ' to Data Store');
+      // console.log('Adding ' + key + ' to Data Store');
       this.dataStore[key] = this.dataTemplate;
-      console.log(this.dataStore);
+      // console.log(this.dataStore);
     }
 
     // console.log(this.dataStore);
@@ -104,7 +106,7 @@ var liveDataStore = {
     this.dataStore[key].updated = Date.now()
     this.dataStore[key].status = 'Live'
 
-    console.log(this.dataStore);
+    // console.log(this.dataStore);
   },
 
   getData: function(key) {

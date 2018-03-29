@@ -85,7 +85,7 @@ router.get('/api/get/:id', function(req, res) {
 
 //Recieve post data from server
 router.post('/api/send/:id', jsonParser, function(req, res) {
-  console.log('Post Recieved with id: ' + req.params.id);
+  // console.log('Post Recieved with id: ' + req.params.id);
   try {
     liveDataStore.updateData(req.params.id, req.body);
   } catch (e) {
@@ -93,7 +93,8 @@ router.post('/api/send/:id', jsonParser, function(req, res) {
   } finally {
 
   }
-  res.send(liveDataStore.dataStore[req.params.id]); //TODO Debug only - remove this for live
+  //res.send(liveDataStore.dataStore[req.params.id]);
+  res.send();
   res.status(200).end();
 });
 
@@ -101,7 +102,7 @@ router.post('/api/send/:id', jsonParser, function(req, res) {
 
 // Used to get the database ID of a car - for app to send data
 router.post('/api/getid', jsonParser, function(req, res) {
-  console.log('Request to get ID for passcode: ' + req.body.username);
+  // console.log('Request to get ID for passcode: ' + req.body.username);
 
   Cars.findOne({
     'car': req.body.username
