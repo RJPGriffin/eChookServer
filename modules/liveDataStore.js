@@ -1,4 +1,4 @@
-const tracks = require('../modules/tracks.js');
+const tracks = require('./tracks.js');
 
 var liveDataStore = {
 
@@ -86,7 +86,8 @@ var liveDataStore = {
       this.dataStore[key].lat = dataIn.Lat
     }
     if ('Lon' in dataIn && 'Lat' in dataIn) {
-      this.dataStore[key].track = tracks.getTrack(dataIn.Lat, dataIn.Lon);
+      //this.dataStore[key].track = tracks.getTrack(dataIn.Lat, dataIn.Lon);
+      console.log(tracks.getTrack(dataIn.Lat, dataIn.Lon));
     }
     if ('LL_Time' in dataIn) {
       this.dataStore[key].LL_Time = dataIn.LL_Time

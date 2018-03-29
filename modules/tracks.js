@@ -1,4 +1,4 @@
-tracks = {
+var tracks = {
 
   /*
   'name': {
@@ -31,14 +31,17 @@ tracks = {
   },
 
   getTrack: function(lat, lon) {
-    let track = "";
+    console.log('Running get Track');
+    let track = "none";
 
     Object.keys(this.tracklist).forEach(function(key) {
+      //  if (track === "") {
       if (lat > this.trackList[key].latMax && lat < this.trackList[key].latMin) {
         if (lon > this.trackList[key].lonMax && lon < this.trackList[key].lonMin) {
           track = key;
         }
       }
+      //  }
       console.log('Found Track:' + track);
       return (track);
     });
