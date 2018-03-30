@@ -1,12 +1,13 @@
 console.log('Recieved: Car: ' + car);
 console.log('Recieved: ID: ' + id);
 
+var local = true; // to change URLs for debug
 var url = "";
-if (false) {
+if (local) {
   if (car === "eChook Demo Car") {
     url = 'http://localhost:3000/api/get/Demo';
   } else {
-    url = 'https://localhost:3000/api/get/' + id;
+    url = 'http://localhost:3000/api/get/' + id;
   }
 } else {
   if (car === "eChook Demo Car") {
@@ -199,6 +200,7 @@ var voltageChart = new Chart(voltageChartCtx, {
 
 
 $(document).ready(function() {
+  console.log('Document Ready');
   initializeMap();
   setInterval(addData, 2000);
 
@@ -207,9 +209,9 @@ $(document).ready(function() {
 
 //Map Stuff
 function initializeMap() {
-  console.log('Initialising Map');
+  console.log('Entering initializeMap');
 
-  var myLatLng = new google.maps.LatLng(50.8599424, -0.7623057);
+  var myLatLng = new google.maps.LatLng(50.853200, -0.634854);
 
   myOptions = {
     zoom: 15,
@@ -225,90 +227,137 @@ function initializeMap() {
   });
 
   var pos = {
-    lat: 50.8599424,
-    lng: -0.7623057
+    lat: 50.853200,
+    lng: -0.634854,
+    track: ""
   }
 
   marker.setMap(map);
-  movePointer(pos);
+
 
 };
 
-function movePointer(lat, lon) {
-  console.log('Updating Map Marker to ' + lat + ' ' + lon);
-  marker.setPosition(new google.maps.LatLng(lat, lon));
-  map.panTo(new google.maps.LatLng(lat, lon));
+function moveMarker(lat, lon, track) {
+  console.log('Entering moveMarker');
+  var trackLocation = "";
+  console.log('move marker recieved: ' + lat + ' ' + lon + ' ' + track);
+
+  if (track != "") {
+    if (trackLocation === "") {
+      console.log("Track detected, getting centre");
+      let trackUrl = "";
+      if (local) {
+        trackUrl = 'http://localhost:3000/api/getmappoint/' + track;
+      } else {
+        trackUrl = 'https://data.echook.uk/api/getmappoint/' + track;
+      }
+
+      $.get(trackUrl, function(data, status) {
+        try {
+          trackLocation = {
+            'lat': data.lat,
+            'lon': data.lon
+          };
+        } catch (e) {
+          console.log('Invalid Track Coordinates Response');
+        } finally {}
+      });
+      map.panTo({
+        lat: trackLocation.lat,
+        lng: trackLocation.lon
+      });
+    }
+  } else {
+    try {
+      map.panTo(new google.maps.LatLng(trackLocation.lat, trackLocation.lon));
+    } catch (e) {
+
+    } finally {
+
+    }
+  }
+
+  try {
+    console.log('Updating Map Marker to ' + lat + ' ' + lon);
+    marker.setPosition(new google.maps.LatLng(lat, lon));
+  } catch (e) {
+    console.log('Failed to update map marker :(');
+  } finally {
+
+  }
 
 };
-
-
-
 
 function addData() {
+  console.log('Entering addData');
   $.get(url, function(data, status) {
-    if (voltageAverage === 0) {
-      voltageAverage = data.voltage;
+    if (status === "success") {
+      if (voltageAverage === 0) {
+        voltageAverage = data.voltage;
+      }
+      if (currentAverage === 0) {
+        currentAverage = data.current;
+      }
+      if (rpmAverage === 0) {
+        rpmAverage = data.rpm;
+      }
+
+      //Remove animations after 100 datapoints
+      if (voltageChart.data.labels.length === 100) {
+        voltageChart.options.animation.duration = 0;
+        console.log('Disabled Animations');
+      }
+
+      alpha = voltageChart.data.labels.length / (voltageChart.data.labels.length + 1);
+      // console.log('Alpha = ' + alpha + ', Data Length = ' + voltageChart.data.labels.length);
+
+      //Voltage Chart
+      voltageChart.data.labels.push(data.time);
+      voltageChart.data.datasets[0].data.push(data.voltage);
+      voltageChart.data.datasets[1].data.push(data.voltsLower);
+      voltageChart.data.datasets[2].data.push(data.voltage - data.voltsLower);
+      voltageAverage = voltageAverage * alpha + data.voltage * (1 - alpha);
+      voltageChart.data.datasets[3].data.push(voltageAverage);
+
+      //Current
+      voltageChart.data.datasets[4].data.push(data.current);
+      currentAverage = currentAverage * alpha + data.current * (1 - alpha);
+      voltageChart.data.datasets[5].data.push(currentAverage);
+
+      //RPM
+      voltageChart.data.datasets[6].data.push(data.rpm / 100);
+      rpmAverage = rpmAverage * alpha + (data.rpm / 100) * (1 - alpha);
+      voltageChart.data.datasets[7].data.push(rpmAverage);
+
+      //Speed
+      voltageChart.data.datasets[8].data.push(data.speed * 2.23694);
+      speedAverage = speedAverage * alpha + (data.speed * 2.23694) * (1 - alpha);
+      voltageChart.data.datasets[9].data.push(speedAverage);
+
+      while (voltageChart.data.labels.length > dataSeconds) {
+        voltageChart.data.labels.splice(0, 1);;
+        voltageChart.data.datasets.forEach((dataset) => {
+          dataset.data.splice(0, 1);;
+        });
+
+      }
+
+
+      var update = updateNumericals(data);
+
+      moveMarker(JSON.stringify(data.lat), JSON.stringify(data.lon), JSON.stringify(data.track));
+
+
+      voltageChart.update();
+    } else {
+      console.log('Get Data returned status: ' + status);
     }
-    if (currentAverage === 0) {
-      currentAverage = data.current;
-    }
-    if (rpmAverage === 0) {
-      rpmAverage = data.rpm;
-    }
-
-    //Remove animations after 100 datapoints
-    if (voltageChart.data.labels.length === 100) {
-      voltageChart.options.animation.duration = 0;
-      console.log('Disabled Animations');
-    }
-
-    alpha = voltageChart.data.labels.length / (voltageChart.data.labels.length + 1);
-    // console.log('Alpha = ' + alpha + ', Data Length = ' + voltageChart.data.labels.length);
-
-    //Voltage Chart
-    voltageChart.data.labels.push(data.time);
-    voltageChart.data.datasets[0].data.push(data.voltage);
-    voltageChart.data.datasets[1].data.push(data.voltsLower);
-    voltageChart.data.datasets[2].data.push(data.voltage - data.voltsLower);
-    voltageAverage = voltageAverage * alpha + data.voltage * (1 - alpha);
-    voltageChart.data.datasets[3].data.push(voltageAverage);
-
-    //Current
-    voltageChart.data.datasets[4].data.push(data.current);
-    currentAverage = currentAverage * alpha + data.current * (1 - alpha);
-    voltageChart.data.datasets[5].data.push(currentAverage);
-
-    //RPM
-    voltageChart.data.datasets[6].data.push(data.rpm / 100);
-    rpmAverage = rpmAverage * alpha + (data.rpm / 100) * (1 - alpha);
-    voltageChart.data.datasets[7].data.push(rpmAverage);
-
-    //Speed
-    voltageChart.data.datasets[8].data.push(data.speed * 2.23694);
-    speedAverage = speedAverage * alpha + (data.speed * 2.23694) * (1 - alpha);
-    voltageChart.data.datasets[9].data.push(speedAverage);
-
-    while (voltageChart.data.labels.length > dataSeconds) {
-      voltageChart.data.labels.splice(0, 1);;
-      voltageChart.data.datasets.forEach((dataset) => {
-        dataset.data.splice(0, 1);;
-      });
-
-    }
-
-
-    var update = updateNumericals(data);
-
-    //movePointer(data.lat, data.lon);
-    marker.setPosition(new google.maps.LatLng(data.lat, data.lon));
-    map.panTo(new google.maps.LatLng(data.lat, data.lon));
-
-    voltageChart.update();
 
   })
 }
 
 function updateNumericals(data) {
+  console.log('Entering updateNumericals');
   $('#voltageTotal').text(data.voltage);
   $('#voltageLower').text(data.voltsLower);
   $('#voltageUpper').text(data.voltage - data.voltsLower);
@@ -317,6 +366,7 @@ function updateNumericals(data) {
   $('#Speed').text(data.speed);
   $('#lat-text').text(data.lat);
   $('#lon-text').text(data.lon);
+  $('#Throttle').text(data.throttle);
 }
 
 function updateTime() {

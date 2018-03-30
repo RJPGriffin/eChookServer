@@ -64,13 +64,19 @@ var tracks = {
       'lonMax': -2.701853,
       'lonMin': -2.726098
     },
+    'Goodwood': {
+      'latMax': 50.864790,
+      'latMin': 50.853663,
+      'lonMax': -0.750720,
+      'lonMin': -0.769699
+    },
     'Grampian Transport Museum': {
       'latMax': 57.233788,
       'latMin': 57.231951,
       'lonMax': -2.697122,
       'lonMin': -2.702809
     },
-    'Kirkistown Circuit': {
+    'Kirkistown': {
       'latMax': 54.459290,
       'latMin': 54.454271,
       'lonMax': -5.459970,
@@ -93,15 +99,28 @@ var tracks = {
       'latMin': 52.512264,
       'lonMax': -0.649619,
       'lonMin': -0.6661527
-    },
-    'Goodwood': {
-      'latMax': 50.864790,
-      'latMin': 50.853663,
-      'lonMax': -0.750720,
-      'lonMin': -0.769699
     }
   },
 
+  // Takes in a track name, return centre of track calculated as average of
+  // lat and lon max an min for map positioning
+  getTrackCentre: function(trackName) {
+    let lat = 0;
+    let lon = 0;
+
+    if (trackName in this.trackList) {
+      lat = ((this.trackList[trackName].latMax - this.trackList[trackName].latMin) / 2 + this.trackList[trackName].latMin).toFixed(6);
+      lon = ((this.trackList[trackName].lonMax - this.trackList[trackName].lonMin) / 2 + this.trackList[trackName].lonMin).toFixed(6);
+    }
+
+    return ({
+      'lat': lat,
+      'lon': lon
+    })
+  },
+
+  //Takes in a location, if it's within track boundaries retruns the track
+  // name, else returns ""
   getTrack: function(lat, lon) {
     let track = "";
     let tmpTrackList = this.trackList; // not sure why I need this, but I do. this.tracklist doesn't work in loop below.

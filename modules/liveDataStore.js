@@ -30,6 +30,9 @@ var liveDataStore = {
     'status': ''
   },
 
+  //Takes in car ID (key) and incoming data. Checks if that car has an entry in
+  // datastore, if not, creates one.
+  // Updates data store with any new data from dataIn
   updateData: function(key, dataIn) {
     // console.log('Calling Update Data');
 
@@ -79,13 +82,9 @@ var liveDataStore = {
     if ('brk' in dataIn) {
       this.dataStore[key].brake = dataIn.brk
     }
-    if ('Lon' in dataIn) {
-      this.dataStore[key].lon = dataIn.Lon
-    }
-    if ('Lat' in dataIn) {
-      this.dataStore[key].lat = dataIn.Lat
-    }
     if ('Lon' in dataIn && 'Lat' in dataIn) {
+      this.dataStore[key].lon = dataIn.Lon
+      this.dataStore[key].lat = dataIn.Lat
       this.dataStore[key].track = tracks.getTrack(dataIn.Lat, dataIn.Lon);
     }
     if ('LL_Time' in dataIn) {
@@ -112,6 +111,7 @@ var liveDataStore = {
     // console.log(this.dataStore);
   },
 
+  //Takes a car ID, returns all data on that ID from datastore
   getData: function(key) {
     console.log('Looking For: ' + key + ' in ' + JSON.stringify(data));
     if (key in data) {
@@ -124,6 +124,7 @@ var liveDataStore = {
     };
   },
 
+  //Cleanup! runs regularly to mark datastore data as old, then delete it.
   manageData: function() {
     // console.log("Running manageData");
     Object.keys(dataStore).forEach(function(key) {

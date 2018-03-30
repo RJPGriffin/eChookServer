@@ -2,6 +2,7 @@ const moment = require('moment');
 
 demo = {
 
+  //Generates random data for the demo functionality
   generate: function() {
     var voltage = Math.floor((Math.random() * 5) + 19);
     var voltageLower = Math.floor((Math.random() * 3) + 9);

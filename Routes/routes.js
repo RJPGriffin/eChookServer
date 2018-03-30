@@ -75,12 +75,16 @@ router.get('/api/get/:id', function(req, res) {
     if (key in liveDataStore.dataStore) {
       res.status(200).send(liveDataStore.dataStore[key]).end;
     } else {
-      res.status(200).send({
-        'status': 'No data found for car',
-        'updated': null
-      }).end;
+      res.status(204).send({}).end;
     };
   }
+});
+
+// recieves a track name and returns it's centre coordinates
+router.get('/api/getmappoint/:id', function(req, res) {
+  let key = req.params.id;
+  let location = tracks.getTrackCentre(key);
+  res.status(200).send(location).end;
 });
 
 //Recieve post data from server
