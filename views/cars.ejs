@@ -18,6 +18,7 @@
     <link rel='stylesheet' href='/styles.css'/>
 
     <script src="https://use.fontawesome.com/8c237fb238.js"></script>
+
     <title>
       eChook Live Data
     </title>
@@ -37,7 +38,9 @@
       console.log('User: ' + localUser);
     </script>
 
-    <h1 class="fullTitle">eChook Live Data</h1>
+    <div class="navbar">
+      <a class="logo" href="http://www.echook.uk">eChook</a>
+    </div>
 
     <div class="column-light" style="width:60vw">
       <span style="text-align:center">
@@ -82,7 +85,7 @@
     <% } %>
 
     <% if (!user) { %>
-      <div class="column-light center">
+      <div class="column-light center login centered">
         <h2>Car Login</h2>
         <!-- show any messages that come back with authentication -->
         <% if (message.length > 0) { %>
@@ -105,7 +108,7 @@
             </a>
           </div>
         </div>
-        To see a demo login with: "eChook Demo Car" and password "Demo"
+        <div style="height:15px"></div>To see a demo login with: "eChook Demo Car" and password "Demo"
       </div>
     <% } %>
 

@@ -9,28 +9,29 @@
   </head>
   <body>
     <div class="dual-column-container">
-      <div class="left-column column-light">
-        <h1>Register a new car:</h1>
+      <div class="left-column column-light centered register">
+        <h1>Register a new car</h1>
 
         <form class="add-car-form" action="/auth/register" method="post">
-          <div>Team Name:*</div>
+          <div class="spaced">Team Name: *</div>
           <input type="text" name="team" value="" required="required">
-          <div>Car Name:*</div>
+          <div class="spaced">Car Name: *</div>
           <input type="text" name="car" value="" required="required">
-          <div>Race Number:</div>
+          <div class="spaced">Race Number:</div>
           <input type="text" name="number" value="">
-          <div>Password:</div>
+          <div class="spaced">Password: *</div>
           <input type="text" name="password" value="">
-          <div>Note: Make this something you can share with your team. Only people with the password can see the car's data.</div>
-          <div>Email for password recovery:</div>
+          <div style="font-size:10px; color:#555">Make this something you can share with the team.</div>
+          <div class="spaced">Email:</div>
           <input type="email" name="email" value="">
-          <input type="submit" name="submit" value="Submit">
+          <div style="font-size:10px; color:#555">
+            By entering your email you agree to recieve occasional updates from us. We will never share your email and you can unsubscribe at any time.
+          </div>
+          <div style="height: 20px"></div>
+          <input type="submit" name="submit" value="Register Car">
         </form>
       </div>
-      <div class="right-column column-light">
-        <h1>Instructions</h1>
-        <div>Descriptions :)</div>
-      </div>
+
     </div>
 
   </body>

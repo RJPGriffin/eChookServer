@@ -23,6 +23,89 @@ body {
 @media screen and (max-width: 900px) {
   .dual-column-container {
     grid-auto-flow: row; } }
+.navbar {
+  top: 0;
+  left: 0;
+  background: #232020;
+  height: 73px;
+  width: 100vw;
+  overflow: hidden; }
+
+.logo {
+  background: #E71B64;
+  color: #f9f9f9;
+  width: 100px;
+  text-align: right;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 10px;
+  font-family: 'Oswald', sans-serif;
+  vertical-align: bottom;
+  font-size: 55px;
+  text-decoration: none;
+  text-rendering: geometricPrecision; }
+
+#spacer-div {
+  height: 10em; }
+
+#intro-background {
+  background: rgba(35, 32, 32, 0.75);
+  color: #f9f9f9;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 4em; }
+
+.navbar {
+  align-items: center; }
+  .navbar ul {
+    padding-left: 5em;
+    list-style: none;
+    display: inline-block;
+    list-style-type: none;
+    color: transparent; }
+    .navbar ul > li {
+      font-size: 14px;
+      position: relative;
+      float: left;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: transparent;
+      text-align: center;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-in-out;
+      transition-property: background, color, padding, border-radius; }
+      .navbar ul > li:after {
+        position: absolute;
+        z-index: -1;
+        content: "";
+        right: 0;
+        border-radius: 50%; }
+      .navbar ul > li:last-child:after {
+        box-shadow: none; }
+      .navbar ul > li:hover {
+        background-color: #E71B64; }
+      .navbar ul > li > a {
+        color: #E7E0EB;
+        text-decoration: none;
+        font-size: 1.4em; }
+
+/* small screens */
+@media screen and (max-width: 44em) {
+  body {
+    margin: 1.5em 0; }
+
+  nav[role="full-horizontal"] ul {
+    padding: 0 0.5em; }
+  nav[role="full-horizontal"] ul > li {
+    width: 100%;
+    padding: 0.45em 0.25em;
+    margin: 0 0 0.55em; }
+    nav[role="full-horizontal"] ul > li:after {
+      box-shadow: none; }
+
+  /*Top Menus for small screens*/
+  #logo {
+    position: relative; } }
 .left-column {
   grid-column: 1;
   grid-row: auto; }
@@ -46,6 +129,12 @@ body {
 
 .center {
   text-align: center; }
+
+.register {
+  margin: 5px, 20px; }
+
+.add-car-form .spaced {
+  margin-top: 5px; }
 
 .fullTitle {
   width: 100%;
@@ -165,12 +254,22 @@ body {
   color: #303030; }
 
 .SelectCarForm {
-  display: flex;
-  flex-direction: row; }
+  display: inline-block;
+  text-align: center; }
+
+.login {
+  width: 400px; }
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%); }
 
 .form-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-around; }
   .form-container input[type=password],
