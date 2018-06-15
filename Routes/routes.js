@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = express.Router();
-var generate = require("adjective-adjective-animal");
 const Cars = require('../models/Cars.js');
 const demoGenerator = require('../modules/demoGenerator.js');
 const tracks = require('../modules/tracks.js');

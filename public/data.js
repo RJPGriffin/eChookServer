@@ -32,170 +32,7 @@ var map;
 var marker;
 
 var voltageChartCtx = document.getElementById("voltageChart").getContext('2d');
-var voltageChart = new Chart(voltageChartCtx, {
-  type: 'line',
-  data: {
-    labels: [],
-    datasets: [{
-        label: 'V Total',
-        data: [],
-        fill: false,
-        borderColor: [
-          '#2292A4'
-        ],
-        backgroundColor: [
-          '#2292A4'
-        ],
-        borderWidth: 4
-      },
-      {
-        label: 'V Batt1',
-        hidden: true,
-        data: [],
-        fill: false,
-
-
-        borderColor: [
-          'rgba(60, 128, 195, 1)'
-        ],
-        borderWidth: 1
-      },
-      {
-        label: 'V Batt2',
-        hidden: true,
-        data: [],
-        fill: false,
-
-        borderColor: [
-          'rgba(60, 128, 195, 1)'
-        ],
-        borderWidth: 1
-      },
-      {
-        label: 'V Avg',
-        data: [],
-        hidden: true,
-        fill: false,
-
-        borderColor: [
-          '#2292A4'
-        ],
-        backgroundColor: [
-          '#2292A4'
-        ],
-        borderWidth: 2
-      },
-      {
-        label: 'Current',
-        data: [],
-        fill: false,
-        borderColor: [
-          '#D74E09'
-        ],
-        backgroundColor: [
-          '#D74E09'
-        ],
-        borderWidth: 4
-      }, {
-        label: 'Current Avg',
-        data: [],
-        fill: false,
-        hidden: true,
-        borderColor: [
-          '#D74E09'
-        ],
-        backgroundColor: [
-          '#D74E09'
-        ],
-        borderWidth: 2
-      }, {
-        label: 'RPM x100',
-        data: [],
-        fill: false,
-        backgroundColor: [
-          '#F2BB05'
-        ],
-        borderColor: [
-          '#F2BB05'
-        ],
-        borderWidth: 4
-      },
-      {
-        label: 'RPM Avg x100',
-        data: [],
-        fill: false,
-        hidden: true,
-        backgroundColor: [
-          '#F2BB05'
-        ],
-        borderColor: [
-          '#F2BB05'
-        ],
-        borderWidth: 2
-      },
-      {
-        label: 'Speed MPH',
-        data: [],
-        fill: false,
-        backgroundColor: [
-          '#43b929'
-        ],
-        borderColor: [
-          '#43b929'
-        ],
-        borderWidth: 4
-      },
-      {
-        label: 'Speed MPH Avg',
-        data: [],
-        fill: false,
-        hidden: true,
-        backgroundColor: [
-          '#43b929'
-        ],
-        borderColor: [
-          '#43b929'
-        ],
-        borderWidth: 2
-      }
-    ]
-  },
-  options: {
-    intersect: true,
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: {
-      duration: 200
-    },
-    elements: {
-      point: {
-        radius: 0.6
-      }
-    },
-    tooltips: {
-      mode: 'x'
-    },
-    legend: {
-      display: true,
-      position: 'bottom',
-      labels: {
-        fontColor: 'rgb(255, 99, 132)'
-      }
-    },
-    scales: {
-      yAxes: [{
-        display: true,
-        ticks: {
-          beginAtZero: true
-        }
-      }],
-      xAxes: [{
-        display: false,
-
-      }]
-    }
-  }
-});
+var voltageChart = new Chart(voltageChartCtx, graphConfig);
 
 
 
@@ -209,8 +46,7 @@ $(document).ready(function() {
 
 //Map Stuff
 function initializeMap() {
-  console.log('Entering initializeMap');
-
+  //Set Default location - Greenpower HQ
   var myLatLng = new google.maps.LatLng(50.853200, -0.634854);
 
   myOptions = {
@@ -226,13 +62,14 @@ function initializeMap() {
     map: map
   });
 
-  var pos = {
+  marker.setMap(map);
+
+  var pos = { // Greenpower UK HQ
     lat: 50.853200,
     lng: -0.634854,
     track: ""
   }
 
-  marker.setMap(map);
 
 
 };
@@ -240,12 +77,23 @@ function initializeMap() {
 function moveMarker(lat, lon, track) {
   console.log('Entering moveMarker');
   var trackLocation = "";
-  console.log('move marker recieved: ' + lat + ' ' + lon + ' ' + track);
+  console.log('Move Marker recieved: ' + lat + ' ' + lon + ' ' + track);
 
-  if (track != "") {
+  //What does this bit need to do...
+  // 1. check if the car is at a known track. this is passed in from the server. "none" if no track.
+  //  - Assuming no track, centre on current position.
+  // If track:
+  //
+
+  let comp = "";
+
+  console.log(`String compare: ${track} vs ${comp}`);
+
+  if (track != comp) {
     if (trackLocation === "") {
       console.log("Track detected, getting centre");
       let trackUrl = "";
+
       if (local) {
         trackUrl = 'http://localhost:3000/api/getmappoint/' + track;
       } else {
@@ -258,18 +106,19 @@ function moveMarker(lat, lon, track) {
             'lat': data.lat,
             'lon': data.lon
           };
+          map.panTo({
+            lat: trackLocation.lat,
+            lng: trackLocation.lon
+          });
         } catch (e) {
           console.log('Invalid Track Coordinates Response');
         } finally {}
       });
-      map.panTo({
-        lat: trackLocation.lat,
-        lng: trackLocation.lon
-      });
     }
   } else {
+    console.log(`Not on Track`);
     try {
-      map.panTo(new google.maps.LatLng(trackLocation.lat, trackLocation.lon));
+      map.panTo(new google.maps.LatLng(lat, lon));
     } catch (e) {
 
     } finally {

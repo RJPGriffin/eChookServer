@@ -12,7 +12,6 @@ demo = {
     var time = moment().locale('en-gb').format('LTS');
     var lat = ((Math.random() / 100) + 50.8599424).toFixed(7);
     var lon = ((Math.random() / 100) + -0.7623057).toFixed(7);
-    console.log('Latitude generated: ' + lat);
     return ({
       'voltage': voltage,
       'voltsLower': voltageLower,
@@ -22,6 +21,7 @@ demo = {
       'time': time,
       'lat': lat,
       'lon': lon,
+      'track': "",
     });
   }
 

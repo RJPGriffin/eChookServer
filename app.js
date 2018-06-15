@@ -12,11 +12,13 @@ const session = require('express-session');
 const routes = require('./Routes/routes');
 const authRoutes = require('./Routes/authRoutes');
 const Cars = require('./models/Cars');
+const db = require('./Private/database.js')
+
 
 
 //Connect to Database
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://echookServer:echookdatabasepassword@ds259855.mlab.com:59855/echook-cars').then(() => console.log('connection succesful')).catch((err) => console.error(err));
+mongoose.connect(`mongodb://${db.user}:${db.password}@${db.url}`).then(() => console.log('connection succesful')).catch((err) => console.error(err));
 
 process.on('unhandledRejection', error => {
   // Prints "unhandledRejection woops!"
@@ -35,7 +37,7 @@ app.use(cookieParser()); // read cookies (needed for auth)
 //app.use(bodyParser()); //doesn't seem to like being called like this
 app.set('view engine', 'ejs');
 app.use(session({
-  secret: 'tmpSckt',
+  secret: '29526276372102',
   resave: false,
   saveUninitialized: true,
   maxAge: 60 * 60 * 1000,
