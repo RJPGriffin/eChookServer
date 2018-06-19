@@ -122,7 +122,7 @@ var tracks = {
   //Takes in a location, if it's within track boundaries retruns the track
   // name, else returns ""
   getTrack: function(lat, lon) {
-    let track = "";
+    let track = null;
     let tmpTrackList = this.trackList; // not sure why I need this, but I do. this.tracklist doesn't work in loop below.
 
 

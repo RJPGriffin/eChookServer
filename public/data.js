@@ -89,7 +89,8 @@ function moveMarker(lat, lon, track) {
 
   console.log(`String compare: ${track} vs ${comp}`);
 
-  if (track != comp) {
+  // If track isn't sent as null, get centre, else no track.
+  if (track != "") {
     if (trackLocation === "") {
       console.log("Track detected, getting centre");
       let trackUrl = "";
@@ -194,7 +195,8 @@ function addData() {
 
       var update = updateNumericals(data);
 
-      moveMarker(JSON.stringify(data.lat), JSON.stringify(data.lon), JSON.stringify(data.track));
+      // moveMarker(JSON.stringify(data.lat), JSON.stringify(data.lon), JSON.stringify(data.track));
+      moveMarker(data.lat, data.lon, data.track);
 
 
       voltageChart.update();
