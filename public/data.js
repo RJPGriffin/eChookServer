@@ -87,7 +87,7 @@ function moveMarker(lat, lon, track) {
 
   let comp = "";
 
-  console.log(`String compare: ${track} vs ${comp}`);
+  // console.log(`String compare: ${track} vs ${comp}`);
 
   // If track isn't sent as null, get centre, else no track.
   if (track != "") {
@@ -107,12 +107,13 @@ function moveMarker(lat, lon, track) {
             'lat': data.lat,
             'lon': data.lon
           };
+          console.log(`panning to ${trackLocation.lat}, ${trackLocation.lon}`);
           map.panTo({
-            lat: trackLocation.lat,
-            lng: trackLocation.lon
+            lat: Number(trackLocation.lat),
+            lng: Number(trackLocation.lon)
           });
         } catch (e) {
-          console.log('Invalid Track Coordinates Response');
+          console.log(`Error - pan map: ${e}`);
         } finally {}
       });
     }
