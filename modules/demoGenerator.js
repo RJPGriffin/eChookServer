@@ -21,7 +21,7 @@ demo = {
       'time': time,
       'lat': lat,
       'lon': lon,
-      'track': "Goodwood",
+      'track': "",
     });
   }
 

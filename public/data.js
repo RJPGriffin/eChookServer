@@ -83,13 +83,11 @@ function moveMarker(lat, lon, track) {
   // 1. check if the car is at a known track. this is passed in from the server. "none" if no track.
   //  - Assuming no track, centre on current position.
   // If track:
-  //
-
+  //  get track centre
+  //  pan to centre
+  //  TODO save location locally to stop constant API calls.
   let comp = "";
 
-  // console.log(`String compare: ${track} vs ${comp}`);
-
-  // If track isn't sent as null, get centre, else no track.
   if (track != "") {
     if (trackLocation === "") {
       console.log("Track detected, getting centre");
