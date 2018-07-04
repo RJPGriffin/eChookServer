@@ -111,18 +111,19 @@ var tracks = {
     if (trackName in this.trackList) {
       lat = ((this.trackList[trackName].latMax - this.trackList[trackName].latMin) / 2 + this.trackList[trackName].latMin).toFixed(6);
       lon = ((this.trackList[trackName].lonMax - this.trackList[trackName].lonMin) / 2 + this.trackList[trackName].lonMin).toFixed(6);
-      return ({
-        'lat': lat,
-        'lon': lon
-      })
-    }
+   } 
+   return ({
+     'lat': lat,
+     'lon': lon
+   })
+    
 
   },
 
   //Takes in a location, if it's within track boundaries retruns the track
   // name, else returns ""
   getTrack: function(lat, lon) {
-    let track = null;
+    let track = "";
     let tmpTrackList = this.trackList; // not sure why I need this, but I do. this.tracklist doesn't work in loop below.
 
 
