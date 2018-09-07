@@ -24,21 +24,26 @@ body {
   .dual-column-container {
     grid-auto-flow: row; } }
 .navbar {
-  position: fixed;
   top: 0;
   left: 0;
   background: #232020;
-  height: 200px;
-  width: 100vw; }
+  height: 73px;
+  width: 100vw;
+  overflow: hidden; }
 
 .logo {
   background: #E71B64;
-  width: 3.5em;
+  color: #f9f9f9;
+  width: 100px;
   text-align: right;
-  padding-right: 0.2em;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 10px;
   font-family: 'Oswald', sans-serif;
-  font-size: 5em;
-  text-rendering: optimizelegibility; }
+  vertical-align: bottom;
+  font-size: 55px;
+  text-decoration: none;
+  text-rendering: geometricPrecision; }
 
 #spacer-div {
   height: 10em; }
@@ -57,14 +62,14 @@ body {
     list-style: none;
     display: inline-block;
     list-style-type: none;
-    color: transparent; }
+    color: rgba(0, 0, 0, 0); }
     .navbar ul > li {
       font-size: 14px;
       position: relative;
       float: left;
       text-transform: uppercase;
       cursor: pointer;
-      color: transparent;
+      color: rgba(0, 0, 0, 0);
       text-align: center;
       transition-duration: 0.3s;
       transition-timing-function: ease-in-out;
@@ -124,6 +129,12 @@ body {
 
 .center {
   text-align: center; }
+
+.register {
+  margin: 5px, 20px; }
+
+.add-car-form .spaced {
+  margin-top: 5px; }
 
 .fullTitle {
   width: 100%;
@@ -243,12 +254,22 @@ body {
   color: #303030; }
 
 .SelectCarForm {
-  display: flex;
-  flex-direction: row; }
+  display: inline-block;
+  text-align: center; }
+
+.login {
+  width: 400px; }
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%); }
 
 .form-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-around; }
   .form-container input[type=password],
