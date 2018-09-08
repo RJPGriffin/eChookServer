@@ -1,7 +1,7 @@
 console.log('Recieved: Car: ' + car);
 console.log('Recieved: ID: ' + id);
 
-var local = false; // to change URLs for debug
+var local = true; // to change URLs for debug
 var url = "";
 if (local) {
   if (car === "eChook Demo Car") {
@@ -90,7 +90,7 @@ function moveMarker(lat, lon, track) {
 
   if (track != "") {
     if (trackLocation === "") {
-      console.log("Track detected, getting centre. Track: "+ track);
+      console.log("Track detected, getting centre. Track: " + track);
       let trackUrl = "";
 
       if (local) {
@@ -212,11 +212,13 @@ function updateNumericals(data) {
   $('#voltageLower').text(data.voltsLower);
   $('#voltageUpper').text(data.voltage - data.voltsLower);
   $('#Current').text(data.current);
+  $('#AmpHours').text(data.ampH);
   $('#RPM').text(data.rpm);
   $('#Speed').text(data.speed);
   $('#lat-text').text(data.lat);
   $('#lon-text').text(data.lon);
   $('#Throttle').text(data.throttle);
+  $('#LapNumber').text(data.currLap);
 }
 
 function updateTime() {
