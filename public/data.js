@@ -26,6 +26,7 @@ var rpmAverage = 0;
 var speedAverage = 0;
 var pause = false;
 var dataSeconds = $('#graphCount').val() * 60;
+var currLap = 0;
 
 //Map Variables
 var map;
@@ -207,7 +208,7 @@ function addData() {
 }
 
 function updateNumericals(data) {
-  console.log('Entering updateNumericals');
+  // console.log('Entering updateNumericals');
   $('#voltageTotal').text(data.voltage);
   $('#voltageLower').text(data.voltsLower);
   $('#voltageUpper').text(data.voltage - data.voltsLower);
@@ -218,7 +219,19 @@ function updateNumericals(data) {
   $('#lat-text').text(data.lat);
   $('#lon-text').text(data.lon);
   $('#Throttle').text(data.throttle);
-  $('#LapNumber').text(data.currLap);
+
+  if (currLap != data.currLap) {
+    $('#LapNumber').text(data.currLap.toFixed(0));
+    $('#LLLap').text(currLap.toFixed(0));
+    $('#LLTime').text(data.LL_Time);
+    $('#LLVolts').text(data.LL_V);
+    $('#LLCurrent').text(data.LL_I);
+    $('#LLSpeed').text(data.LL_Spd);
+    $('#LLRPM').text(data.LL_RPM);
+    $('#LLAH').text(data.LL_Ah);
+    currLap = data.currLap;
+
+  }
 }
 
 function updateTime() {

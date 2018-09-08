@@ -446,6 +446,29 @@ div.panel {
   grid-row: 4;
   grid-column: 1/3; }
 
+.lap-info {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr 1fr;
+  grid-auto-flow: column;
+  justify-items: center;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin: auto;
+  border-width: medium;
+  border-color: #adadad;
+  border-style: solid;
+  padding: 10px;
+  margin: 10px 10px auto;
+  vertical-align: middle;
+  flex-grow: 1.1;
+  flex-shrink: 0.5;
+  width: 70vh; }
+
+.lap-info:hover {
+  border-color: #E71B64;
+  background-color: #e7e7e7; }
+
 #map {
   height: 60vh;
   width: auto;
