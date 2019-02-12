@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <!-- Global Site Tag (gtag.js) - Google Analytics -->
-    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=108921096"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
+
+<head>
+  <!-- Global Site Tag (gtag.js) - Google Analytics -->
+  <script async="async" src="https://www.googletagmanager.com/gtag/js?id=108921096"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments)
       };
       gtag('js', new Date());
       gtag('config', 'UA-108921096-1');
     </script>
-    <meta charset="utf-8">
-    <title>Car Data</title>
-    <link rel='stylesheet' href='/styles.css'/>
-    <link rel='stylesheet' href='/normalize.css'/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Car Data</title>
+  <link rel='stylesheet' href='/styles.css' />
+  <link rel='stylesheet' href='/normalize.css' />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   </script>
 </head>
+
 <body>
   <script>
     var car = '<%- user.car %>';
@@ -26,12 +28,18 @@
   </script>
 
   <div class="navbar">
-    <a class="logo" href="http://www.echook.uk">eChook</a>
-  </div>
-
-  <div class="fullTitle">
-    <div id="carHeader"><%= user.car %></div>
-    <div id="teamHeader"><%= user.team %></div>
+    <div class="logo">eChook</div>
+    <div id="carHeader">
+      <%= user.car %>
+    </div>
+    <div id="teamHeader">
+      <%= user.team %>
+    </div>
+    <div class="logout-button-nav">
+      <a style="display:block" href="/auth/logout">
+        <strong>Log Out</strong>
+      </a>
+    </div>
   </div>
 
   <div class="dataContainer column-accordion-light active">
@@ -157,4 +165,5 @@
   <script src="/data.js"></script>
   <script src="/accordion.js"></script>
 </body>
+
 </html>
