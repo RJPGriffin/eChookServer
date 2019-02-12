@@ -18,7 +18,8 @@ const db = require('./Private/database.js')
 
 //Connect to Database
 mongoose.Promise = global.Promise;
-mongoose.connect(`mongodb://${db.user}:${db.password}@${db.url}`).then(() => console.log('connection succesful')).catch((err) => console.error(err));
+//console.log(`Database URL:mongodb://${db.user}:${db.password}@${db.url}}`);
+mongoose.connect(`mongodb://${db.user}:${db.password}@${db.url}`, {useNewUrlParser: true}).then(() => console.log('connection succesful')).catch((err) => console.error(err));
 
 process.on('unhandledRejection', error => {
   // Prints "unhandledRejection woops!"
