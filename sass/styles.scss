@@ -630,3 +630,12 @@ div.panel {
   margin: 20px 0;
   border-radius: 3px;
 }
+
+.stopwatch-container {
+  display: flex;
+  justify-content: left;
+}
+
+#stopwatch-start-button {
+  height: 30px;
+}
