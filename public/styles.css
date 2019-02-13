@@ -10,6 +10,12 @@ html {
 body {
   overflow-x: hidden; }
 
+.desktop {
+  display: block; }
+
+.mobile {
+  display: none; }
+
 .dual-column-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -47,6 +53,55 @@ body {
   text-decoration: none;
   text-rendering: geometricPrecision; }
 
+#carHeader {
+  grid-column: 2;
+  grid-row: 1;
+  color: #f9f9f9;
+  font-size: 40px;
+  padding-left: 15px; }
+
+#teamHeader {
+  grid-column: 2;
+  grid-row: 2;
+  color: #f9f9f9;
+  font-style: 30px;
+  padding-left: 15px; }
+
+@media screen and (max-width: 700px) {
+  .desktop {
+    display: none; }
+
+  .mobile {
+    display: block; }
+
+  .navbar {
+    grid-template-columns: 55px 1fr 35px;
+    grid-template-rows: 40px 30px;
+    top: 0;
+    left: 0;
+    background: #232020;
+    width: 100vw;
+    overflow: hidden; }
+
+  .logo {
+    padding-right: 5px;
+    font-family: 'Oswald', sans-serif; }
+
+  #carHeader {
+    grid-column: 2;
+    grid-row: 1;
+    color: #f9f9f9;
+    font-size: 6vw;
+    vertical-align: middle;
+    height: 40px;
+    padding-left: 15px; }
+
+  #teamHeader {
+    grid-column: 2;
+    grid-row: 2;
+    color: #f9f9f9;
+    font-style: 30px;
+    padding-left: 15px; } }
 #spacer-div {
   height: 10em; }
 
@@ -60,20 +115,7 @@ body {
 /* small screens */
 @media screen and (max-width: 44em) {
   body {
-    margin: 1.5em 0; }
-
-  nav[role="full-horizontal"] ul {
-    padding: 0 0.5em; }
-  nav[role="full-horizontal"] ul > li {
-    width: 100%;
-    padding: 0.45em 0.25em;
-    margin: 0 0 0.55em; }
-    nav[role="full-horizontal"] ul > li:after {
-      box-shadow: none; }
-
-  /*Top Menus for small screens*/
-  #logo {
-    position: relative; } }
+    margin: 1.5em 0; } }
 .left-column {
   grid-column: 1;
   grid-row: auto; }
@@ -103,30 +145,6 @@ body {
 
 .add-car-form .spaced {
   margin-top: 5px; }
-
-.fullTitle {
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  padding-top: 20px;
-  padding-bottom: 20px;
-  font-family: Cabin, sans-serif;
-  text-align: center;
-  vertical-align: middle;
-  color: #f9f9f9; }
-
-#carHeader {
-  grid-column: 2;
-  grid-row: 1;
-  color: #f9f9f9;
-  font-size: 40px;
-  padding-left: 15px; }
-
-#teamHeader {
-  grid-column: 2;
-  grid-row: 2;
-  color: #f9f9f9;
-  font-style: 30px;
-  padding-left: 15px; }
 
 .dataContainer {
   display: grid;
@@ -209,6 +227,11 @@ body {
     display: block;
     text-decoration: none; }
 
+@media screen and (max-width: 700px) {
+  .logout-button-nav {
+    padding-top: 0;
+    border-radius: 5px 0 0 5px;
+    margin: 15px 0; } }
 .data-button {
   background-color: #30c630;
   padding: 20px;
