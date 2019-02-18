@@ -566,9 +566,25 @@ button.accordion.active {
   grid-row: 4;
   grid-column: 1/3;
 }
+
+#map {
+  height: 60vh;
+  width: auto;
+  margin: 20px 0;
+  border-radius: 3px;
+}
 @media screen and (max-width: 700px) {
   .panel {
-    padding: 0 5px;
+    padding: 0;
+  }
+
+  .map-border {
+    padding: 0;
+  }
+
+  #map {
+    margin: 0;
+    border-radius: 0 0 10px 10px;
   }
 
   .num-title {
@@ -635,7 +651,8 @@ button.accordion.active {
 }
 
 .lap-info {
-  display: grid;
+  // display: grid;
+  display: none;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: 1fr 1fr;
   grid-auto-flow: column;
@@ -662,13 +679,6 @@ button.accordion.active {
 
 .table-head {
   // border-bottom: darken(#f9f9f9, 10%) solid 3px;
-}
-
-#map {
-  height: 60vh;
-  width: auto;
-  margin: 20px 0;
-  border-radius: 3px;
 }
 
 .stopwatch-container {
