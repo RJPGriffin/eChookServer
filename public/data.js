@@ -31,6 +31,8 @@ var currLap = 0;
 //Map Variables
 var map;
 var marker;
+var trackLocation = "";
+var currTrack = "";
 
 var voltageChartCtx = document.getElementById("voltageChart").getContext('2d');
 var voltageChart = new Chart(voltageChartCtx, graphConfig);
@@ -76,22 +78,8 @@ function initializeMap() {
 };
 
 function moveMarker(lat, lon, track) {
-  console.log('Entering moveMarker');
-  var trackLocation = "";
-  console.log('Move Marker recieved: ' + lat + ' ' + lon + ' ' + track);
-
-  //What does this bit need to do...
-  // 1. check if the car is at a known track. this is passed in from the server. "none" if no track.
-  //  - Assuming no track, centre on current position.
-  // If track:
-  //  get track centre
-  //  pan to centre
-  //  TODO save location locally to stop constant API calls.
-  let comp = "";
-
   if (track != "") {
     if (trackLocation === "") {
-      console.log("Track detected, getting centre. Track: " + track);
       let trackUrl = "";
 
       if (local) {
@@ -106,7 +94,6 @@ function moveMarker(lat, lon, track) {
             'lat': data.lat,
             'lon': data.lon
           };
-          console.log(`panning to ${trackLocation.lat}, ${trackLocation.lon}`);
           map.panTo({
             lat: Number(trackLocation.lat),
             lng: Number(trackLocation.lon)
@@ -117,7 +104,7 @@ function moveMarker(lat, lon, track) {
       });
     }
   } else {
-    console.log(`Not on Track`);
+    trackLocation = "";
     try {
       map.panTo(new google.maps.LatLng(lat, lon));
     } catch (e) {
@@ -128,10 +115,10 @@ function moveMarker(lat, lon, track) {
   }
 
   try {
-    console.log('Updating Map Marker to ' + lat + ' ' + lon);
+    // console.log('Updating Map Marker to ' + lat + ' ' + lon);
     marker.setPosition(new google.maps.LatLng(lat, lon));
   } catch (e) {
-    console.log('Failed to update map marker :(');
+    // console.log('Failed to update map marker :(');
   } finally {
 
   }
@@ -219,6 +206,14 @@ function updateNumericals(data) {
   $('#lat-text').text(data.lat);
   $('#lon-text').text(data.lon);
   $('#Throttle').text(data.throttle);
+  if (data.track != currTrack) {
+    currTrack = data.track;
+    if (data.track != "") {
+      $('#MapTitle').text(`Map - ${data.track}`);
+    } else {
+      $('#MapTitle').text(`Map`);
+    }
+  }
 
   if (currLap != data.currLap) {
     $('#LapNumber').text(data.currLap.toFixed(0));

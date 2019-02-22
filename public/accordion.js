@@ -21,6 +21,20 @@ $(document).ready(function() {
   }
 });
 
+$(window).resize(function() {
+  for (i = 0; i < acc.length; i++) {
+
+    if (acc[i].classList.contains("active")) {
+      var panel = acc[i].nextElementSibling;
+      // if (panel.style.maxHeight) {
+      //   panel.style.maxHeight = null;
+      // } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+      // }
+    }
+  }
+});
+
 for (i = 0; i < acc.length; i++) {
   acc[i].onclick = function() {
     this.classList.toggle("active");
