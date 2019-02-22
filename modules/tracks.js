@@ -99,6 +99,12 @@ var tracks = {
       'latMin': 52.512264,
       'lonMax': -0.649619,
       'lonMin': -0.6661527
+    },
+    'Silverstone': {
+      'latMax': 52.082334,
+      'latMin': 52.060783,
+      'lonMax': -1.007314,
+      'lonMin': -1.030766
     }
   },
 
@@ -111,12 +117,12 @@ var tracks = {
     if (trackName in this.trackList) {
       lat = ((this.trackList[trackName].latMax - this.trackList[trackName].latMin) / 2 + this.trackList[trackName].latMin).toFixed(6);
       lon = ((this.trackList[trackName].lonMax - this.trackList[trackName].lonMin) / 2 + this.trackList[trackName].lonMin).toFixed(6);
-   } 
-   return ({
-     'lat': lat,
-     'lon': lon
-   })
-    
+    }
+    return ({
+      'lat': lat,
+      'lon': lon
+    })
+
 
   },
 
