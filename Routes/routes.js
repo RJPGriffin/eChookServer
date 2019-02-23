@@ -20,16 +20,16 @@ router.get('/', function(req, res) {
   var carMasterList = Cars.find({}).then(function(masterCarList) {
     Object.keys(liveDataStore.dataStore).forEach(function(key) { // look for each entry in data store
       Object.keys(masterCarList).forEach(function(masterKey) { // compare to entries in master list
-        console.log('Comparing ' + key + ' with ' + JSON.stringify(masterCarList[masterKey]._id));
+        // console.log('Comparing ' + key + ' with ' + JSON.stringify(masterCarList[masterKey]._id));
         //if (key == masterCarList[masterKey]._id) {
         carList[count] = masterCarList[masterKey];
-        console.log('Added Car: ' + JSON.stringify(carList[count].car));
+        // console.log('Added Car: ' + JSON.stringify(carList[count].car));
         count++;
         //  }
       });
     });
-    console.log('rendering Page');
-    console.log('data:{' + JSON.stringify(carList) + '}');
+    // console.log('rendering Page');
+    // console.log('data:{' + JSON.stringify(carList) + '}');
     res.render('cars', {
       data: carList,
       'length': count,
@@ -48,6 +48,9 @@ router.get('/data', isLoggedIn, function(req, res) {
 
 });
 
+router.get('/spectate', function(req, res) {
+  res.render('spectate');
+});
 
 router.get('/add', function(req, res) {
   res.render('addCar');
