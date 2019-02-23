@@ -126,7 +126,6 @@ function moveMarker(lat, lon, track) {
 };
 
 function addData() {
-  console.log('Entering addData');
   $.get(url, function(data, status) {
     if (status === "success") {
       if (voltageAverage === 0) {

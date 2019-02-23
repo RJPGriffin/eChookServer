@@ -1,8 +1,14 @@
 const tracks = require('./tracks.js');
+const moment = require('moment');
+const Cars = require('../models/Cars.js');
+const crypto = require('crypto');
+// const uuid = require('uuid/v1');
 
 var liveDataStore = {
 
   dataStore: {},
+  spectatorData: {},
+  carLookup: {},
 
   dataTemplate: {
     'voltage': '',
@@ -30,6 +36,28 @@ var liveDataStore = {
     'status': ''
   },
 
+  // Using the database UUID to identify the car in the spectator data
+  // would reaveal it publicly, allowing anyone to request that car's full
+  // data through the API, so new UUID needs to be generated for the public
+  // lookup
+  carLookupTemplate: {
+    'name': '',
+    'teamName': '',
+    'number': '',
+    'ID': '',
+    'lastUsed': ''
+  },
+
+  spectatorDataTemplate: {
+    'name': '',
+    'teamName': '',
+    'number': '',
+    'lap': '',
+    'speed': '',
+    'lat': '',
+    'lon': '',
+    'updated': ''
+  },
   //Takes in car ID (key) and incoming data. Checks if that car has an entry in
   // datastore, if not, creates one.
   // Updates data store with any new data from dataIn
@@ -108,8 +136,81 @@ var liveDataStore = {
     this.dataStore[key].updated = Date.now()
     this.dataStore[key].status = 'Live'
 
-    // console.log(this.dataStore);
+    // Now data store has been filled, should we add the car to the spectatorData?
+    if (this.dataStore[key].track !== "") { //car is on a track
+      console.log(`Entering Add Spectator Data - car on track`);
+      console.log(`Attempting to stringify`);
+      console.log(`Current Car Lookup: ${JSON.stringify(this.carLookup)}`);
+      console.log(`stringified`);
+      // Do we have a local copy of the car?
+      if (key in this.carLookup) {
+        console.log(`car in carLookup already`);
+        let carName = this.carLookup[key].name;
+        let teamName = this.carLookup[key].teamName;
+        let id = this.carLookup[key].id;
+        let number = this.carLookup[key].number;
+        this.carLookup[key].lastUsed = new moment();
+
+        let currTrack = this.dataStore[key].track;
+        if (!(currTrack in this.spectatorData)) {
+          this.spectatorData[currTrack] = {}; //add the track
+        }
+
+        //now check for/add cars ID to track
+        if (!(id in this.spectatorData[currTrack])) {
+          this.spectatorData[currTrack][id] = this.spectatorDataTemplate;
+          this.spectatorData[currTrack][id].name = carName;
+          this.spectatorData[currTrack][id].teamName = teamName;
+          this.spectatorData[currTrack][id].number = number;
+        }
+
+        //Fill In data
+        this.spectatorData[currTrack][id].speed = dataIn.Spd;
+        this.spectatorData[currTrack][id].lap = dataIn.Lap;
+        this.spectatorData[currTrack][id].lon = dataIn.Lon;
+        this.spectatorData[currTrack][id].lat = dataIn.Lat;
+        this.spectatorData[currTrack][id].updated = new moment();
+
+        console.log(`Spectator Data Added: ${JSON.stringify(this.spectatorData)}`);
+
+      } else { //add key and info. Data will be added next time data comes in.
+        console.log(`car not in car lookup, fetching info from DB`);
+        this.carLookup[key] = {};
+        console.log(`Added Key: ${JSON.stringify(this.carLookup)}`);
+
+        Cars.findOne({
+          '_id': key
+        }, function(err, car) {
+          // if there are any errors, return the error before anything else
+          if (err) {
+            console.log(err);
+          }
+
+          // if no user is found, return the message
+          if (!car) {
+            console.log("Car Not Found Spectator");
+          } else {
+            console.log(`Car found in DB`);
+            let tmpCar = car.car;
+            let tmpTeam = car.team;
+            let tmpNum = car.number;
+            // let temp = {
+            liveDataStore.carLookup[key] = {
+              'car': tmpCar,
+              'teamName': tmpTeam,
+              'number': tmpNum,
+              'lastUsed': new moment(),
+              'id': crypto.randomBytes(16).toString("hex")
+            };
+          }
+        })
+        console.log(`New Car Lookup: ${JSON.stringify(this.carLookup)}`);
+
+      }
+    }
+
   },
+
 
   //Takes a car ID, returns all data on that ID from datastore
   getData: function(key) {
