@@ -126,9 +126,10 @@ function moveMarker(lat, lon, track) {
 };
 
 function addData() {
-  console.log('Entering addData');
   $.get(url, function(data, status) {
     if (status === "success") {
+
+      // Don't remember why I'm zeroing these?
       if (voltageAverage === 0) {
         voltageAverage = data.voltage;
       }
@@ -138,6 +139,9 @@ function addData() {
       if (rpmAverage === 0) {
         rpmAverage = data.rpm;
       }
+
+      //Convert incoming m/s speed to MPH
+      data.speed = data.speed * 2.23694;
 
       //Remove animations after 100 datapoints
       if (voltageChart.data.labels.length === 100) {
@@ -167,8 +171,8 @@ function addData() {
       voltageChart.data.datasets[7].data.push(rpmAverage);
 
       //Speed
-      voltageChart.data.datasets[8].data.push(data.speed * 2.23694);
-      speedAverage = speedAverage * alpha + (data.speed * 2.23694) * (1 - alpha);
+      voltageChart.data.datasets[8].data.push(data.speed);
+      speedAverage = speedAverage * alpha + (data.speed) * (1 - alpha);
       voltageChart.data.datasets[9].data.push(speedAverage);
 
       while (voltageChart.data.labels.length > dataSeconds) {
