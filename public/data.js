@@ -206,7 +206,7 @@ function updateNumericals(data) {
   $('#Current').text(data.current);
   $('#AmpHours').text(data.ampH);
   $('#RPM').text(data.rpm);
-  $('#Speed').text(data.speed);
+  $('#Speed').text(data.speed.toFixed(1));
   $('#lat-text').text(data.lat);
   $('#lon-text').text(data.lon);
   $('#Throttle').text(data.throttle);
