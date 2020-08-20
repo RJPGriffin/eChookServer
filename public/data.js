@@ -210,6 +210,9 @@ function updateNumericals(data) {
   $('#lat-text').text(data.lat);
   $('#lon-text').text(data.lon);
   $('#Throttle').text(data.throttle);
+  $('#Temp1').text(data.temp1);
+  $('#Temp2').text(data.temp2);
+  $('#Brake').text(data.brake == 1 ? "ON" : "OFF");
   if (data.track != currTrack) {
     currTrack = data.track;
     if (data.track != "") {
