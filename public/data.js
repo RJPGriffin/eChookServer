@@ -1,7 +1,7 @@
 console.log('Recieved: Car: ' + car);
 console.log('Recieved: ID: ' + id);
 
-var local = true; // to change URLs for debug
+var local = false; // to change URLs for debug
 var url = "";
 if (local) {
   if (car === "eChook Demo Car") {
