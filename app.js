@@ -18,10 +18,8 @@ const db = require('./Private/database.js')
 
 //Connect to Database
 mongoose.Promise = global.Promise;
-console.log(`Database URL:mongodb://${db.user}:${db.password}@${db.url}}`);
-mongoose.connect(`mongodb://${db.user}:${db.password}@${db.url}`, {useNewUrlParser: true}).then(() => console.log('connection succesful')).catch((err) => console.error(err));
-
-//mongoose.connect(`mongodb://echookServer:<password>@echook-cars-shard-00-00.oqnrh.gcp.mongodb.net:27017,echook-cars-shard-00-01.oqnrh.gcp.mongodb.net:27017,echook-cars-shard-00-02.oqnrh.gcp.mongodb.net:27017/echook-cars?ssl=true&replicaSet=atlas-fw1be6-shard-0&authSource=admin&retryWrites=true&w=majority`);
+//console.log(`Database URL:mongodb://${db.user}:${db.password}@${db.url}}`);
+mongoose.connect(`mongodb://${db.user}:${db.password}@${db.url}`, {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log('connection succesful')).catch((err) => console.error(err));
 
 
 process.on('unhandledRejection', error => {
