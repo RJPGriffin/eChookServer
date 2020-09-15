@@ -104,6 +104,20 @@ router.post('/api/send/:id', jsonParser, function(req, res) {
   res.status(200).end();
 });
 
+//APIv2
+router.get('/api2/get/:id', function(req, res) {
+  // let key = req.params.id;
+  // if (key == 'demodemo') {
+  res.status(200).send(demoGenerator.generate()).end;
+  // } else {
+  //   if (key in liveDataStore.dataStore) {
+  //     res.status(200).send(liveDataStore.dataStore[key]).end;
+  //   } else {
+  //     res.status(204).send({}).end;
+  //   };
+  // }
+});
+
 
 
 // Used to get the database ID of a car - for app to send data

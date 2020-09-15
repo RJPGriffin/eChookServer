@@ -19,7 +19,10 @@ const db = require('./Private/database.js')
 //Connect to Database
 mongoose.Promise = global.Promise;
 //console.log(`Database URL:mongodb://${db.user}:${db.password}@${db.url}}`);
-mongoose.connect(`mongodb://${db.user}:${db.password}@${db.url}`, {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log('connection succesful')).catch((err) => console.error(err));
+mongoose.connect(`mongodb://${db.user}:${db.password}@${db.url}`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log('connection succesful')).catch((err) => console.error(err));
 
 
 process.on('unhandledRejection', error => {
@@ -65,7 +68,7 @@ app.use(function(error, rew, res, next) {
   if (error) {
     console.log(error);
     res.status(422).send({ //TODO Flesh this out
-      message: err.message,
+      message: error.message,
       error: error
     })
   }
