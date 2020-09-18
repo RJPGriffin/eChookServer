@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 const routes = require('./Routes/routes');
+const v2routes = require('./Routes/v2routes');
 const authRoutes = require('./Routes/authRoutes');
 const Cars = require('./models/Cars');
 const db = require('./Private/database.js')
@@ -19,11 +20,17 @@ const db = require('./Private/database.js')
 //Connect to Database
 mongoose.Promise = global.Promise;
 //console.log(`Database URL:mongodb://${db.user}:${db.password}@${db.url}}`);
-mongoose.connect(`mongodb://${db.user}:${db.password}@${db.url}`, {
+
+// mongoose.connect(`mongodb://${db.user}:${db.password}@${db.url}`, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// }).then(() => console.log('connection succesful')).catch((err) => console.error(err));
+
+// Local for test
+mongoose.connect(`mongodb://localhost:27017/echookTest`, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log('connection succesful')).catch((err) => console.error(err));
-
 
 process.on('unhandledRejection', error => {
   // Prints "unhandledRejection woops!"
@@ -55,6 +62,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 app.use('/', routes);
+app.use('/v2', v2routes);
 app.use('/auth', authRoutes);
 
 
