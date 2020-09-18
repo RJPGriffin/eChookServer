@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=108921096"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments)
+        };
+        gtag('js', new Date());
+
+        gtag('config', 'UA-108921096-1');
+    </script>
+
+    <title>eChook - Open Source Data Logging and Telemetry</title>
+    <meta charset="UTF-8">
+    <title>title</title>
+
+    <script type='text/javascript'
+        src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>
+    <script src="https://use.fontawesome.com/10386a299c.js"></script>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="css/screen-bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="css/data.css" type="text/css">
+    <link rel="stylesheet" href="css/login.css" type="text/css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <!-- <script type='text/javascript' src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script> -->
+    <script type='text/javascript' src="scripts/script.js"></script>
+    <script src="https://use.fontawesome.com/10386a299c.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<script type="text/javascript" src="scripts/script.js" charset="utf-8"></script>
+<link rel="stylesheet" href="css/nav.css" type="text/css">
+<div id="navVue">
+
+    <div class="nav-container nav-height" v-bind:class="{'nav-container-small': scrolled }">
+
+        <a class="logo nav-height" v-bind:class="{ 'logo-small': scrolled, 'logo-large':!scrolled }"
+            href="/">{{logoText}}</a>
+        <div class="menu-holder nav-height" v-bind:class="{ 'menu-holder-small': scrolled }">
+            <div v-for="x in nav" class="nav-item" v-bind:class="{ 'nav-item-small': scrolled }">
+                <a v-bind:href="x.link" target="_blank">
+                    <p>
+                        {{x.name}}</p>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type='text/javascript' src="scripts/navVue.js"></script>
+
+
+<div id="nav-placeholder"></div>
+
+<div id="login-app">
+    <template v-if="active">
+        <div id="welcome-container" class="centred">
+            <div id="login-title">{{snippets.title}}</div>
+            <!-- Login Screen -->
+            <div v-if="screens.login">
+                <div v-if="pastLogins.length > 0" class="">
+                    <template v-for="(car, i) in pastLogins">
+                        <div v-on:click="prevLogin(i)" class="prev-login-bar">
+                            {{car.car}}
+                            <!-- ({{car.codeObs}}) -->
+                        </div>
+                    </template>
+                    <div v-on:click="clearHistory" id="clear-history" class="">
+                        {{snippets.clearText}}
+                    </div>
+                    <div class="login-divider"></div>
+                </div>
+                <!-- <input class="t-input" v-model="teamCode" type="text" name="" placeholder="********" maxlength="8"> -->
+                <input class="t-input" v-on:keyup.enter="newLogin" v-on:input="teamCode = $event.target.value"
+                    type="text" name="" placeholder="********" maxlength="8">
+                <div v-on:click="newLogin" class="button" v-bind:class="{'submit-button': validCode}">
+                    {{loginButtonText}}
+                </div>
+                <div id="get-new-code" v-on:click="toRegistration" class="">
+                    Don't have a code? Get one here!
+                </div>
+            </div>
+            <!-- New Registration Screen -->
+            <div class="" v-if="screens.register">
+                <div class="">
+                    <input class="reg-input" v-on:input="register.team = $event.target.value" type="text"
+                        placeholder="Team Name" name="" value="" maxlength="40">
+                    <br>
+                    <input class="reg-input" v-on:input="register.car = $event.target.value" type="text"
+                        placeholder="Car Name" name="" value="" maxlength="40">
+                </div>
+                <div style="height:10px"></div>
+                <div class="button">
+                    {{regButtonText}}
+                </div>
+                <div v-on:click="toLogin" id="get-new-code">
+                    Return to Login
+                </div>
+            </div>
+        </div>
+    </template>
+</div>
+
+
+
+
+<!-- data app ---------------------------------------------------------->
+<div id="data-app" style="text-align:center">
+    <template v-if="active">
+        <div style="height:70px"></div>
+        <div class="dataContainer column-accordion-light active">
+            <!-- <div class="accordion " v-bind:class="{active: views.numerical.active}" v-on:click="views.numerical.active = !views.numerical.active"> -->
+            <div class="accordion active">
+                Dashboard
+                <!-- Numbers in title bar when view is inactive -->
+                <!-- <div class="num-overview" v-if="!views.numerical.active"> -->
+                <!-- {{latest.vTotal.value}}V
+          {{latest.current.value}}A
+          {{latest.speed.value}}{{latest.speed.unit}}
+          {{latest.rpm.value}}RPM
+          Lap:{{latest.lap.value}} -->
+                <!-- </div> -->
+            </div>
+            <!-- <div class="panel" v-if="views.numerical.active"> -->
+            <div class="numbers-container column-light">
+                <template v-for="(x,key) in latest">
+                    <div v-if="x.show" class="num-background">
+                        <!-- <div v-if="x.show" class="num-background num-grid"> -->
+                        <div class="num-title">{{x.title}}</div>
+                        <div id="Current" class="num-large"><strong>{{x.value}}</strong></div>
+                        <div class="num-unit">{{x.unit}}</div>
+                        <div class="bkg-graph graphRed" v-bind:class="{graphGreen:x.value<=x.high&&x.value>=x.low}"
+                            v-bind:style="{height: ((x.value/x.max)*100).toFixed(1)+'%'}"> </div>
+                    </div>
+                </template>
+                <button v-on:click="getData">Get Data</button>
+            </div>
+            <!-- </div> -->
+        </div>
+        <!-- Lap Table + graphs -->
+        <div class="dataContainer column-accordion-light active">
+            <!-- <div class="accordion" v-bind:class="{active: views.laps.active}" v-on:click="views.laps.active = !views.laps.active"> -->
+            <div class="accordion active">
+                Laps
+            </div>
+            <!-- <div class="panel" v-if="views.laps.active"> -->
+            <div class="panel">
+                <div class="numbers-container column-accordion-light">
+                    <template v-for="(session,key) in sessions">
+                        <div class="session-title">
+                            Session {{key+1}} - {{session.start.toLocaleString()}}
+                        </div>
+                        <div class="session-laps-background">
+
+                            <template v-for="lap in session.laps">
+                                <div class="lap-bar">
+                                    Lap {{lap.lap}}
+                                    Averages: {{lap.v}}V, {{lap.i}}A, {{lap.RPM}}RPM, {{lap.speed}}MPH in {{lap.time}}
+                                </div>
+                            </template>
+                        </div>
+
+                    </template>
+                </div>
+                <div class="">
+                    All times are approximate - please refer to official Greenpower timings.
+                </div>
+            </div>
+        </div>
+
+        <div class="dataContainer column-accordion-light active">
+            <!-- <div class="accordion " v-bind:class="{active: views.graph.active}" v-on:click="views.graph.active = !views.graph.active" :click="activateGraph"> -->
+            <div class="accordion active">
+                <strong>Graph</strong>
+            </div>
+            <div class="panel">
+                <div class="dataHeading"></div>
+
+                <div class="dataGraph">
+                    <canvas ref="main-graph" id="voltageChart" width="400" height="100"></canvas>
+                </div>
+                <div class="center">Click on the graph legend to show and hide signals</div>
+                <div style="height:10px"></div>
+            </div>
+        </div>
+
+        <div class="dataContainer column-accordion-light active">
+            <!-- <div class="accordion" v-bind:class="{active: views.map.active}" v-on:click="views.map.active = !views.map.active"> -->
+            <div class="accordion active">
+                <strong id="MapTitle">Map</strong>
+            </div>
+            <div class="panel map-boarder">
+                <div id="map"></div>
+                <div class="desktop">
+                    Latitude:
+                    <span id="lat-text"></span>
+                    Longitude:
+                    <span id="lon-text"></span>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:none" class="">
+
+            <div class="dataContainer column-accordion-light active">
+                <button class="accordion">
+                    <strong>Stopwatch</strong>
+                </button>
+                <div class="panel">
+                    <div class="stopwatch-container"></div>
+                    <div id="stopwatch-start-button fa fa-play">Play
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="column-light">
+      <div style="text-align:right">
+        <div>Minutes of Data to Show:</div>
+        <input type="number" id="graphCount" value="5">
+        <input type="button" name="" value="Update" onclick="updateTime()">
+      </div>
+    </div> -->
+
+    </template>
+</div>
+</body>
+<script type='text/javascript' src="scripts/dataVue.js"></script>
+<script type='text/javascript' src="scripts/loginVue.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+<script type='text/javascript' src="scripts/graphConfig.js"></script>
+
+</html>
