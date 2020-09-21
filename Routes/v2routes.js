@@ -17,21 +17,9 @@ router.get('/', function (req, res) {
     res.render('v2app');
 });
 
-router.get('/data', isLoggedIn, function (req, res) {
-
-    res.render('data', {
-        user: req.user
-    })
-
-});
 
 router.get('/spectate', function (req, res) {
     res.render('spectate');
-});
-
-router.get('/add', function (req, res) {
-    res.render('addCar');
-
 });
 
 router.post('/add', urlEncodedParser, function (req, res, next) {

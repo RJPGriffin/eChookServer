@@ -2,6 +2,7 @@ var dataApp = new Vue({
   el: '#data-app',
   data: {
     active: false,
+    role: 'member',
     views: {
       numerical: {
         active: true
@@ -35,7 +36,7 @@ var dataApp = new Vue({
         max: 17,
         min: 0,
         unit: "Volts",
-        show: true
+        show: false
       },
       vLower: {
         title: "Lower Battery",
@@ -45,7 +46,7 @@ var dataApp = new Vue({
         max: 17,
         min: 0,
         unit: "Volts",
-        show: true
+        show: false
       },
       current: {
         title: "Current",
@@ -65,7 +66,7 @@ var dataApp = new Vue({
         max: 3000,
         min: 1600,
         unit: "RPM",
-        show: true
+        show: false
       },
       speed: {
         title: "Motor Speed",
@@ -75,7 +76,7 @@ var dataApp = new Vue({
         max: 50,
         min: 0,
         unit: "Mph",
-        show: true
+        show: false
       },
       throttle: {
         title: "Throttle",
@@ -85,7 +86,7 @@ var dataApp = new Vue({
         max: 100,
         min: 0,
         unit: "%",
-        show: true
+        show: false
       },
       tempOne: {
         title: "Temperature 1",
@@ -95,7 +96,7 @@ var dataApp = new Vue({
         max: 70,
         min: 0,
         unit: "°c",
-        show: true
+        show: false
       },
       tempTwo: {
         title: "Temperature 2",
@@ -105,7 +106,7 @@ var dataApp = new Vue({
         max: 70,
         min: 0,
         unit: "°c",
-        show: true
+        show: false
       },
       ah: {
         title: "Amp Hours Used",
@@ -115,7 +116,7 @@ var dataApp = new Vue({
         max: 34,
         min: 0,
         unit: "Ah",
-        show: true
+        show: false
       },
       brake: {
         title: "Brake",
@@ -125,7 +126,7 @@ var dataApp = new Vue({
         max: 1,
         min: 0,
         unit: "",
-        show: true
+        show: false
       },
       lap: {
         title: "Lap Number",
@@ -135,7 +136,13 @@ var dataApp = new Vue({
         max: 70,
         min: 0,
         unit: "",
-        show: true
+        show: false
+      },
+      location: {
+        title: "GPS Location",
+        lat: 0,
+        lng: 0,
+        show: false
       }
     },
     sessions: [{
@@ -187,47 +194,91 @@ var dataApp = new Vue({
       var voltageChartCtx = document.getElementById("voltageChart").getContext('2d');
       var voltageChart = new Chart(voltageChartCtx, graphConfig);
     },
+    isAdmin: function () {
+      return(this.role === 'admin');
+    },
     getData: function () {
-      let url = "https://data.echook.uk/api/get/Demo";
+      // let url = "https://data.echook.uk/api/get/Demo";
+      let url = "http://localhost:3000/api/get/Demo";
+      let vm = this;
       $.get(url, function (data, status) {
         if (status === "success") {
 
-          //         //Convert incoming m/s speed to MPH
-          //         data.speed = data.speed * 2.23694;
-          //
-          //         this.vTotal.value = data.voltage;
-          //         this.vLower.value = data.voltsLower;
-          //         this.latest.vUpper.value = data.voltage - data.voltsLower;
-          //         this.latest.current.value = data.current;
-          //         this.latest.ah.value = data.ampH;
-          //         this.latest.rpm.value = data.rpm;
-          //         this.latest.speed.value = data.speed.toFixed(1);
-          //         this.latest.lat.value = data.lat;
-          //         this.latest.lon.value = data.lon;
-          //         this.latest.throttle.value = data.throttle;
-          //         this.latest.tempOne.value = data.temp1;
-          //         this.latest.tempTwo.value = data.temp2;
-          //         this.latest.brake.value = data.brake == 1 ? "ON" : "OFF";
-          //         // if (data.track != currTrack) {
-          //         //   currTrack = data.track;
-          //         //   if (data.track != "") {
-          //         //     $('#MapTitle').text(`Map - ${data.track}`);
-          //         //   } else {
-          //         //     $('#MapTitle').text(`Map`);
-          //         //   }
-          //         // }
-          //         //
-          //         // if (currLap != data.currLap) {
-          //         //   $('#LapNumber').text(data.currLap.toFixed(0));
-          //         //   $('#LLLap').text(currLap.toFixed(0));
-          //         //   $('#LLTime').text(data.LL_Time);
-          //         //   $('#LLVolts').text(data.LL_V);
-          //         //   $('#LLCurrent').text(data.LL_I);
-          //         //   $('#LLSpeed').text(data.LL_Spd);
-          //         //   $('#LLRPM').text(data.LL_RPM);
-          //         //   $('#LLAH').text(data.LL_Ah);
-          //         //   currLap = data.currLap;
-          //         //   jasc
+                  //Convert incoming m/s speed to MPH
+                  data.speed = data.speed * 2.23694;
+
+                  console.log(data);
+          
+                  if(data.hasOwnProperty('voltage')) {
+                     vm.latest.vTotal.value = data.voltage;
+                     vm.latest.vTotal.show = true;
+                  }
+                  if(data.hasOwnProperty('voltsLower')) {
+                     vm.latest.vLower.value = data.voltsLower;
+                     vm.latest.vLower.show = true;
+                  }
+                  if(data.hasOwnProperty('voltage')) {
+                     vm.latest.vUpper.value = (data.voltage - data.voltsLower).toFixed(2);
+                     vm.latest.vUpper.show = true;
+                  }
+                  if(data.hasOwnProperty('current')) {
+                     vm.latest.current.value = data.current;
+                     vm.latest.current.show = true;
+                  }
+                  if(data.hasOwnProperty('ampH')) {
+                     vm.latest.ah.value = data.ampH;
+                     vm.latest.ah.show = true;
+                  }
+                  if(data.hasOwnProperty('rpm')) {
+                     vm.latest.rpm.value = data.rpm;
+                     vm.latest.rpm.show = true;
+                  }
+                  if(data.hasOwnProperty('speed')) {
+                     vm.latest.speed.value = data.speed.toFixed(1);
+                     vm.latest.speed.show = true;
+                  }
+                  if(data.hasOwnProperty('lat')) {
+                     vm.latest.location.lat = data.lat;
+                  }
+                  if(data.hasOwnProperty('lon')) {
+                     vm.latest.location.lng = data.lon;
+                  }
+                  if(data.hasOwnProperty('throttle')) {
+                     vm.latest.throttle.value = data.throttle;
+                     vm.latest.throttle.show = true;
+                  }
+                  if(data.hasOwnProperty('temp1')) {
+                     vm.latest.tempOne.value = data.temp1;
+                     vm.latest.tempOne.show = true;
+                  }
+                  if(data.hasOwnProperty('temp2')) {
+                     vm.latest.tempTwo.value = data.temp2;
+                     vm.latest.tempTwo.show = true;
+                  }
+                  if(data.hasOwnProperty('brake')) {
+                     vm.latest.brake.value = data.brake == 1 ? "ON" : "OFF";
+                     vm.latest.brake.show = true;
+                  }
+                  // if (data.track != currTrack) {
+                  //   currTrack = data.track;
+                  //   if (data.track != "") {
+                  //     $('#MapTitle').text(`Map - ${data.track}`);
+                  //   } else {
+                  //     $('#MapTitle').text(`Map`);
+                  //   }
+                  // }
+                  //
+                  // if (currLap != data.currLap) {
+                  //   $('#LapNumber').text(data.currLap.toFixed(0));
+                  //   $('#LLLap').text(currLap.toFixed(0));
+                  //   $('#LLTime').text(data.LL_Time);
+                  //   $('#LLVolts').text(data.LL_V);
+                  //   $('#LLCurrent').text(data.LL_I);
+                  //   $('#LLSpeed').text(data.LL_Spd);
+                  //   $('#LLRPM').text(data.LL_RPM);
+                  //   $('#LLAH').text(data.LL_Ah);
+                  //   currLap = data.currLap;
+                  //   jasc
         } else {
           console.log('Get Data returned status: ' + status);
         }

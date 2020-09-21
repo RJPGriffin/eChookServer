@@ -118,19 +118,9 @@
     <template v-if="active">
         <div style="height:70px"></div>
         <div class="dataContainer column-accordion-light active">
-            <!-- <div class="accordion " v-bind:class="{active: views.numerical.active}" v-on:click="views.numerical.active = !views.numerical.active"> -->
             <div class="accordion active">
                 Dashboard
-                <!-- Numbers in title bar when view is inactive -->
-                <!-- <div class="num-overview" v-if="!views.numerical.active"> -->
-                <!-- {{latest.vTotal.value}}V
-          {{latest.current.value}}A
-          {{latest.speed.value}}{{latest.speed.unit}}
-          {{latest.rpm.value}}RPM
-          Lap:{{latest.lap.value}} -->
-                <!-- </div> -->
             </div>
-            <!-- <div class="panel" v-if="views.numerical.active"> -->
             <div class="numbers-container column-light">
                 <template v-for="(x,key) in latest">
                     <div v-if="x.show" class="num-background">
@@ -142,9 +132,10 @@
                             v-bind:style="{height: ((x.value/x.max)*100).toFixed(1)+'%'}"> </div>
                     </div>
                 </template>
-                <button v-on:click="getData">Get Data</button>
             </div>
-            <!-- </div> -->
+            <div v-if="role === 'admin'">
+            <button v-on:click="getData">Get Data</button>
+            </div>
         </div>
         <!-- Lap Table + graphs -->
         <div class="dataContainer column-accordion-light active">

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt-nodejs');
 
 
 //Define Schema for DB
@@ -12,7 +11,7 @@ var car2Schema = new mongoose.Schema({
         type: String,
         required: [true, 'Car Name is Required']
     },
-    number: {
+    raceNumber: {
         type: Number
     },
     passcode: {
@@ -23,23 +22,15 @@ var car2Schema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    email: {
-        type: String,
-    },
     lastLive: Date,
+    created: Date,
+    loginCount: Number,
+    avatarUrl: String,
+
 });
 
-// generating a hash
-carSchema.methods.generateHash = function (password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-
-// checking if password is valid
-carSchema.methods.validPassword = function (password) {
-    return bcrypt.compareSync(password, this.password);
-};
 
 
-const Cars = mongoose.model('Cars', carSchema);
+const Cars2 = mongoose.model('Cars', car2Schema);
 
 module.exports = Cars2;
