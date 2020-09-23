@@ -231,10 +231,10 @@ function updateNumericals(data) {
     $('#Throttle').text(Math.floor(data.throttle));
   }
   if (data.hasOwnProperty('temp1')){
-    $('#Temp1').text(data.temp1.toFixed(1));
+    $('#Temp1').text(Number(data.temp1).toFixed(1));
   }
   if (data.hasOwnProperty('temp2')){
-    $('#Temp2').text(data.temp2.toFixed(1));
+    $('#Temp2').text(Number(data.temp2).toFixed(1));
   }
   if (data.hasOwnProperty('brake')){
     $('#Brake').text(data.brake == 1 ? "ON" : "OFF");
