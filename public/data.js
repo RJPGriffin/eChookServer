@@ -200,18 +200,18 @@ function addData() {
 
 function updateNumericals(data) {
   // console.log('Entering updateNumericals');
-  $('#voltageTotal').text(data.voltage);
-  $('#voltageLower').text(data.voltsLower);
-  $('#voltageUpper').text(data.voltage - data.voltsLower);
-  $('#Current').text(data.current);
-  $('#AmpHours').text(data.ampH);
-  $('#RPM').text(data.rpm);
+  $('#voltageTotal').text(data.voltage.toFixed(2));
+  $('#voltageLower').text(data.voltsLower.toFixed(2));
+  $('#voltageUpper').text((data.voltage - data.voltsLower).toFixed(2));
+  $('#Current').text(data.current).toFixed(1);
+  $('#AmpHours').text(data.ampH.toFixed(2));
+  $('#RPM').text(Math.floor(data.rpm));
   $('#Speed').text(data.speed.toFixed(1));
   $('#lat-text').text(data.lat);
   $('#lon-text').text(data.lon);
-  $('#Throttle').text(data.throttle);
-  $('#Temp1').text(data.temp1);
-  $('#Temp2').text(data.temp2);
+  $('#Throttle').text(Math.floor(data.throttle));
+  $('#Temp1').text(data.temp1.toFixed(1));
+  $('#Temp2').text(data.temp2.toFixed(1));
   $('#Brake').text(data.brake == 1 ? "ON" : "OFF");
   if (data.track != currTrack) {
     currTrack = data.track;
