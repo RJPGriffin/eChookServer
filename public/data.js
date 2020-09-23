@@ -200,19 +200,45 @@ function addData() {
 
 function updateNumericals(data) {
   // console.log('Entering updateNumericals');
-  $('#voltageTotal').text(data.voltage);
-  $('#voltageLower').text(data.voltsLower);
-  $('#voltageUpper').text(data.voltage - data.voltsLower);
-  $('#Current').text(data.current);
-  $('#AmpHours').text(data.ampH);
-  $('#RPM').text(data.rpm);
-  $('#Speed').text(data.speed.toFixed(1));
-  $('#lat-text').text(data.lat);
-  $('#lon-text').text(data.lon);
-  $('#Throttle').text(data.throttle);
-  $('#Temp1').text(data.temp1);
-  $('#Temp2').text(data.temp2);
-  $('#Brake').text(data.brake == 1 ? "ON" : "OFF");
+  if(data.hasOwnProperty('voltage')){
+    $('#voltageTotal').text(data.voltage.toFixed(2));
+  }
+  if(data.hasOwnProperty('voltsLower')){
+    $('#voltageLower').text(data.voltsLower.toFixed(2));
+  }
+  if (data.hasOwnProperty('voltage') && data.hasOwnProperty('voltsLower')){
+    $('#voltageUpper').text((data.voltage - data.voltsLower).toFixed(2));
+  }
+  if(data.hasOwnProperty('current')){
+    $('#Current').text(data.current.toFixed(1));
+  }
+  if(data.hasOwnProperty('ampH')){
+    $('#AmpHours').text(data.ampH.toFixed(2));
+  }
+  if(data.hasOwnProperty('rpm')){
+    $('#RPM').text(Math.floor(data.rpm));
+  }
+  if(data.hasOwnProperty('speed')){
+    $('#Speed').text(data.speed.toFixed(1));
+  }
+  if(data.hasOwnProperty('lat')){
+    $('#lat-text').text(data.lat);
+  }
+  if(data.hasOwnProperty('lon')){
+    $('#lon-text').text(data.lon);
+  }
+  if (data.hasOwnProperty('throttle')){
+    $('#Throttle').text(Math.floor(data.throttle));
+  }
+  if (data.hasOwnProperty('temp1')){
+    $('#Temp1').text(Number(data.temp1).toFixed(1));
+  }
+  if (data.hasOwnProperty('temp2')){
+    $('#Temp2').text(Number(data.temp2).toFixed(1));
+  }
+  if (data.hasOwnProperty('brake')){
+    $('#Brake').text(data.brake == 1 ? "ON" : "OFF");
+  }
   if (data.track != currTrack) {
     currTrack = data.track;
     if (data.track != "") {
