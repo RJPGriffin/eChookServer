@@ -227,16 +227,16 @@ function updateNumericals(data) {
   if(data.hasOwnProperty('lon')){
     $('#lon-text').text(data.lon);
   }
-  if(data.hasOwnProperty(')){'
+  if (data.hasOwnProperty('throttle')){
     $('#Throttle').text(Math.floor(data.throttle));
   }
-  if(data.hasOwnProperty(')){'
+  if (data.hasOwnProperty('temp1')){
     $('#Temp1').text(data.temp1.toFixed(1));
   }
-  if(data.hasOwnProperty(')){'
+  if (data.hasOwnProperty('temp2')){
     $('#Temp2').text(data.temp2.toFixed(1));
   }
-  if(data.hasOwnProperty(')){'
+  if (data.hasOwnProperty('brake')){
     $('#Brake').text(data.brake == 1 ? "ON" : "OFF");
   }
   if (data.track != currTrack) {
