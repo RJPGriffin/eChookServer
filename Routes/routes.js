@@ -75,6 +75,7 @@ router.get('/api/get/:id', function(req, res) {
     res.status(200).send(demoGenerator.generate()).end;
   } else {
     if (key in liveDataStore.dataStore) {
+	console.log(`Sending data to ID ${key}`);
       res.status(200).send(liveDataStore.dataStore[key]).end;
     } else {
       res.status(204).send({}).end;

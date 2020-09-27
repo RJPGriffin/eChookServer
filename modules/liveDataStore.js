@@ -65,7 +65,7 @@ var liveDataStore = {
     // console.log('Calling Update Data');
 
     if (key in this.dataStore) {
-
+	console.log(`___________Data incoming from ${key}________`);
     } else {
       // console.log('Adding ' + key + ' to Data Store');
       this.dataStore[key] = this.dataTemplate;
