@@ -17,27 +17,27 @@ router.get('/', function(req, res) {
   //Innefficient - fetches all cars
   var count = 0;
   carList = {};
-  var carMasterList = Cars.find({}).then(function(masterCarList) {
-    Object.keys(liveDataStore.dataStore).forEach(function(key) { // look for each entry in data store
-      Object.keys(masterCarList).forEach(function(masterKey) { // compare to entries in master list
-        // console.log('Comparing ' + key + ' with ' + JSON.stringify(masterCarList[masterKey]._id));
-        //if (key == masterCarList[masterKey]._id) {
-        carList[count] = masterCarList[masterKey];
-        // console.log('Added Car: ' + JSON.stringify(carList[count].car));
-        count++;
-        //  }
-      });
-    });
-    // console.log('rendering Page');
-    // console.log('data:{' + JSON.stringify(carList) + '}');
-    res.render('cars', {
-      data: carList,
-      'length': count,
-      message: req.flash('loginMessage'),
-      user: req.user,
-    });
-
+  // var carMasterList = Cars.find({}).then(function(masterCarList) {
+  //   Object.keys(liveDataStore.dataStore).forEach(function(key) { // look for each entry in data store
+  //     Object.keys(masterCarList).forEach(function(masterKey) { // compare to entries in master list
+  //       // console.log('Comparing ' + key + ' with ' + JSON.stringify(masterCarList[masterKey]._id));
+  //       //if (key == masterCarList[masterKey]._id) {
+  //       carList[count] = masterCarList[masterKey];
+  //       // console.log('Added Car: ' + JSON.stringify(carList[count].car));
+  //       count++;
+  //       //  }
+  //     });
+  //   });
+  // console.log('rendering Page');
+  // console.log('data:{' + JSON.stringify(carList) + '}');
+  res.render('cars', {
+    data: carList,
+    'length': count,
+    message: req.flash('loginMessage'),
+    user: req.user,
   });
+
+  // });
 });
 
 router.get('/data', isLoggedIn, function(req, res) {
