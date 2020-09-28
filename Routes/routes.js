@@ -74,7 +74,7 @@ router.get('/api/get/:id', function(req, res) {
   if (key == 'Demo') {
     res.status(200).send(demoGenerator.generate()).end;
   } else {
-    key = "A" + key;
+    key = "$" + key;
     if (key in liveDataStore.dataStore) {
       console.log(`Sending data to ID ${key}\n Containting: \n ${JSON.stringify(liveDataStore.dataStore[key])}`);
       res.status(200).send(liveDataStore.dataStore[key]).end;
