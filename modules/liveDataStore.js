@@ -62,25 +62,86 @@ var liveDataStore = {
   // datastore, if not, creates one.
   // Updates data store with any new data from dataIn
   updateData: function(key, dataIn) {
+    key = "$" + key; //Ensures key does not start with a number
+    if (!this.dataStore.hasOwnProperty(key)) {
+      this.dataStore[key] = {};
+    }
 
+    if (dataIn.hasOwnProperty('Vt')) {
+      this.dataStore[key].voltage = dataIn.Vt;
+    }
+    if (dataIn.hasOwnProperty('A')) {
+      this.dataStore[key].current = dataIn.A
+    }
+    if (dataIn.hasOwnProperty('V1')) {
+      this.dataStore[key].voltageLower = dataIn.V1
+    }
+    if (dataIn.hasOwnProperty('RPM')) {
+      this.dataStore[key].rpm = dataIn.RPM
+    }
+    if (dataIn.hasOwnProperty('Spd')) {
+      this.dataStore[key].speed = dataIn.Spd
+    }
+    if (dataIn.hasOwnProperty('Thrtl')) {
+      this.dataStore[key].throttle = dataIn.Thrtl
+    }
+    if (dataIn.hasOwnProperty('Tmp1')) {
+      this.dataStore[key].temp1 = dataIn.Tmp1
+    }
+    if (dataIn.hasOwnProperty('Tmp2')) {
+      this.dataStore[key].temp2 = dataIn.Tmp2
+    }
+    if (dataIn.hasOwnProperty('AH')) {
+      this.dataStore[key].ampH = dataIn.AH
+    }
+    if (dataIn.hasOwnProperty('Lap')) {
+      this.dataStore[key].currLap = dataIn.Lap
+    }
+    if (dataIn.hasOwnProperty('Gear')) {
+      this.dataStore[key].gear = dataIn.Gear
+    }
+    if (dataIn.hasOwnProperty('brk')) {
+      this.dataStore[key].brake = dataIn.brk
+    }
+    if (dataIn.hasOwnProperty('LL_Time')) {
+      this.dataStore[key].LL_Time = dataIn.LL_Time
+    }
+    if (dataIn.hasOwnProperty('LL_V')) {
+      this.dataStore[key].LL_V = dataIn.LL_V
+    }
+    if (dataIn.hasOwnProperty('LL_I')) {
+      this.dataStore[key].LL_I = dataIn.LL_I
+    }
+    if (dataIn.hasOwnProperty('LL_RPM')) {
+      this.dataStore[key].LL_RPM = dataIn.LL_RPM
+    }
+    if (dataIn.hasOwnProperty('LL_Spd')) {
+      this.dataStore[key].LL_Spd = dataIn.LL_Spd
+    }
+    if (dataIn.hasOwnProperty('LL_Ah')) {
+      this.dataStore[key].LL_Ah = dataIn.LL_Ah
+    }
+    if ('Lon' in dataIn && 'Lat' in dataIn) {
+      this.dataStore[key].lon = dataIn.Lon
+      this.dataStore[key].lat = dataIn.Lat
+      this.dataStore[key].track = tracks.getTrack(dataIn.Lat, dataIn.Lon);
+    }
+    this.dataStore[key].updated = Date.now()
+    this.dataStore[key].status = 'Live'
+
+
+    console.log(JSON.stringify(this.dataStore));
+  },
+  updateDataOld: function(key, dataIn) {
     key = "A" + key;
 
     // console.log('Calling Update Data');
     console.log(`___________Data incoming from ${key}________`);
 
 
-    if (!this.dataStore.hasOwnProperty(key)) {
-      // console.log('Adding ' + key + ' to Data Store');
+    if (!this.dataStore.hasOwnProperty(key)) { // Key doesn't exist yet - add it
       this.dataStore[key] = {};
-      // console.log(this.dataStore);
     }
-    // if (key in this.dataStore) {
-    //
-    // } else {
-    //   // console.log('Adding ' + key + ' to Data Store');
-    //   this.dataStore[key] = this.dataTemplate;
-    //   // console.log(this.dataStore);
-    // }
 
     console.log(`Adding data to key: ${key}`);
 
