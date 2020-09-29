@@ -41,7 +41,7 @@ process.on('unhandledRejection', error => {
 var app = express();
 
 
-app.use(morgan('dev')); // log every request to the console
+//app.use(morgan('dev')); // log every request to the console
 
 
 //required for passport
