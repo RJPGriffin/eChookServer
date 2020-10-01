@@ -207,7 +207,7 @@
 .session-title {
   width: 100%;
   background-color: darken($light, 10%);
-  margin: 5 10 0;
+  margin: 5 10;
   border-radius: 5px 5px 0 0;
   font-size: 20px;
   text-align: left;
@@ -230,7 +230,7 @@
   width: auto;
 }
 
-.lap-data-container{
+.lap-data-container {
   // border: solid 2px;
   // border-color: darken($light, 40%);
   width: 100%;
@@ -246,11 +246,11 @@
 //   justify-content: space-around;
 // }
 
-.lap-data-header{
-  background-color:darken($light, 5%);
+.lap-data-header {
+  background-color: darken($light, 5%);
   width: 100/7pc;
 }
 
-#map{
+#map {
   height: 70vh;
 }

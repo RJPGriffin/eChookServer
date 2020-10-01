@@ -1,12 +1,10 @@
 #welcome-container {
   width: 80vw;
   max-width: 500px;
-  background-color: #F9F9F9;
-}
+  background-color: #F9F9F9; }
 
 #welcome-container h1 {
-  font-size: 30px;
-}
+  font-size: 30px; }
 
 #login-title {
   width: 80vw;
@@ -16,30 +14,25 @@
   color: #F9F9F9;
   background-color: #087e8b;
   border-bottom: #100f0f solid 3px;
-  margin-bottom: 20px;
-}
+  margin-bottom: 20px; }
 
 #get-new-code {
   text-align: right;
   margin: 5px 8px 30px auto;
   font-size: 13px;
-  user-select: none;
-}
+  user-select: none; }
 
 #get-new-code:hover {
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 #clear-history {
   text-align: right;
   margin: 5px 8px 0 auto;
   font-size: 13px;
-  user-select: none;
-}
+  user-select: none; }
 
 #clear-history:hover {
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .centred {
   border-radius: 15px;
@@ -47,8 +40,7 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-}
+  transform: translate(-50%, -50%); }
 
 .t-input {
   max-width: 80vw;
@@ -61,8 +53,7 @@
   text-align: center;
   color: #e71b64;
   font-weight: bold;
-  text-transform: uppercase;
-}
+  text-transform: uppercase; }
 
 .button {
   padding: 10px 5px;
@@ -71,22 +62,18 @@
   font-size: 20px;
   background-color: #065143;
   color: #F9F9F9;
-  user-select: none;
-}
+  user-select: none; }
 
 .submit-button {
   background-color: #e71b64;
-  color: #F9F9F9;
-}
+  color: #F9F9F9; }
 
 .submit-button:hover {
   background-color: #d7175b;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .submit-button.active {
-  background-color: #e71b64;
-}
+  background-color: #e71b64; }
 
 .prev-login-bar {
   padding: 6px;
@@ -95,25 +82,23 @@
   font-size: 20px;
   border-top: #e0e0e0 solid 3px;
   border-bottom: #e0e0e0 solid 3px;
-  user-select: none;
-}
+  user-select: none; }
 
 .prev-login-bar:hover {
   border-top: #e71b64 solid 3px;
   border-bottom: #e71b64 solid 3px;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .login-divider {
   width: auto;
   height: 3px;
   background-color: #e0e0e0;
-  margin: 5px 0 17px;
-}
+  margin: 5px 0 17px; }
 
 .reg-input {
   width: 250px;
   max-width: 80vw;
   font-size: 20px;
-  margin: 5px auto;
-}
+  margin: 5px auto; }
+
+/*# sourceMappingURL=login.css.map */

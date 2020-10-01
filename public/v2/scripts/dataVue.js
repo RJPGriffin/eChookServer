@@ -2,7 +2,7 @@
 var voltageChart = {};
 
 //testing
-currLap = 0;
+currLap = 8;
 
 //Map
 //Map Variables
@@ -17,20 +17,6 @@ var dataApp = new Vue({
   data: {
     active: false,
     role: 'member',
-    views: {
-      numerical: {
-        active: true
-      },
-      laps: {
-        active: true
-      },
-      graph: {
-        active: true
-      },
-      map: {
-        active: true
-      }
-    },
     latest: {
       vTotal: {
         title: "Voltage Total",
@@ -194,14 +180,14 @@ var dataApp = new Vue({
       alpha: 0.9889,
     }
   },
-   watch: {
-    active: function () {
+  watch: {
+    active: function() {
       if (this.active) {
         setTimeout(() => this.activateGraph(), 200); //Gives time for the canvas element to be loaded to the DOM before placing graph
-        this.sessions[0].start = new Date();
+        // this.sessions[0].start = new Date();
 
         //Start the data polling
-        var poll = setInterval(function () {
+        var poll = setInterval(function() {
           this.getData();
         }.bind(this), 2000);
 
@@ -213,26 +199,26 @@ var dataApp = new Vue({
         poll.clearInterval();
       }
     },
-    views: function () {
+    views: function() {
       if (views.graph.active) setTimeout(() => this.activateGraph(), 200); //Gives time for the canvas element to be loaded to the DOM before placing graph
     }
   },
   computed: {
 
   },
-  ready: function () {
+  ready: function() {
     this.getData();
 
-    setInterval(function () {
+    setInterval(function() {
       this.getData();
     }.bind(this), 2000);
   },
   methods: {
-    activateGraph: function () {
+    activateGraph: function() {
       var voltageChartCtx = document.getElementById("voltageChart").getContext('2d');
       voltageChart = new Chart(voltageChartCtx, graphConfig);
     },
-    initializeMap: function(){
+    initializeMap: function() {
       //Set Default location - Greenpower HQ
       var myLatLng = new google.maps.LatLng(50.853200, -0.634854);
 
@@ -257,25 +243,42 @@ var dataApp = new Vue({
         track: ""
       }
     },
-    isAdmin: function () {
+    isAdmin: function() {
       return (this.role === 'admin');
     },
-    getData: function () {
+    getData: function() {
       // let url = "https://data.echook.uk/api/get/Demo";
       let url = "http://localhost:3000/api/get/Demo";
       let latest = this.latest;
       let vm = this;
-      $.get(url, function (data, status) {
+      $.get(url, function(data, status) {
         if (status === "success") {
-          vm.updateaLatestData(data);
+          vm.updateLatestData(data);
         } else {
           console.log('Get Data returned status: ' + status);
         }
         //
       });
     },
-    updateaLatestData: function (data) {
+    updateLatestData: function(data) {
       data.speed = data.speed * 2.23694;
+
+      //First determine lap:
+      currLap++;
+      data.lap = Math.floor(Number(currLap / 10));
+
+      //Lap Management
+      if (this.latest.lap.value != 1 && data.lap === 1) {
+        //new sessionstart
+        this.newSession();
+      }
+      if (data.lap > this.latest.lap.value) {
+        this.newLap(data.lap);
+      }
+
+
+      this.latest.lap.value = data.lap;
+      this.latest.lap.show = this.latest.lap.value ? true : false;
 
       // console.log(data);
 
@@ -338,9 +341,10 @@ var dataApp = new Vue({
       //   }
       // }
 
-      currLap ++;
-      this.latest.lap.value = Math.floor(Number(currLap/10));
-      this.latest.lap.show = true;
+      if (data.lap > 0) {
+        this.updateLapData();
+      }
+
 
       if (data.track != currTrack) {
         currTrack = data.track;
@@ -365,35 +369,86 @@ var dataApp = new Vue({
 
       this.updateGraphData(data);
     },
-    updateGraphData: function (data) {
-      
-      let chartLength = voltageChart.data.datasets[0].data.length-1;
-      chartLength = chartLength > 0 ? chartLength:0;
+    newSession: function() {
+      let time = new Date();
+      if (this.sessions.length !== 0) {
+        this.sessions[this.sessions.length - 1].finish = time;
+      }
+      this.sessions.push({
+        start: time,
+        laps: []
+      });
+    },
+    newLap: function(lapNum) {
+      this.sessions[this.sessions.length - 1].laps.push({
+        lap: lapNum,
+        pointCount: 0,
+        start: new Date(),
+        startAh: this.latest.ah.value,
+        v: 0,
+        i: 0,
+        rpm: 0,
+        speed: 0
+      });
+    },
+    updateLapData: function() {
+      let currSessionIndex = this.sessions.length - 1;
+      let currLapIndex = this.sessions[currSessionIndex].laps.length - 1;
+
+      let thisLap = this.sessions[currSessionIndex].laps[currLapIndex];
+
+      thisLap.pointCount++;
+      thisLap.v = this.lapAverage(thisLap.v, this.latest.vTotal.value, thisLap.pointCount);
+      thisLap.i = this.lapAverage(thisLap.i, this.latest.current.value, thisLap.pointCount);
+      thisLap.rpm = Math.floor(this.lapAverage(thisLap.rpm, this.latest.rpm.value, thisLap.pointCount));
+      thisLap.speed = this.lapAverage(thisLap.speed, this.latest.speed.value, thisLap.pointCount).toFixed(1);
+      thisLap.Ah = this.latest.ah.value - thisLap.startAh;
+      thisLap.time = this.lapTimeString(new Date - thisLap.start);
+
+
+    },
+    lapAverage: function(oldValue, newValue, count) {
+      let result = ((Number(oldValue) * (count - 1) + Number(newValue)) / count).toFixed(2);
+      return Number(result)
+    },
+    lapTimeString: function(millis) {
+      var seconds = Math.floor(millis / 1000);
+      var minutes = Math.floor(millis / (1000 * 60));
+      if (seconds < 60) {
+        return seconds + " Sec";
+      } else {
+        return minutes + ":" + Math.floor(seconds % 60);
+      }
+    },
+    updateGraphData: function(data) {
+
+      let chartLength = voltageChart.data.datasets[0].data.length - 1;
+      chartLength = chartLength > 0 ? chartLength : 0;
       // console.log(`Chart Length = ${chartLength}`);
-      
+
       alpha = Number(this.chartOptions.alpha);
-      
+
       // Averages:
       let voltageAverage, currentAverage, rpmAverage, speedAverage;
-      if(chartLength == 0){
+      if (chartLength == 0) {
         voltageAverage = this.latest.vTotal.value;
         currentAverage = this.latest.current.value;
-        rpmAverage = this.latest.rpm.value/100;
+        rpmAverage = this.latest.rpm.value / 100;
         speedAverage = this.latest.speed.value;
 
-      }else{
+      } else {
         voltageAverage = voltageChart.data.datasets[1].data[chartLength];
         currentAverage = voltageChart.data.datasets[3].data[chartLength];
         rpmAverage = voltageChart.data.datasets[5].data[chartLength];
         speedAverage = voltageChart.data.datasets[7].data[chartLength];
       }
-      
-      
+
+
       voltageChart.data.labels.push(data.time);
       voltageChart.data.datasets[0].data.push(this.latest.vTotal.value);
       voltageAverage = voltageAverage * alpha + (this.latest.vTotal.value) * (1 - alpha);
       voltageChart.data.datasets[1].data.push(voltageAverage);
-      
+
       //Current
       voltageChart.data.datasets[2].data.push(this.latest.current.value);
       currentAverage = currentAverage * alpha + this.latest.current.value * (1 - alpha);
@@ -411,14 +466,14 @@ var dataApp = new Vue({
       voltageChart.data.datasets[7].data.push(speedAverage);
 
       while (voltageChart.data.labels.length > this.chartOptions.dataSeconds) {
-          voltageChart.data.labels.splice(0, 1);;
-          voltageChart.data.datasets.forEach((dataset) => {
+        voltageChart.data.labels.splice(0, 1);;
+        voltageChart.data.datasets.forEach((dataset) => {
           dataset.data.splice(0, 1);;
         });
       }
-      
+
       voltageChart.update();
     }
   }
-  
+
 })
