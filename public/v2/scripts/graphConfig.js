@@ -17,7 +17,7 @@ var graphConfig = {
       {
         label: 'V Avg',
         data: [],
-        hidden: true,
+        hidden: false,
         fill: false,
 
         borderColor: [
@@ -43,7 +43,7 @@ var graphConfig = {
         label: 'Current Avg',
         data: [],
         fill: false,
-        hidden: true,
+        hidden: false,
         borderColor: [
           '#D74E09'
         ],
