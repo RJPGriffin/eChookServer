@@ -59,7 +59,6 @@
 <script type='text/javascript' src="scripts/navVue.js"></script>
 
 
-<div id="nav-placeholder"></div>
 
 <div id="login-app">
     <template v-if="active">
@@ -151,12 +150,31 @@
                             Session {{key+1}} - {{session.start.toLocaleString()}}
                         </div>
                         <div class="session-laps-background">
-
+                            <div class="lap-data-container">
+                                <div class="lap-data-header"><stong>Lap</stong></div>
+                                <div class="lap-data-header"><stong>Voltage</stong></div>
+                                <div class="lap-data-header"><stong>Current</stong></div>
+                                <div class="lap-data-header"><stong>RPM</stong></div>
+                                <div class="lap-data-header"><stong>Speed</stong></div>
+                                <div class="lap-data-header"><stong>Ah</stong></div>
+                                <div class="lap-data-header"><stong>Time</stong></div>
+                            </div>
                             <template v-for="lap in session.laps">
-                                <div class="lap-bar">
+                                
+                                <div class="lap-data-container">
+                                    <div class="lap-data-unit">{{lap.lap}}</div>
+                                    <div class="lap-data-unit">{{lap.v}}V</div>
+                                    <div class="lap-data-unit">{{lap.i}}A</div>
+                                    <div class="lap-data-unit">{{lap.RPM}}RPM</div>
+                                    <div class="lap-data-unit">{{lap.speed}}Mph</div>
+                                    <div class="lap-data-unit">{{lap.Ah}}Ah</div>
+                                    <div class="lap-data-unit">{{lap.time}}</div>
+                                </div>
+
+                                <!-- <div class="lap-bar">
                                     Lap {{lap.lap}}
                                     Averages: {{lap.v}}V, {{lap.i}}A, {{lap.RPM}}RPM, {{lap.speed}}MPH in {{lap.time}}
-                                </div>
+                                </div> -->
                             </template>
                         </div>
 
@@ -190,7 +208,7 @@
                 <strong id="MapTitle">Map</strong>
             </div>
             <div class="panel map-boarder">
-                <div id="map" style="height:70vh"></div>
+                <div id="map"></div>
                 <div class="desktop">
                     Latitude:
                     <span id="lat-text"></span>

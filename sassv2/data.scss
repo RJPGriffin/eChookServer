@@ -193,7 +193,7 @@
   margin: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-  min-height: 80vh;
+  min-height: 70vh;
 }
 @media screen and (max-width: 700px) {
   .column-light,
@@ -228,4 +228,29 @@
   font-size: 13px;
   text-align: left;
   width: auto;
+}
+
+.lap-data-container{
+  // border: solid 2px;
+  // border-color: darken($light, 40%);
+  width: 100%;
+  margin: 0 10 5;
+  display: inline-grid;
+  display: -moz-inline-grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+// .lap-data-container{
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: nowrap;
+//   justify-content: space-around;
+// }
+
+.lap-data-header{
+  background-color:darken($light, 5%);
+  width: 100/7pc;
+}
+
+#map{
+  height: 70vh;
 }

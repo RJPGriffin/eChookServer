@@ -1,6 +1,9 @@
 // Placeholder
 var voltageChart = {};
 
+//testing
+currLap = 0;
+
 //Map
 //Map Variables
 var map;
@@ -37,26 +40,6 @@ var dataApp = new Vue({
         max: 34,
         min: 15,
         unit: "Volts",
-        show: true
-      },
-      vUpper: {
-        title: "Upper Battery",
-        value: 12,
-        low: 10,
-        high: 17,
-        max: 17,
-        min: 0,
-        unit: "Volts",
-        show: false
-      },
-      vLower: {
-        title: "Lower Battery",
-        value: 12,
-        low: 10,
-        high: 17,
-        max: 17,
-        min: 0,
-        unit: "Volts",
         show: false
       },
       current: {
@@ -67,7 +50,7 @@ var dataApp = new Vue({
         max: 35,
         min: 6,
         unit: "Amps",
-        show: true
+        show: false
       },
       rpm: {
         title: "Motor Speed",
@@ -119,6 +102,26 @@ var dataApp = new Vue({
         unit: "°c",
         show: false
       },
+      vUpper: {
+        title: "Upper Battery",
+        value: 12,
+        low: 10,
+        high: 17,
+        max: 17,
+        min: 0,
+        unit: "Volts",
+        show: false
+      },
+      vLower: {
+        title: "Lower Battery",
+        value: 12,
+        low: 10,
+        high: 17,
+        max: 17,
+        min: 0,
+        unit: "Volts",
+        show: false
+      },
       ah: {
         title: "Amp Hours Used",
         value: 4,
@@ -151,6 +154,7 @@ var dataApp = new Vue({
       },
       location: {
         title: "GPS Location",
+        track: "",
         lat: 0,
         lng: 0,
         show: false
@@ -325,14 +329,27 @@ var dataApp = new Vue({
         this.latest.brake.value = data.brake == 1 ? "ON" : "OFF";
         this.latest.brake.show = true;
       }
-      // if (data.track != currTrack) {
-      //   currTrack = data.track;
-      //   if (data.track != "") {
-      //     $('#MapTitle').text(`Map - ${data.track}`);
-      //   } else {
-      //     $('#MapTitle').text(`Map`);
+      // if (data.hasOwnProperty('currLap')) {
+      //   this.latest.lap.value = Math.floor(Number(data.currLap));
+      //   if (this.latest.lap.value !== 0){
+      //     this.latest.lap.show = true;
+      //   }else{
+      //     this.latest.lap.show = false;
       //   }
       // }
+
+      currLap ++;
+      this.latest.lap.value = Math.floor(Number(currLap/10));
+      this.latest.lap.show = true;
+
+      if (data.track != currTrack) {
+        currTrack = data.track;
+        if (data.track != "") {
+          $('#MapTitle').text(`Map - ${data.track}`);
+        } else {
+          $('#MapTitle').text(`Map`);
+        }
+      }
       //
       // if (currLap != data.currLap) {
       //   $('#LapNumber').text(data.currLap.toFixed(0));
