@@ -1,4 +1,6 @@
+@import "_colours.scss";
 @import url(https://fonts.googleapis.com/css?family=Oswald:400,500|Cabin:400,700);
+
 .nav-height {
   height: 70px;
   max-height: 70px;
@@ -10,7 +12,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  background-color: #100f0f;
+  background-color: $dark;
 }
 
 .nav-container-small {
@@ -22,8 +24,8 @@
   display: inline-block;
   top: 0;
   left: 0;
-  background-color: #e71b64;
-  color: #F9F9F9;
+  background-color: $epink;
+  color: $light;
   text-align: right;
   text-decoration: none;
   font-family: 'Oswald', sans-serif;
@@ -66,7 +68,7 @@
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  color: #F9F9F9;
+  color: $light;
   text-align: center;
   transition-duration: 0.3s;
   transition-timing-function: ease-in-out;
@@ -76,17 +78,18 @@
   padding: 0 15px;
   margin: auto 5px;
   height: 70px;
-}
 
-.nav-item:hover {
-  background-color: #E71B64;
-}
+  &:hover {
+    background-color: #E71B64;
+  }
 
-.nav-item > a {
-  display: block;
-  flex-grow: 1;
-  color: #F9F9F9;
-  text-decoration: none;
+  > a {
+    display: block;
+    flex-grow: 1;
+    color: $light;
+    text-decoration: none;
+    // margin: 20px 20px auto;
+  }
 }
 
 .nav-item-small {

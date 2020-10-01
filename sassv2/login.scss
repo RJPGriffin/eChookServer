@@ -1,7 +1,9 @@
+@import "_colours.scss";
+
 #welcome-container {
   width: 80vw;
   max-width: 500px;
-  background-color: #F9F9F9;
+  background-color: $light;
 }
 
 #welcome-container h1 {
@@ -13,9 +15,9 @@
   max-width: 500px;
   font-size: 50px;
   border-radius: 14px 14px 0 0;
-  color: #F9F9F9;
-  background-color: #087e8b;
-  border-bottom: #100f0f solid 3px;
+  color: $light;
+  background-color: $blue;
+  border-bottom: $dark solid 3px;
   margin-bottom: 20px;
 }
 
@@ -40,10 +42,11 @@
 #clear-history:hover {
   cursor: pointer;
 }
+// Classes
 
 .centred {
   border-radius: 15px;
-  box-shadow: 0 0 5px 0 #2d2d2d;
+  box-shadow: 0 0 5px 0 darken($light, 80%);
   position: fixed;
   top: 50%;
   left: 50%;
@@ -51,15 +54,18 @@
 }
 
 .t-input {
+  // width: 300px;
   max-width: 80vw;
-  border: 3px solid #e71b64;
+  border: 3px solid $epink;
   border-radius: 5px;
+  // box-shadow: 0 0 16px rgba(0,0,0,0.1);
+  // background: rgba(255,255,255,0.5);
   margin: 0 auto 15px;
   padding: 10px;
   font-size: 40px;
   width: 300px;
   text-align: center;
-  color: #e71b64;
+  color: $epink;
   font-weight: bold;
   text-transform: uppercase;
 }
@@ -67,47 +73,52 @@
 .button {
   padding: 10px 5px;
   margin: auto;
-  box-shadow: 0 0 1px 0 #c6c6c6;
+  // width: 40px;
+  box-shadow: 0 0 1px 0 darken($light, 20%);
   font-size: 20px;
-  background-color: #065143;
-  color: #F9F9F9;
+  background-color: $green;
+  color: $light;
   user-select: none;
 }
 
+.button:hover {
+  //
+}
+
 .submit-button {
-  background-color: #e71b64;
-  color: #F9F9F9;
+  background-color: $epink;
+  color: $light;
 }
 
 .submit-button:hover {
-  background-color: #d7175b;
+  background-color: darken($epink, 4%);
   cursor: pointer;
 }
 
 .submit-button.active {
-  background-color: #e71b64;
+  background-color: $epink;
 }
 
 .prev-login-bar {
   padding: 6px;
   margin: 2px 0;
-  background-color: #ececec;
+  background-color: darken($light, 5%);
   font-size: 20px;
-  border-top: #e0e0e0 solid 3px;
-  border-bottom: #e0e0e0 solid 3px;
+  border-top: darken($light, 10%) solid 3px;
+  border-bottom: darken($light, 10%) solid 3px;
   user-select: none;
 }
 
 .prev-login-bar:hover {
-  border-top: #e71b64 solid 3px;
-  border-bottom: #e71b64 solid 3px;
+  border-top: $epink solid 3px;
+  border-bottom: $epink solid 3px;
   cursor: pointer;
 }
 
 .login-divider {
   width: auto;
   height: 3px;
-  background-color: #e0e0e0;
+  background-color: darken($light, 10%);
   margin: 5px 0 17px;
 }
 

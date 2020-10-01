@@ -2,7 +2,11 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+// @import "_customVariables.scss";
+// @import "../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// @import "../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap-compass.scss";
 @import url(https://fonts.googleapis.com/css?family=Oswald:400,500|Cabin:400,700);
+
 h2 {
   font-family: 'Cabin:700', sans-serif;
   font-weight: bold;
@@ -53,6 +57,8 @@ body {
   font-family: 'Cabin', sans-serif;
 }
 
+.flex-item {}
+
 .navbar-dark {
   background: #232020;
 }
@@ -63,6 +69,15 @@ body {
   justify-content: space-around;
   position: fixed;
 }
+// .logo {
+//   background: #E71B64;
+//   width: 3.5em;
+//   text-align: right;
+//   padding-right: 0.2em;
+//   font-family: 'Oswald', sans-serif;
+//   font-size: 5em;
+//   text-rendering: optimizelegibility;
+// }
 
 #spacer-div {
   height: 10em;
@@ -78,75 +93,82 @@ body {
 
 .navbar {
   align-items: center;
-}
 
-.navbar ul {
-  padding-left: 5em;
-  list-style: none;
-  display: inline-block;
-  list-style-type: none;
-  color: transparent;
-}
+  ul {
+    padding-left: 5em;
+    list-style: none;
+    display: inline-block;
+    list-style-type: none;
+    color: rgba(0,0,0,0);
 
-.navbar ul > li {
-  font-size: 20px;
-  position: relative;
-  float: left;
-  text-transform: uppercase;
-  cursor: pointer;
-  color: transparent;
-  text-align: center;
-  transition-duration: 0.3s;
-  transition-timing-function: ease-in-out;
-  transition-property: background, color, padding, border-radius;
-}
+    > li {
+      font-size: 20px;
+      position: relative;
+      float: left;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: rgba(0,0,0,0);
+      text-align: center;
+      //border-radius             : 1em;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-in-out;
+      transition-property: background, color, padding, border-radius;
 
-.navbar ul > li:after {
-  position: absolute;
-  z-index: -1;
-  content: "";
-  right: 0;
-  border-radius: 50%;
-}
+      &:after {
+        position: absolute;
+        z-index: -1;
+        content: "";
+        right: 0;
+        border-radius: 50%;
+      }
 
-.navbar ul > li:last-child:after {
-  box-shadow: none;
-}
+      &:last-child:after {
+        box-shadow: none;
+      }
 
-.navbar ul > li:hover {
-  background-color: #E71B64;
-}
+      &:hover {
+        background-color: #E71B64;
+      }
 
-.navbar ul > li > a {
-  color: #E7E0EB;
-  text-decoration: none;
-  font-size: 1.4em;
+      > a {
+        color: #E7E0EB;
+        text-decoration: none;
+        font-size: 1.4em;
+      }
+    }
+  }
 }
-
 /* small screens */
 @media screen and (max-width: 44em) {
   body {
     margin: 1.5em 0;
   }
-  nav[role="full-horizontal"] ul {
-    padding: 0 0.5em;
-  }
-  nav[role="full-horizontal"] ul > li {
-    width: 100%;
-    padding: 0.45em 0.25em;
-    margin: 0 0 0.55em;
-  }
-  nav[role="full-horizontal"] ul > li:after {
-    box-shadow: none;
+
+  nav[role="full-horizontal"] {
+    ul {
+      padding: 0 0.5em;
+    }
+
+    ul > li {
+      width: 100%;
+      padding: 0.45em 0.25em;
+      margin: 0 0 0.55em;
+
+      &:after {
+        box-shadow: none;
+      }
+    }
   }
   /*Top Menus for small screens*/
   #logo {
     position: relative;
   }
+
   #nav-menu {
     position: relative;
   }
 }
+//Nav dropdown
 
 .dropdown-button {
   cursor: pointer;
@@ -161,7 +183,7 @@ li.dropdown {
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   z-index: 1;
 }
 
@@ -194,10 +216,7 @@ li.dropdown {
   align-content: center;
   padding: 30px;
   font: 'Cabin', sans-serif;
-}
-
-@media screen and (max-width: 500px) {
-  .content-background {
+  @media screen and (max-width: 500px) {
     padding-left: 1em;
     padding-right: 1em;
   }
@@ -218,10 +237,7 @@ li.dropdown {
   padding: 50px 30px;
   overflow: auto;
   font: 'Cabin', sans-serif;
-}
-
-@media screen and (max-width: 500px) {
-  .content-background-inverted {
+  @media screen and (max-width: 500px) {
     padding-left: 1em;
     padding-right: 1em;
   }
@@ -230,7 +246,9 @@ li.dropdown {
 .content-background-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  // grid-template-rows: repeat(5, auto);
   justify-items: center;
+  // grid-row-gap         : 15px;
   grid-column-gap: 20px;
 }
 
@@ -244,7 +262,7 @@ li.dropdown {
 
 .t1-background {
   border-radius: 5px 5px 0 0;
-  background-color: #e0e0e0;
+  background-color: darken(#f9f9f9, 10%);
 }
 
 #title1-light {
@@ -290,17 +308,17 @@ li.dropdown {
   font-family: 'Cabin';
   padding-top: 10px;
   margin-bottom: 25px;
-}
 
-.triplet-container div {
-  font-size: 1em;
+  div {
+    font-size: 1em;
+  }
 }
 
 .tc-light {
-  background-color: #f4f4f4;
+  background-color: darken(#f9f9f9, 2%);
   border-style: solid;
   border-top: none;
-  border-color: #e0e0e0;
+  border-color: darken(#f9f9f9, 10%);
   border-radius: 0 0 5px 5px;
 }
 
@@ -331,10 +349,7 @@ li.dropdown {
   display: inline-block;
   *display: inline;
   zoom: 1;
-}
-
-@media screen and (max-width: 500px) {
-  .col2 {
+  @media screen and (max-width: 500px) {
     margin-left: auto;
     margin-right: auto;
   }
@@ -361,16 +376,16 @@ li.dropdown {
   vertical-align: bottom;
   bottom: 0;
   transition: background 0.3s;
-}
 
-.main-button:hover {
-  text-decoration: none !important;
-  background-color: #30669c !important;
+  &:hover {
+    text-decoration: none !important;
+    background-color: darken(#3c80c3, 10%) !important;
+  }
 }
 
 .teamPicture {
   background-color: #f9f9f9;
-  border: solid 5px #c6c6c6;
+  border: solid 5px darken(#f9f9f9, 20%);
   border-radius: 50%;
   width: 130px;
   height: 130px;
