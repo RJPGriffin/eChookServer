@@ -424,9 +424,9 @@ var dataApp = new Vue({
       var seconds = Math.floor(millis / 1000);
       var minutes = Math.floor(millis / (1000 * 60));
       if (seconds < 60) {
-        return seconds + " Sec";
+        return seconds + "s";
       } else {
-        return minutes + ":" + Math.floor(seconds % 60);
+        return minutes + "m" + Math.floor(seconds % 60)+"s";
       }
     },
     updateGraphData: function(data) {
