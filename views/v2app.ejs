@@ -166,25 +166,39 @@
                   <strong>Time</strong>
                 </div>
               </div>
-              <template v-for="lap in session.laps">
+              <template v-for="(lap, lapKey) in session.laps">
 
-                <div class="lap-data-container">
+                <div class="lap-data-container" v-bind:class="{'lap-tint-row': lapKey%2}">
                   <div class="lap-data-unit">{{lap.lap}}</div>
-                  <div class="lap-data-unit">{{lap.v}}</div>
-                  <div class="lap-data-unit">{{lap.i}}</div>
-                  <div class="lap-data-unit">{{lap.rpm}}</div>
-                  <div class="lap-data-unit">{{lap.speed}}</div>
-                  <div class="lap-data-unit">{{lap.Ah}}</div>
-                  <div class="lap-data-unit">{{lap.time}}</div>
+
+                  <div class="lap-data-unit">
+                      <div class="lap-data-text">{{lap.v}}</div>
+                      <div class="lap-graph" v-bind:style="{width: ((lap.v/30)*100).toFixed(1)+'%'}"> </div>
+                  </div>
+                  <div class="lap-data-unit">
+                      <div class="lap-data-text">{{lap.i}}</div>
+                      <div class="lap-graph" v-bind:style="{width: ((lap.i/30)*100).toFixed(1)+'%'}"> </div>
+                    </div>
+                  <div class="lap-data-unit">
+                      <div class="lap-data-text">{{lap.rpm}}</div>
+                      <div class="lap-graph" v-bind:style="{width: ((lap.rpm/3000)*100).toFixed(1)+'%'}"> </div>
+                    </div>
+                  <div class="lap-data-unit">
+                      <div class="lap-data-text">{{lap.speed}}</div>
+                      <div class="lap-graph" v-bind:style="{width: ((lap.speed/35)*100).toFixed(1)+'%'}"> </div>
+                    </div>
+                  <div class="lap-data-unit">
+                      <div class="lap-data-text">{{lap.Ah}}</div>
+                      <div class="lap-graph" v-bind:style="{width: ((lap.Ah/3)*100).toFixed(1)+'%'}"> </div>
+                    </div>
+                  <div class="lap-data-unit">
+                      {{lap.time}}
+                    </div>
                 </div>
 
-                <!-- <div class="lap-bar">
-                                    Lap {{lap.lap}}
-                                    Averages: {{lap.v}}V, {{lap.i}}A, {{lap.RPM}}RPM, {{lap.speed}}MPH in {{lap.time}}
-                                </div> -->
-              </template>
+                </template> 
             </div>
-
+            <div style="height:1em"></div>
           </template>
         </div>
         <div class="">

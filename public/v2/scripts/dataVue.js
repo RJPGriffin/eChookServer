@@ -153,6 +153,7 @@ var dataApp = new Vue({
           lap: 1,
           v: 23.5,
           i: 20,
+          Ah:1,
           rpm: 1800,
           speed: 20,
           time: "1m20s"
@@ -161,6 +162,7 @@ var dataApp = new Vue({
           lap: 2,
           v: 22,
           i: 19,
+          Ah: 1,
           rpm: 1800,
           speed: 20,
           time: "1m20s"
@@ -169,6 +171,7 @@ var dataApp = new Vue({
           lap: 3,
           v: 21,
           i: 18,
+          Ah: 1,
           rpm: 1800,
           speed: 20,
           time: "1m20s"
