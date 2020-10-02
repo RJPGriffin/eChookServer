@@ -14,6 +14,7 @@ var currTrack = "";
 
 var dataApp = new Vue({
   el: '#data-app',
+  poll:{}, //Object for recurring poll function
   data: {
     active: false,
     role: 'member',
@@ -190,7 +191,7 @@ var dataApp = new Vue({
         // this.sessions[0].start = new Date();
 
         //Start the data polling
-        var poll = setInterval(function() {
+        this.poll = setInterval(function() {
           this.getData();
         }.bind(this), 2000);
 
@@ -199,7 +200,7 @@ var dataApp = new Vue({
 
 
       } else {
-        poll.clearInterval();
+        clearInterval(this.poll);
       }
     },
     views: function() {

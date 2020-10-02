@@ -22,6 +22,12 @@ var loginApp = new Vue({
     }
   },
   mounted() {
+    if(localStorage.currentStatus){
+      let status = JSON.parse(localStorage.currentStatus);
+      if(status.loggedIn === true){
+        this.loginWithCode(status.code);
+      }
+    }
     if (localStorage.logins) {
       this.pastLogins = JSON.parse(localStorage.logins);
       console.log(`Logins found: ${JSON.stringify(this.pastLogins)}`);
@@ -95,15 +101,20 @@ var loginApp = new Vue({
             team: "team"
           })
           localStorage.logins = JSON.stringify(this.pastLogins);
-          this.active = false;
-          dataApp.active = true;
+          this.loginWithCode(this.teamCode);
         }
       }
     },
     prevLogin: function(i) {
       let code = this.pastLogins[i].code;
+      this.loginWithCode(code);
+    },
+    loginWithCode: function(code){
+      localStorage.currentStatus = JSON.stringify({ loggedIn: true, code: code });
       console.log(`Login with code: ${code}`);
+      dataApp.carCode = code;
       this.active = false;
+      navVue.loggedIn = true;
       dataApp.active = true;
     },
     clearHistory: function() {

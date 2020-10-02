@@ -98,3 +98,19 @@
   padding: 0 15px;
   margin: auto 5px;
 }
+
+.login-button{
+  position: relative;
+  margin: 12px 50px 5px auto;
+  padding: 5px 12px 5px 12px;
+  height: min-content;
+  width: max-content;
+  background-color:darken( red, 20%);
+  z-index: 53;
+}
+
+.login-button-small{
+  height: 37px;
+  margin: 0 50px 0 auto;
+  padding: 3px 12px 0;
+}

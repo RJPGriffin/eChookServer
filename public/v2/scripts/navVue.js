@@ -2,6 +2,7 @@ var navVue = new Vue({
   el: '#navVue',
   data: {
     scrolled: 0,
+    loggedIn: 0,
     narrow: 0,
     logoText: "eChook",
     nav: [{
@@ -13,12 +14,22 @@ var navVue = new Vue({
     }, {
       name: "Live Data",
       link: "data.echook.uk"
-    }]
+    }],
+    login:{
+    }
   },
   methods: {
     handleScroll() {
       this.scrolled = window.scrollY > 50;
-    }
+    },
+    logOut: function() {
+      this.loggedIn = false;
+      dataApp.active = false;
+      loginApp.active = true;
+      let status = JSON.parse(localStorage.currentStatus);
+      status.loggedIn = false;
+      localStorage.currentStatus = JSON.stringify(status);
+    },
   },
   watch: {
     scrolled: function() {
@@ -26,6 +37,13 @@ var navVue = new Vue({
         this.logoText = "eC"
       } else {
         this.logoText = "eChook"
+      }
+    },
+    loggedIn: function(){
+      if(this.loggedIn){
+        this.login.text = "Log Out";
+      }else{
+        this.login.text = "Log In";
       }
     }
   },

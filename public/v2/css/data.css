@@ -96,6 +96,7 @@
   flex-shrink: 0.5;
   max-width: 200px;
   z-index: 0;
+  overflow: hidden;
 }
 
 .num-background:hover {
@@ -227,6 +228,7 @@
 
 .lap-data-text {
   position: relative;
+  overflow: hidden;
   z-index: 3;
 }
 

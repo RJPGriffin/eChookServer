@@ -105,6 +105,7 @@
   flex-shrink: 0.5;
   max-width: 200px;
   z-index: 0;
+  overflow: hidden;
 }
 
 .num-background:hover {
@@ -146,11 +147,13 @@
     padding: 0;
   }
 
-  .num-title {}
+  // .num-title {
+  //   // empt
+  // }
 
-  .num-unit {}
+  // .num-unit {}
 
-  .num-grid {}
+  // .num-grid {}
 
   .num-background {
     border-radius: 5px;
@@ -256,6 +259,7 @@
 
 .lap-data-text{
   position: relative;
+  overflow: hidden;
   z-index: 3;
 }
 

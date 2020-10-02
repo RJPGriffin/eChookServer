@@ -37,6 +37,8 @@
 
 <script type="text/javascript" src="scripts/script.js" charset="utf-8"></script>
 <link rel="stylesheet" href="css/nav.css" type="text/css">
+
+
 <div id="navVue">
 
   <div class="nav-container nav-height" v-bind:class="{'nav-container-small': scrolled }">
@@ -50,8 +52,11 @@
         </a>
       </div>
     </div>
-
+    <div v-if="loggedIn" id="" class="login-button button" v-bind:class="{ 'login-button-small': scrolled }" v-on:click="logOut">
+        Log Out
+    </div>
   </div>
+  
 </div>
 <script type='text/javascript' src="scripts/navVue.js"></script>
 
