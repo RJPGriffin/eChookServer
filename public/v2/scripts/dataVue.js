@@ -319,6 +319,7 @@ var dataApp = new Vue({
       }
       if (data.hasOwnProperty('lon')) {
         this.latest.location.lng = data.lon;
+        this.updateMapPosition(this.latest.location.lat, this.latest.location.lng);
       }
       if (data.hasOwnProperty('throttle')) {
         this.latest.throttle.value = data.throttle;
@@ -410,6 +411,10 @@ var dataApp = new Vue({
       thisLap.time = this.lapTimeString(new Date - thisLap.start);
 
 
+    },
+    updateMapPosition: function (lat, lon){
+      map.panTo(new google.maps.LatLng(lat, lon));
+      marker.setPosition(new google.maps.LatLng(lat, lon));
     },
     lapAverage: function(oldValue, newValue, count) {
       let result = ((Number(oldValue) * (count - 1) + Number(newValue)) / count).toFixed(2);
